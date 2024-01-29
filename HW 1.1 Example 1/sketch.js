@@ -1,5 +1,4 @@
 function setup() {
-  //Example 1
   createCanvas(130,60);
 }
 
