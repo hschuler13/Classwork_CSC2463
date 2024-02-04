@@ -1,31 +1,68 @@
+let palettes;
+let chosenPalette;
+
 function setup() {
   createCanvas(700, 400);
+  chosenPalette = color('white');
+  palettes = [
+    new Palette(0,0,color('red')),
+    new Palette(0,15,color('orange')),
+    new Palette(0,30,color('yellow')),
+    new Palette(0,45,color('green')),
+    new Palette(0,60,color('cyan')),
+    new Palette(0,75,color('blue')),
+    new Palette(0,90,color('magenta')),
+    new Palette(0,105,color('brown')),
+    new Palette(0,120,color('white')),
+    new Palette(0,135,color('black')),
+  ];
 }
 
 function draw() {
-  background(220);
-  fill('red');
-  square(0,0,15);
-  fill('orange');
-  square(0,15,15);
-  fill('yellow');
-  square(0,30,15);
-  fill('green');
-  square(0,45,15);
-  fill('cyan');
-  square(0,60,15);
-  fill('blue');
-  square(0,75,15);
-  fill('magenta');
-  square(0,90,15);
-  fill('brown');
-  square(0,105,15);
-  fill('white');
-  square(0,120,15);
-  fill('black');
-  square(0,135,15);
+  stroke('black');
+  noFill();
+  strokeWeight(2);
+  rect(0,0,700,400);
+
+  for(let i=0;i < palettes.length;i++) {
+    palettes[i].draw();
+  }
+
+  if(mouseIsPressed){
+    stroke(chosenPalette);
+    strokeWeight(5);
+    line (mouseX, mouseY, pmouseX, pmouseY);
+  } 
 }
 
-function mouseClicked(){
-  
+function mousePressed(){
+  let inPalette = false;
+  for(let i=0; i < palettes.length; i++){
+    if(palettes[i].contains(mouseX,mouseY)){
+      chosenPalette = palettes[i].fill;
+      inPalette = true;
+    }
+  }
 }
+
+class Palette{
+  constructor (x, y, fill){
+    this.x = x;
+    this.y = y;
+    this.fill = fill;
+  }
+
+  draw(){
+    fill(this.fill);
+    strokeWeight(1);
+    stroke('black');
+    square(this.x,this.y,15);
+  }
+
+  contains(x,y){
+    let inX = x >= this.x && x <= this.x + 100;
+    let inY = y >= this.y && y <= this.y +100;
+    return inX && inY;
+  }
+}
+
