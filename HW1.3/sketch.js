@@ -28,9 +28,9 @@ function preload(){
   Robot.addAnis(animations);
   Robot.changeAni('walkRight');
 
-  /*SpelunkyGuy = new Character(500,500,80,80,'assets/spelunkyguy.png',animations);
+  SpelunkyGuy = new Character(500,500,80,80,'assets/spelunkyguy.png',animations);
   Green = new Character(200,200,80,80,'assets/green.png',animations);
-  Robot = new Character(200,300,80,80,'assets/robot.png',animations);*/
+  Robot = new Character(200,300,80,80,'assets/robot.png',animations);
 }
 
 function setup(){
@@ -114,7 +114,7 @@ function walkLeft() {
   Robot.vel.y = 0;
 }
 
-/*class Character{
+class Character{
   constructor(x, y, height, width, spriteSheets, animations){
     sprite = new Sprite (x, y, height, width);
     sprite.spriteSheet = spriteSheets;
@@ -123,4 +123,4 @@ function walkLeft() {
     sprite.addAnis(animations);
     sprite.changeAni('stand');
   }
-}*/
+}
