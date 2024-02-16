@@ -28,9 +28,9 @@ function preload(){
   Robot.addAnis(animations);
   Robot.changeAni('walkRight');
 
-  SpelunkyGuy = new Character(500,500,80,80,'assets/spelunkyguy.png',animations);
-  Green = new Character(200,200,80,80,'assets/green.png',animations);
-  Robot = new Character(200,300,80,80,'assets/robot.png',animations);
+  SpelunkyGuy1 = new Character(500,500,80,80,'assets/spelunkyguy.png',animations);
+  Green1 = new Character(200,200,80,80,'assets/green.png',animations);
+  Robot1 = new Character(200,300,80,80,'assets/robot.png',animations);
 }
 
 function setup(){
