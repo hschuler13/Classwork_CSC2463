@@ -8,9 +8,9 @@ function preload(){
     walkRight: {row:0 , col:1, frames:8}
   };
   
-  characters.push(new Character(200,100,80,80,'assets/spelunkyguy.png',animations));
-  characters.push(new Character(200,200,80,80,'assets/green.png',animations));
-  characters.push(new Character(200,300,80,80,'assets/robot.png',animations));
+  characters.push(new Character(200,100,80,80,'libraries/assets/SpelunkyGuy.png',animations));
+  characters.push(new Character(200,200,80,80,'libraries/assets/Green.png',animations));
+  characters.push(new Character(200,300,80,80,'libraries/assets/Robot.png',animations));
 }
 
 function setup(){
