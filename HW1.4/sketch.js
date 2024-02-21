@@ -128,7 +128,7 @@ function timer() {
 }*/
 
 function summonBugs(){
-  
+  while (bugs.length < 25){
     while (bugGenerator > 0) {
       let bug = new bugs.Sprite(random(height), random(width), 32, 32);
       bug.spriteSheet = beetle;
@@ -185,29 +185,45 @@ function summonBugs(){
       else if (bugDirection == 4){
         down();
       }
+
+      if (bug.mouse.presses()){
+        bug.changeAni('squish');
+        bug.vel.x = 0;
+        bug.vel.y = 0;
+        bug.cull(10);
+      }
       howManyBugs++;
       bugGenerator--;
-    }
- 
 
-  
+      
+    }
+
+    
+  }
+    
+ 
     /*let kill = false;
 
     function mouseClicked(){
-      if(dist(mouseX, mouseY, sprite.position.x, sprite.position.y) <= bugHitBox){
-        sprite.changeAni('squish');
-        sprite.vel.x = 0;
-        sprite.vel.y = 0;
-      }
-
-      if (kill == false){
-        deadBugs++;
-        howManyBugs--;
-      }
-
-      kill = true;
+      
     }
   }*/
+}
+
+function mouseCLicked(){
+  let kill = false;
+  if(dist(mouseX, mouseY, sprite.position.x, sprite.position.y) <= bugHitBox){
+    sprite.changeAni('squish');
+    sprite.vel.x = 0;
+    sprite.vel.y = 0;
+  }
+
+  if (kill == false){
+    deadBugs++;
+    howManyBugs--;
+  }
+
+  kill = true;
 }
 
 /*function mouseReleased(){
