@@ -9,6 +9,7 @@ let deadBugs = 0;
 let bugHitBox = 32;*/
 
 let bugs;
+let bug;
 let screen = 1;
 let bugGenerator = 25;
 let howManyBugs = 0;
@@ -54,6 +55,12 @@ function draw() {
   summonBugs();
   if (bugs.cull(400)){
     bugGenerator = 25;
+  }
+  if (bugs.mouse.presses()){
+    bugs.changeAni('squish');
+    bugs.vel.x = 0;
+    bugs.vel.y = 0;
+    bugs.cull(10);
   }
   clear();
   
@@ -130,7 +137,7 @@ function timer() {
 function summonBugs(){
   while (bugs.length < 25){
     while (bugGenerator > 0) {
-      let bug = new bugs.Sprite(random(height), random(width), 32, 32);
+      bug = new bugs.Sprite(random(height), random(width), 32, 32);
       bug.spriteSheet = beetle;
       bug.collider = 'none';
       bug.layer = 2;
@@ -186,12 +193,7 @@ function summonBugs(){
         down();
       }
 
-      if (bug.mouse.presses()){
-        bug.changeAni('squish');
-        bug.vel.x = 0;
-        bug.vel.y = 0;
-        bug.cull(10);
-      }
+      
       howManyBugs++;
       bugGenerator--;
 
@@ -210,7 +212,7 @@ function summonBugs(){
   }*/
 }
 
-function mouseCLicked(){
+/*function mouseCLicked(){
   let kill = false;
   if(dist(mouseX, mouseY, sprite.position.x, sprite.position.y) <= bugHitBox){
     sprite.changeAni('squish');
@@ -224,7 +226,7 @@ function mouseCLicked(){
   }
 
   kill = true;
-}
+}*/
 
 /*function mouseReleased(){
   if (howManyBugs == 0){
