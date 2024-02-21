@@ -25,26 +25,13 @@ function setup() {
   createCanvas(400, 400);
 
 	bugs = new Group();
-  
-	/*bugs.color = 'yellow';
-	bugs.y = 25;
-	bugs.diameter = 10;*/
-	
-    
 
     if (bugGenerator < 25){
       bugGenerator = 25;
     }
   
 	
-  /*createCanvas(400, 400);
-  bugs = new Group();
-  bugs.spriteSheet = beetle;
-  bugs.collider = 'none';
-  bugs.anis.frameDelay = 7;
-  bugs.life = 1000;
-  summonBugs();
-  screen = 1;
+  /*screen = 1;
   deadBugs = 0;
   howManyBugs = 10;*/
   
@@ -124,16 +111,6 @@ function timer() {
   }*/
 }
 
-/*function summonBugs(){
-  for (let i = 0; i < howManyBugs; i++){
-    let sprite = createSprite(random(width),random(height), 32, 32);
-
-    
-  }
-
-  bugs.add(this.sprite);
-}*/
-
 function summonBugs(){
   while (bugs.length < 25){
     while (bugGenerator > 0) {
@@ -193,7 +170,6 @@ function summonBugs(){
         down();
       }
 
-      
       howManyBugs++;
       bugGenerator--;
 
@@ -202,14 +178,6 @@ function summonBugs(){
 
     
   }
-    
- 
-    /*let kill = false;
-
-    function mouseClicked(){
-      
-    }
-  }*/
 }
 
 /*function mouseCLicked(){
@@ -226,70 +194,4 @@ function summonBugs(){
   }
 
   kill = true;
-}*/
-
-/*function mouseReleased(){
-  if (howManyBugs == 0){
-    howManyBugs = howManyBugs + random (5, 15);
-    summonBugs();
-  }
-  else{
-    return false;
-  }
-}*/
-
-
-
-function squish(){
-
-}
-
-/*function bugsCrawl(){
-
-  for (let i = 0; i < bugs.length; i++){
-    if(bugs[i].position.x >= (width + 201)){
-      bugs[i].position.x = (0-60);
-    }
-    else if(bugs[i].position.y >= (height +201)){
-      bugs[i].position.y = (0-50);
-    }
-    else if(bugs[i].position.x <= 0 - 201){
-      bugs[i].position.x = (width + 80);
-    }
-    else if(bugs[i].position.y <= 0 - 201){
-      bugs[i].position.y = (height + 70);
-    }
-  }
-
-}*/
-
-/*class Character{
-  constructor (x,y,height,width,spriteSheets,animations){
-    this.sprite = new Sprite (x,y,height,width);
-    
-    
-    t
-    //switch
-    this.sprite.changeAni('standVert');
-  }
-
-  stop(){
-    
-  }
-
-  left(){
-    
-  }
-
-  right(){
-    
-  }
-
-  up(){
-    
-  }
-
-  down(){
-    
-  }
 }*/
