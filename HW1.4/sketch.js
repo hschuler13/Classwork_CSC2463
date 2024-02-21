@@ -3,15 +3,17 @@
 let font;
 let bugs;
 let speed;
-let howManyBugs;
 
-let bugDirection;
 let timerLength = 30;
 let deadBugs = 0;
 let bugHitBox = 32;*/
 
 let bugs;
-let screen = 0;
+let screen = 1;
+let bugGenerator = 25;
+let howManyBugs = 0;
+let bugDirection;
+
 function preload(){
  beetle = loadImage('assets/beetleV2.png');
 
@@ -19,7 +21,7 @@ function preload(){
 }
 
 function setup() {
-  new Canvas(400, 400);
+  createCanvas(400, 400);
 
 	bugs = new Group();
   
@@ -27,18 +29,10 @@ function setup() {
 	bugs.y = 25;
 	bugs.diameter = 10;*/
 	
-    while (bugs.length < 24) {
-      let bug = new bugs.Sprite(random(height), random(width), 32, 32);
-      bug.spriteSheet = beetle;
-      bug.addAni({
-        walkVert: {row: 0, frames: 7},
-        standVert: {row: 0, col: 3, frames: 1},
-        walkHorz: {row: 1, frames: 7},
-        standHorz: {row: 1, col: 3, frames: 1},
-        squish: {row: 2, frames: 1}
-      });
-      
-      bug.x = bugs.length * 20;
+    
+
+    if (bugGenerator < 25){
+      bugGenerator = 25;
     }
   
 	
@@ -56,7 +50,17 @@ function setup() {
 }
 
 function draw() {
+  background(220);
+  summonBugs();
+  if (bugs.cull(400)){
+    bugGenerator = 25;
+  }
   clear();
+  
+  
+    //gameStart();
+  
+  
   //background(220);
   
   /*if (screen == 1){
@@ -73,21 +77,23 @@ function draw() {
   //drawSprites();
 }
 
-/*function gameStart(){
-  text("Press the space button to start!", 200, 200);
+function gameStart(){
+  bugs.removeAll();
+  //text("Press the space button to start!", 200, 200);
   if (kb.pressing(' ')){
     screen = 0;
   }
 }
 
 function gamePlaying(){
-  timer();
-  bugsCrawl();
-  text("score: " + deadBugs,100,20);
+  bugs.draw();
+  //timer();
+  //bugsCrawl();
+  //text("score: " + deadBugs,100,20);
   
 }
 
-function gameEnd(){
+/*function gameEnd(){
   bugs.removeAll();
   text("Game end!", 200, 150);
   text("Bugs squashed: ", 200, 300);
@@ -101,15 +107,15 @@ function gameEnd(){
 function score(x, y){
   text("Bugs squashed: " + deadBugs, x, y);
 
-}
+}*/
 
 function timer() {
-  text("timer: " + ceil(timerLength),300,20);
+  /*text("timer: " + ceil(timerLength),300,20);
   timerLength -= deltaTime/1000;
   if (timerLength < 0){
     screen = 2;
-  }
-}*/
+  }*/
+}
 
 /*function summonBugs(){
   for (let i = 0; i < howManyBugs; i++){
@@ -121,53 +127,71 @@ function timer() {
   bugs.add(this.sprite);
 }*/
 
-/*function summonBugs(){
-  for (let i = 0; i < howManyBugs; i++){
-   
-    sprite = new bugs.Sprite(random(height), random(width), 32, 32);
-    
-    sprite.addAnis(animations);
-    
+function summonBugs(){
+  
+    while (bugGenerator > 0) {
+      let bug = new bugs.Sprite(random(height), random(width), 32, 32);
+      bug.spriteSheet = beetle;
+      bug.collider = 'none';
+      bug.layer = 2;
+      
+      bug.addAnis({
+        walkVert: {row: 0, frames: 7},
+        standVert: {row: 0, col: 3, frames: 1},
+        walkHorz: {row: 1, frames: 7},
+        standHorz: {row: 1, col: 3, frames: 1},
+        squish: {row: 2, frames: 1}
+      });
+      bug.anis.frameDelay = 7;
+  
+      function left(){
+        bug.changeAni('walkHorz');
+        bug.vel.y = 0;
+        bug.vel.x = -1;
+        bug.scale.x = -1;
+      }
+      
+      function right(){
+        bug.changeAni('walkHorz');
+        bug.vel.y = 0;
+        bug.vel.x = 1;
+        bug.scale.x = 1;
+      }
+      
+      function up(){
+        bug.changeAni('walkVert');
+        bug.vel.y = -1;
+        bug.vel.x = 0;
+        bug.scale.y = 1;
+      }
+      
+      function down(){
+        bug.changeAni('walkVert');
+        bug.vel.y = 1;
+        bug.vel.x = 0;
+        bug.scale.y = -1;
+      }
+  
+      bugDirection = random([1,2,3,4]);
+      if (bugDirection == 1){
+        left();
+      }
+      else if (bugDirection == 2){
+        right();
+      }
+      else if (bugDirection == 3){
+        up();
+      }
+      else if (bugDirection == 4){
+        down();
+      }
+      howManyBugs++;
+      bugGenerator--;
+    }
+ 
 
-    bugDirection = random([1,2,3,4]);
-    if(bugDirection = 1){
-      //left
-      sprite.position.x = random(120, width - 120);
-      //this.sprite.velocity.y = speed;
-      sprite.changeAni('walkHorz');
-      sprite.vel.x = -1;
-      sprite.scale.x = -1;
-      sprite.vel.y = 0;
-    }
-    else if (bugDirection = 2){
-      //right
-      sprite.position.x = random(120, width - 120);
-      //this.sprite.velocity.y = 0 - speed;
-      sprite.changeAni('walkHorz');
-      sprite.vel.x = 1;
-      sprite.scale.x = 1;
-      sprite.vel.y = 0;
-    }
-    else if (bugDirection = 3){
-      //up
-      sprite.position.y = random(120, height);
-      //this.sprite.velocity.x = speed;
-      sprite.changeAni('walkVert');
-      sprite.vel.x = 0;
-      sprite.scale.y = 1;
-      sprite.vel.y = -1;
-    }
-    else{
-      //down
-      sprite.position.y = random(120, height);
-      //this.sprite.velocity.x = 0 - speed;
-      sprite.changeAni('walkVert');
-      sprite.vel.x = 0;
-      sprite.scale.y = -1;
-      sprite.vel.y = 1;
-    }
-
-    let kill = false;
+  
+    /*let kill = false;
 
     function mouseClicked(){
       if(dist(mouseX, mouseY, sprite.position.x, sprite.position.y) <= bugHitBox){
@@ -183,10 +207,8 @@ function timer() {
 
       kill = true;
     }
-
-    bugs.add(sprite);
-  }
-}*/
+  }*/
+}
 
 /*function mouseReleased(){
   if (howManyBugs == 0){
@@ -198,25 +220,11 @@ function timer() {
   }
 }*/
 
-/*function left(){
 
-}
-
-function right(){
-
-}
-
-function up(){
-
-}
-
-function down(){
-
-}
 
 function squish(){
 
-}*/
+}
 
 /*function bugsCrawl(){
 
