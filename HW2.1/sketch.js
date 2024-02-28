@@ -40,5 +40,6 @@ function setup() {
 
 function draw() {
   background('LightCoral');
-  text("Ping pong delay adjustment slider", 185, 190);
+  text("Click each button to trigger a different sound", 200, 20);
+  text("Ping pong delay adjustment slider", 180, 190);
 }
