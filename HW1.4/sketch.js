@@ -15,7 +15,7 @@ let font;
 
 function preload() {
   beetle = loadImage("assets/beetleV2.png");
-  font = loadFont("assets/pixelifysans-regular.ttf")
+  //font = loadFont("assets/pixelifysans-regular.ttf")
   animations = {
     walkVert: { row: 0, frames: 7 },
     standVert: { row: 0, col: 3, frames: 1 },
@@ -28,7 +28,7 @@ function preload() {
 function setup() {
   createCanvas(400, 400);
   textAlign(CENTER);
-  textFont(font);
+  //textFont(font);
   noCursor();
   screen = 1;
   deadBugs = 0;
