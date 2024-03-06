@@ -1,21 +1,15 @@
-let synth1 = new Tone.PolySynth(Tone.DuoSynth);
-let synth2 = new Tone.PolySynth(Tone.Synth);
+let synth = new Tone.PolySynth(Tone.DuoSynth);
+
 
 let bend = new Tone.PitchShift();
 bend.pitch = 0;
-let ppDelay = new Tone.PingPongDelay(0);
-let chor = new Tone.Chorus(0);
+let ppDelay = new Tone.PingPongDelay("4n", 0.5);
+let fDelay = new Tone.FeedbackDelay ("8n", 0.5);
 
-
-synth1.connect(bend);
-bend.connect(chor);
-chor.connect(ppDelay);
-ppDelay.toDestination();
-
-synth2.connect(bend);
-bend.connect(chor);
-chor.connect(ppDelay);
-ppDelay.toDestination();
+synth.connect(bend);
+bend.connect(ppDelay);
+ppDelay.connect(fDelay);
+fDelay.toDestination();
 
 let notes = {
   'a' : 'C3',
@@ -28,44 +22,46 @@ let notes = {
   'k' : 'C4'
 }
 
+let pitchS;
+let ppDelayS;
+let fDelayS;
+
 function setup() {
   createCanvas(400, 400);
-
-  sel = createSelect();
-  sel.position (100, 50);
-  sel.option ('Duo Synth');
-  sel.option ('Normal Synth');
-  sel.selected ('Normal Synth');
+  textAlign(CENTER);
 
   pitchS = createSlider(0, 12, 0, 0.1);
-  pitchS.position (100,200);
+  pitchS.position (130,150);
   pitchS.mouseMoved(() => bend.pitch = pitchS.value());
 
-  ppDelS = createSlider (0, "16n", 0, 0.1);
-  ppDelS.position (100, 150);
-  ppDelS.mouseMoved(() => {ppDelay.delayTime.value = ppDelS.value();})
+  ppDelayS = createSlider(0., 1., 0.5, 0.05);
+  ppDelayS.position(130, 200);
+  ppDelayS.mouseReleased(() => {
+    ppDelay.delayTime.value = ppDelayS.value();
+  })
 
-  cS = createSlider (0, 10, 0, 0.1);
-  cS.position (100, 250);
-  cS.mouseMoved(() => {cS.delayTime.value = cS.value();})
+  fDelayS = createSlider (0, 1, 0, 0.05);
+  fDelayS.position (130, 250);
+  fDelayS.mouseMoved(() => {fDelay.delayTime.value = fDelayS.value();})
 }
 
 function keyPressed(){
-  if (sel.selected() === 'Normal Synth'){
   let noteActv = notes[key];
-  synth2.triggerAttackRelease(noteActv, 0.8);
-  }
-  else if(sel.selected() === 'Duo Synth'){
-    let noteActv = notes[key];
-    synth1.triggerAttackRelease(noteActv, 0.8);
-  }
+  synth.triggerAttack(noteActv);
 }
 
-/*function keyReleased(){
+function keyReleased(){
   let noteActv = notes[key];
   synth.triggerRelease(noteActv, '+0.03');
-}*/
+}
 
 function draw() {
+  
   background('CornflowerBlue');
+  text('Press the corresponding keys to activate notes:', 200, 20);
+  text('A: C3, S: D3, D: E3, F: F3, G: G3, H: A3, J: B3, K: C4', 200, 40);
+  text('Use the sliders to alter the note sounds', 200, 100);
+  text('Pitch', 200, 140);
+  text('Ping Pong Delay', 200, 190);
+  text('Feedback Delay', 200, 240);
 }
