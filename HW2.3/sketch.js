@@ -1,3 +1,9 @@
+let image;
+
+function preload() {
+  image = loadImage('StarMario.png')
+}
+
 function setup() {
   createCanvas(400, 400);
   textAlign(CENTER);
@@ -5,7 +11,8 @@ function setup() {
 
 function draw() {
   if (mouseIsPressed === true){
-    background('pink');
+    background(image);
+    
   }
   else{
     background(220);
