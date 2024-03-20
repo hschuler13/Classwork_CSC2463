@@ -5,6 +5,7 @@ let synth = new Tone.PolySynth(Tone.AMSynth).connect(bc);
 
 function preload() {
   image = loadImage('sadTrombone.jpg');
+  textAlign(CENTER);
 }
 
 function setup() {
@@ -17,6 +18,7 @@ function draw() {
   }
   else{
     background(220);
+    text("Press mouse for sound effect", 200, 200);
   }
 }
 
