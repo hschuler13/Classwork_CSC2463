@@ -5,11 +5,11 @@ let synth = new Tone.PolySynth(Tone.AMSynth).connect(bc);
 
 function preload() {
   image = loadImage('sadTrombone.jpg');
-  textAlign(CENTER);
 }
 
 function setup() {
   createCanvas(400,400);
+  textAlign(CENTER);
 }
 
 function draw() {
