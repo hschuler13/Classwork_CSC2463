@@ -1,7 +1,7 @@
 let image;
 
 let bc = new Tone.BitCrusher(8).toDestination();
-let synth = new Tone.PolySynth().connect(bc);
+let synth = new Tone.PolySynth(Tone.AMSynth).connect(bc);
 
 function preload() {
   image = loadImage('sadTrombone.jpg');
