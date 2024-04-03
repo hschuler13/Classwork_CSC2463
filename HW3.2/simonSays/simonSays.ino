@@ -1,6 +1,9 @@
-int maxLvl = 50;
+const int maxLvl = 50;
 int lvl = 1;
 int flashSpeed = 1000;
+
+int sequence[maxLvl];
+int user_sequence[maxLvl];
 
 void setup() {
   pinMode(A0, INPUT);
@@ -20,7 +23,14 @@ void setup() {
 }
 
 void loop() {
+  if(lvl == 1){
+    create_sequence();
+  }
 
+  if(digitalRead(A4) == LOW || lvl != 1){
+    set_sequence();
+    get_sequence();
+  }
 
   void create_sequence() {
     randomSeed(millis());
@@ -52,6 +62,8 @@ void loop() {
 
       while(check == 0){
         if (digitalRead(A0) == LOW){
+          digitalWrite(5, HIGH);
+          
           check = 1;
           
           if (user_sequence[i] != sequence[i]){
