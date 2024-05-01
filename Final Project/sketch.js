@@ -53,8 +53,26 @@ function draw() {
   keyTyped();
   gravity();
   if(gameStateLevel == 0){
+    startScreen();
+  }
+  else if(gameStateLevel == 1){
     playState();
   }
+  if (mouseIsPressed == true){
+    gameStateLevel = 1;
+  }
+}
+
+function startScreen(){
+  background(220);
+
+  textFont(pixelFont);
+  fill(255);
+  strokeWeight(10);
+  stroke(0);
+  textSize(100);
+  text("Cold as Fire", width/2, height/2);
+  text("Click mouse to start", width/2, 300);
 }
 
 function playState(){
