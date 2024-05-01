@@ -31,7 +31,7 @@ function setup() {
   createCanvas(800, 500);
   rectMode(CENTER);
   textAlign(CENTER);
-  imageAlign(CENTER);
+  imageMode(CENTER);
   //grass = new Sprite();
 }
 
