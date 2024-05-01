@@ -5,6 +5,8 @@ let playerHeight = 70;
 
 let platformX = 200; //change these when you make your own custom platforms
 let platformY = 300;
+let platform2X = 300;
+let platform2Y = 400;
 let platformWidth = 200;
 let platformHeight = 40;
 
@@ -132,8 +134,8 @@ function playState(){
   //character
   stroke(0);
   fill(150,0,170);
-  //rect(playerX,playerY,playerWidth,playerHeight);
-  image(playerSprite,playerX,playerY,playerWidth,playerHeight);
+  rect(playerX,playerY,playerWidth,playerHeight);
+  //image(playerSprite,playerX,playerY,playerWidth,playerHeight);
 
   //collisions
   if(playerX >= platformX - platformWidth/2 && playerX <= platformX + platformWidth/2 && playerY + playerHeight >= platformY - platformHeight/2 && playerY + playerHeight >= platformY + platformHeight/2 && jump == false){
