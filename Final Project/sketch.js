@@ -13,7 +13,13 @@ let platformWidth = 200;
 let platformHeight = 40;
 
 let carrotX = 600;
-let carrotY = 410;
+let carrotY = 400;
+let carrot2X = 600;
+let carrot2Y = 250;
+let carrot3X = 500;
+let carrot3Y = 100;
+let carrot4X = 200;
+let carrot4Y = 250;
 let carrotWidth = 30;
 let carrotHeight = 30;
 
@@ -133,6 +139,27 @@ function playState(){
   if(playerX >= carrotX-carrotWidth/2 && playerX <= carrotX+carrotWidth/2 && playerY >= carrotY-carrotHeight/2 && playerY <= carrotY+carrotHeight/2){
     score++;
     carrotX = 900
+    //add carrot sound effect when you collect it
+  }
+
+  image(carrot,carrot2X,carrot2Y,carrotWidth,carrotHeight);
+  if(playerX >= carrot2X-carrotWidth/2 && playerX <= carrot2X+carrotWidth/2 && playerY >= carrot2Y-carrotHeight/2 && playerY <= carrot2Y+carrotHeight/2){
+    score++;
+    carrot2X = 900
+    //add carrot sound effect when you collect it
+  }
+
+  image(carrot,carrot3X,carrot3Y,carrotWidth,carrotHeight);
+  if(playerX >= carrot3X-carrotWidth/2 && playerX <= carrot3X+carrotWidth/2 && playerY >= carrot3Y-carrotHeight/2 && playerY <= carrot3Y+carrotHeight/2){
+    score++;
+    carrot3X = 900
+    //add carrot sound effect when you collect it
+  }
+
+  image(carrot,carrot4X,carrot4Y,carrotWidth,carrotHeight);
+  if(playerX >= carrot4X-carrotWidth/2 && playerX <= carrot4X+carrotWidth/2 && playerY >= carrot4Y-carrotHeight/2 && playerY <= carrot4Y+carrotHeight/2){
+    score++;
+    carrot3X = 900
     //add carrot sound effect when you collect it
   }
   //character
