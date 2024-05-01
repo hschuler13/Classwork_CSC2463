@@ -1,12 +1,17 @@
 let playerX = 400;
 let playerY = 375;
-let playerWidth = 50; //set these when you have drawn your sprites
-let playerHeight = 50;
+let playerWidth = 30; //set these when you have drawn your sprites
+let playerHeight = 70;
 
 let platformX = 200; //change these when you make your own custom platforms
 let platformY = 300;
 let platformWidth = 200;
 let platformHeight = 40;
+
+let carrotX = 600;
+let carrotY = 410;
+let carrotWidth = 30;
+let carrotHeight = 30;
 
 let gameStateLevel = 0;
 
@@ -21,7 +26,12 @@ let gravityJumpCount = 0;
 
 let playerSprite;
 let platformBlock;
+let carrot;
 //place background later
+
+let score = 0;
+let lives = 3;
+let timer = 0;
 
 //premade sounds
 let sounds = new Tone.Players({
@@ -37,6 +47,7 @@ let pixelFont;
 
 function preload(){
   playerSprite = loadImage('assets/player_1.png');
+  carrot = loadImage('assets/carrot.png');
   pixelFont = loadFont('assets/PixelifySans-Regular.ttf');
 }
 
@@ -96,12 +107,28 @@ function playState(){
   strokeWeight(15);
   rect(width/2,height/2,width,height);
 
+  //score
+  textFont(pixelFont);
+  fill(255);
+  strokeWeight(10);
+  stroke(0);
+  textSize(20);
+  text("Score: ", 100, 50);
+  text(score, 120, 50);
+
   //platform
   stroke(0);
   strokeWeight(5);
   fill(255,120,0);
   rect(platformX,platformY,platformWidth,platformHeight);
 
+  //carrot
+  image(carrot,carrotX,carrotY,carrotWidth,carrotHeight);
+  if(playerX >= carrotX-carrotWidth/2 && playerX <= carrotX+carrotWidth/2 && playerY >= carrotY-carrotHeight/2 && playerY <= carrotY+carrotHeight/2){
+    score++;
+    carrotX = 900
+    //add carrot sound effect when you collect it
+  }
   //character
   stroke(0);
   fill(150,0,170);
