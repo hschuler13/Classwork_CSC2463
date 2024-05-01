@@ -23,6 +23,17 @@ let playerSprite;
 let platformBlock;
 //place background later
 
+//premade sounds
+let sounds = new Tone.Players({
+  'playerJump': "assets/jump.mp3",
+  'playerShoot': "assets/shoot.mp3",
+  'playerWalk': "assets/walk.mp3",
+  'poof': "assets/poof.mp3"
+});
+sounds.toDestination();
+//sounds made by me :3
+
+
 function preload(){
   playerSprite = loadImage('assets/player_1.png');
 }
@@ -88,9 +99,11 @@ function playState(){
 function keyPressed(){
   if(kb.pressing('a')){
     playerX -= 5;
+    sounds.player('playerWalk').start;
   }
   if(kb.pressing('d')){
     playerX += 5;
+    sounds.player('playerWalk').start;
   }
   /*else if(keyDown('UP_ARROW')){
     playerY = playerY + 5;
@@ -103,6 +116,7 @@ function keyPressed(){
 function keyTyped(){
   if(kb.pressing('s')){
     gravityJump = true;
+    sounds.player('playerJump').start;
   }
   else {
     gravityJump = false;
