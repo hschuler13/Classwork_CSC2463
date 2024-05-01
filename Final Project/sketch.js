@@ -33,9 +33,11 @@ let sounds = new Tone.Players({
 sounds.toDestination();
 //sounds made by me :3
 
+let pixelFont;
 
 function preload(){
   playerSprite = loadImage('assets/player_1.png');
+  pixelFont = loadFont('assets/PixelifySans-Regular.ttf');
 }
 
 function setup() {
