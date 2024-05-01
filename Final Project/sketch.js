@@ -5,8 +5,10 @@ let playerHeight = 70;
 
 let platformX = 200; //change these when you make your own custom platforms
 let platformY = 300;
-let platform2X = 300;
-let platform2Y = 400;
+let platform2X = 600;
+let platform2Y = 300;
+let platform3X = 500;
+let platform3Y = 150;
 let platformWidth = 200;
 let platformHeight = 40;
 
@@ -123,6 +125,8 @@ function playState(){
   strokeWeight(5);
   fill(255,120,0);
   rect(platformX,platformY,platformWidth,platformHeight);
+  rect(platform2X,platform2Y,platformWidth,platformHeight);
+  rect(platform3X,platform3Y,platformWidth,platformHeight);
 
   //carrot
   image(carrot,carrotX,carrotY,carrotWidth,carrotHeight);
@@ -139,7 +143,19 @@ function playState(){
 
   //collisions
   if(playerX >= platformX - platformWidth/2 && playerX <= platformX + platformWidth/2 && playerY + playerHeight >= platformY - platformHeight/2 && playerY + playerHeight >= platformY + platformHeight/2 && jump == false){
-    playerY = playerY;
+    playerY = platformY - 55;
+    gravityPlayerVelocity = 0;
+    jumpCounter = 0;
+  }
+
+  if(playerX >= platform2X - platformWidth/2 && playerX <= platform2X + platformWidth/2 && playerY + playerHeight >= platform2Y - platformHeight/2 && playerY + playerHeight >= platform2Y + platformHeight/2 && jump == false){
+    playerY = platformY - 55;
+    gravityPlayerVelocity = 0;
+    jumpCounter = 0;
+  }
+
+  if(playerX >= platform3X - platformWidth/2 && playerX <= platform3X + platformWidth/2 && playerY + playerHeight >= platform3Y - platformHeight/2 && playerY + playerHeight >= platform3Y + platformHeight/2 && jump == false){
+    playerY = platformY - 55;
     gravityPlayerVelocity = 0;
     jumpCounter = 0;
   }
