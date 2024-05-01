@@ -1,7 +1,7 @@
 let playerX = 400;
 let playerY = 375;
-let playerWidth = 30; //set these when you have drawn your sprites
-let playerHeight = 70;
+let playerWidth = 50; //set these when you have drawn your sprites
+let playerHeight = 50;
 
 let platformX = 200; //change these when you make your own custom platforms
 let platformY = 300;
