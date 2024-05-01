@@ -19,10 +19,19 @@ let gravityGroundHeight = 375;
 let gravitySkyHeight = 50;
 let gravityJumpCount = 0;
 
+let playerSprite;
+let platformBlock;
+//place background later
+
+function preload(){
+  playerSprite = loadImage('assets/player_1.png');
+}
+
 function setup() {
   createCanvas(800, 500);
   rectMode(CENTER);
   textAlign(CENTER);
+  imageAlign(CENTER);
   //grass = new Sprite();
 }
 
@@ -65,7 +74,8 @@ function playState(){
   //character
   stroke(0);
   fill(150,0,170);
-  rect(playerX,playerY,playerWidth,playerHeight);
+  //rect(playerX,playerY,playerWidth,playerHeight);
+  image(playerSprite,playerX,playerY,playerWidth,playerHeight);
 
   //collisions
   if(playerX >= platformX - platformWidth/2 && playerX <= platformX + platformWidth/2 && playerY + playerHeight >= platformY - platformHeight/2 && playerY + playerHeight >= platformY + platformHeight/2 && jump == false){
