@@ -116,18 +116,18 @@ function playerMove(){
   }
 
   //adjust for your specific tiles
-  if(onGround.overlapping(grass) || onGround.overlapping(water)){
+  /*if(onGround.overlapping(grass) || onGround.overlapping(water)){
     player.drag = 20;
     player.friction = 10;
     jump = 15;
     player.h = 8;
-  }
-  else{
+  }*/
+  /*else{
     player.drag = 0;
     player.friction = 0;
     jump = 20;
     //player.h = 
-  }
+  }*/
 
   if(player.y > 400){
     player.speed = 0;
