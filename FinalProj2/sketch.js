@@ -50,8 +50,8 @@ function setup() {
 
   //copy and paste this for each group of tiles player walks on
   g1 = new walkable.Group();
-  g1.w = tileSize;
-  g1.h = tileSize;
+  g1.w = groundSize;
+  g1.h = groundSize;
   g1.tile = 'a';
   g1.collider = 'static';
   g1.image = topGroundPic;
