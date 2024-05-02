@@ -1,6 +1,7 @@
-let player, onGround;
+let player, onGround, tileMap;
 let gameState = 0;
 let playerPic, bgPic, topGroundPic, bottomGroundPic, carrotPic, iceBulletPic, fireBulletPic, fireEnemyPic, iceEnemyPic, fireObstaclePic, iceObstaclePic;
+let groundSize = 20;
 
 function preload(){
   player = new Sprite(30,30,400,250);
@@ -34,12 +35,38 @@ function setup() {
   world.gravity.y = 12;
   //player.scale = 0.5;
   player.debug = true;
+  //adjust hitbox if neccessary
+  //player.w = 
+  //player.h = 
 
   onGround = new Sprite(player.x, player.y + player.h/2, player.w/2, 1);
   onGround.visible = false;
   onGround.mass = 0.1;
   let joint = new GlueJoint(player,onGround);
   joint.visible = false;
+
+  walkable = new Group();
+  walkable.layer = 1;
+
+  //copy and paste this for each group of tiles player walks on
+  f1 = new walkable.Group();
+  f1.w = tileSize;
+  f1.h = tileSize;
+  f1.tile = 'a';
+  f1.collider = 'static';
+  f1.image = floorTile;
+
+  tileMap = new Tiles([
+    '..........',
+    '..........',
+    '..........',
+    'aaaaaaaaaa'
+  ],
+    tileSize,
+    tileSize,
+    tileSize-1,
+    tileSize-1
+);
 }
 
 function draw() {
