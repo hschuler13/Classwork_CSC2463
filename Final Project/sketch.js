@@ -169,19 +169,19 @@ function playState(){
   image(playerSprite,playerX,playerY,playerWidth,playerHeight);
 
   //collisions
-  if(playerX >= platformX - platformWidth/2 && playerX <= platformX + platformWidth/2 && playerY + playerHeight >= platformY - platformHeight/2 && playerY + playerHeight >= platformY + platformHeight/2 && jump == false){
+  if(playerX >= platformX - platformWidth/2 && playerX <= platformX + platformWidth/2 && playerY + playerHeight >= platformY - platformHeight/2 && playerY + playerHeight >= platformY + platformHeight/2 && gravityJump == false){
     playerY = platformY - 55;
     gravityPlayerVelocity = 0;
     jumpCounter = 0;
   }
 
-  if(playerX >= platform2X - platformWidth/2 && playerX <= platform2X + platformWidth/2 && playerY + playerHeight >= platform2Y - platformHeight/2 && playerY + playerHeight >= platform2Y + platformHeight/2 && jump == false){
+  if(playerX >= platform2X - platformWidth/2 && playerX <= platform2X + platformWidth/2 && playerY + playerHeight >= platform2Y - platformHeight/2 && playerY + playerHeight >= platform2Y + platformHeight/2 && gravityJump == false){
     playerY = platformY - 55;
     gravityPlayerVelocity = 0;
     jumpCounter = 0;
   }
 
-  if(playerX >= platform3X - platformWidth/2 && playerX <= platform3X + platformWidth/2 && playerY + playerHeight >= platform3Y - platformHeight/2 && playerY + playerHeight >= platform3Y + platformHeight/2 && jump == false){
+  if(playerX >= platform3X - platformWidth/2 && playerX <= platform3X + platformWidth/2 && playerY + playerHeight >= platform3Y - platformHeight/2 && playerY + playerHeight >= platform3Y + platformHeight/2 && gravityJump == false){
     playerY = platformY - 55;
     gravityPlayerVelocity = 0;
     jumpCounter = 0;
