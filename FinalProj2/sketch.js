@@ -8,7 +8,7 @@ let jump = 20;
 let score = 0;
 
 function preload(){
-  player = new Sprite(30,30,50,50);
+  player = new Sprite(0,97,50,50);
   playerPic = loadImage('assets/playerSpriteSheet.png');
   player.spriteSheet = playerPic;
   player.rotationLock = true;
@@ -70,6 +70,19 @@ function setup() {
   g1.collider = 'static';
   g1.image = topGroundPic;
 
+  //go to next stage tile
+  /*
+  g1 = new walkable.Group();
+  g1.w = groundSize;
+  g1.h = groundSize;
+  g1.tile = 'a';
+  g1.collider = 'static';
+  g1.image = topGroundPic;
+
+  player.overlaps(door, (p,d) => {
+    levelTwo();
+  });
+  */
   tileMap = new Tiles([
     '..........',
     '..........',
@@ -152,6 +165,24 @@ function playerMove(){
   }
 }
 
+function levelTwo(){
+  player.speed = 0;
+    player.x = 40;
+    player.y = 100;
+  tileMap.remove();
+  tileMap = new Tiles([
+    '..........',
+    '..........',
+    '..........',
+    'aaaaaaaaaa'
+  ],
+    groundSize,
+    groundSize,
+    groundSize-1,
+    groundSize-1
+);
+
+}
 /*function keyPressed(){
   
 }*/
