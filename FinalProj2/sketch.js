@@ -63,10 +63,10 @@ function setup() {
     '..........',
     'aaaaaaaaaa'
   ],
-    tileSize,
-    tileSize,
-    tileSize-1,
-    tileSize-1
+    groundSize,
+    groundSize,
+    groundSize-1,
+    groundSize-1
 );
 }
 
