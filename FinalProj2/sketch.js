@@ -5,7 +5,7 @@ let groundSize = 20;
 let jump = 20;
 
 function preload(){
-  player = new Sprite(30,30,400,250);
+  player = new Sprite(30,30,50,50);
   playerPic = loadImage('assets/playerSpriteSheet.png');
   player.spriteSheet = playerPic;
   player.rotationLock = true;
@@ -19,15 +19,23 @@ function preload(){
   /*
   bgPic = loadImage('assets/placeholder.png');*/
   topGroundPic = loadImage('assets/grassBlock.png');
-  /*bottomGroundPic = loadImage('assets/placeholder.png');
-  carrotPic = loadImage('assets/placeholder.png');
-  iceBulletPic = loadImage('assets/placeholder.png');
+  //bottomGroundPic = loadImage('assets/placeholder.png');
+  carrotPic = loadImage('assets/carrot.png');
+  /*iceBulletPic = loadImage('assets/placeholder.png');
   fireBulletPic = loadImage('assets/placeholder.png');
   fireEnemyPic = loadImage('assets/placeholder.png');
   iceEnemyPic = loadImage('assets/placeholder.png');
   fireObstaclePic = loadImage('assets/placeholder.png');
   iceObstaclePic = loadImage('assets/placeholder.png');
   */
+
+  carrot = new Group();
+  carrot.w = 30;
+  carrot.h = 30;
+  carrot.image = carrotPic;
+  carrot.tile = 'c';
+  carrot.collider = 'static';
+  carrot.rotationLock = true;
 }
 
 function setup() {
@@ -37,9 +45,11 @@ function setup() {
   //player.scale = 0.5;
   player.debug = true;
   //adjust hitbox if neccessary
-  //player.w = 
-  //player.h = 
-
+  player.w = 30;
+  player.h = 30;
+  player.overlaps(carrot,(p,c) =>{
+    c.remove()
+  });
   onGround = new Sprite(player.x, player.y + player.h/2, player.w/2, 1);
   onGround.visible = false;
   onGround.mass = 0.1;
@@ -60,7 +70,7 @@ function setup() {
   tileMap = new Tiles([
     '..........',
     '..........',
-    '..........',
+    '......cc..',
     'aaaaaaaaaa'
   ],
     groundSize,
@@ -78,6 +88,7 @@ function draw() {
     camera.y = player.y;
     player.visible = true;
     walkable.visible = true;
+    carrot.visible = true;
     playerMove();
   }
   /*else if(gameState == 2){
@@ -88,6 +99,7 @@ function draw() {
     text("Press space to start", 400, 250);
     player.visible = false;
     walkable.visible = false;
+    carrot.visible = false;
     if(kb.presses('space')){
       gameState = 1;
     }
