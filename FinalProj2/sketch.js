@@ -3,6 +3,9 @@ let gameState = 0;
 let playerPic, bgPic, topGroundPic, bottomGroundPic, carrotPic, iceBulletPic, fireBulletPic, fireEnemyPic, iceEnemyPic, fireObstaclePic, iceObstaclePic;
 let groundSize = 20;
 let jump = 20;
+//add bg music using tonejs
+//also use sound effects
+let score = 0;
 
 function preload(){
   player = new Sprite(30,30,50,50);
@@ -83,6 +86,7 @@ function setup() {
 function draw() {
   if(gameState == 1){
     world.step();
+    text('carrots:' + score, 10, 25);
     background(135, 206, 235);
     camera.x = player.x + 52;
     camera.y = player.y;
