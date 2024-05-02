@@ -26,11 +26,10 @@ function preload(){
   carrotPic = loadImage('assets/carrot.png');
   /*iceBulletPic = loadImage('assets/placeholder.png');
   fireBulletPic = loadImage('assets/placeholder.png');
-  fireEnemyPic = loadImage('assets/placeholder.png');
-  iceEnemyPic = loadImage('assets/placeholder.png');
-  fireObstaclePic = loadImage('assets/placeholder.png');
-  iceObstaclePic = loadImage('assets/placeholder.png');
-  */
+  fireEnemyPic = loadImage('assets/placeholder.png');*/
+  iceEnemyPic = loadImage('assets/sprite_sheet(2).png');
+  //fireObstaclePic = loadImage('assets/placeholder.png');*/
+  //iceObstaclePic = loadImage('assets/sprite_sheet(2).png');
 
   carrot = new Group();
   carrot.w = 30;
@@ -83,10 +82,34 @@ function setup() {
     levelTwo();
   });
   */
+
+  enemy = new Group();
+  enemy.w = 51;
+  enemy.h = 50;
+  enemy.tile = 'x';
+  enemy.rotationLock = true;
+  enemy.friction = 0;
+  enemy.drag = 0;
+  enemy.vel.x = 0.2;
+  enemy.spriteSheet = iceEnemyPic;
+  enemy.addAnis({
+    run:{row:0, frames: 7}
+  });
+
+  onGround.overlaps(enemy,(s,e) =>{
+    if(player.vel.y > 0){
+      e.remove();
+    }
+  });
+  player.overlaps(enemy,(p,e) =>{
+    player.speed = 0;
+    player.x = 30;
+    player.y = 30;
+  })
   tileMap = new Tiles([
     '..........',
     '..........',
-    '......cc..',
+    '......c..x',
     'aaaaaaaaaa'
   ],
     groundSize,
@@ -182,6 +205,20 @@ function levelTwo(){
     groundSize-1
 );
 
+}
+
+function enemyMovement(){
+  for(e of enemy){
+    if(e.overlaps(f1) || e.overlaps(f3) || e.overlaps(carrot)){
+      e.vel.x = -0.2;
+    }
+    if(e.vel.x < 0){
+      e.mirror.x = false;
+    }
+    else{
+      e.mirror.x = true;
+    }
+  }
 }
 /*function keyPressed(){
   
