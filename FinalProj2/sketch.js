@@ -5,7 +5,7 @@ let groundSize = 20;
 
 function preload(){
   player = new Sprite(30,30,400,250);
-  playerPic = loadImage('bunny.png');
+  playerPic = loadImage('assets/playerSpriteSheet.png');
   player.spriteSheet = playerPic;
   player.rotationLock = true;
   player.friction = 0;
@@ -16,9 +16,9 @@ function preload(){
   player.ani = 'stand';
   //load images here with loadImage();
   /*
-  bgPic = loadImage('assets/placeholder.png');
-  topGroundPic = loadImage('assets/placeholder.png');
-  bottomGroundPic = loadImage('assets/placeholder.png');
+  bgPic = loadImage('assets/placeholder.png');*/
+  topGroundPic = loadImage('assets/grassBlock.png');
+  /*bottomGroundPic = loadImage('assets/placeholder.png');
   carrotPic = loadImage('assets/placeholder.png');
   iceBulletPic = loadImage('assets/placeholder.png');
   fireBulletPic = loadImage('assets/placeholder.png');
@@ -49,12 +49,12 @@ function setup() {
   walkable.layer = 1;
 
   //copy and paste this for each group of tiles player walks on
-  f1 = new walkable.Group();
-  f1.w = tileSize;
-  f1.h = tileSize;
-  f1.tile = 'a';
-  f1.collider = 'static';
-  f1.image = floorTile;
+  g1 = new walkable.Group();
+  g1.w = tileSize;
+  g1.h = tileSize;
+  g1.tile = 'a';
+  g1.collider = 'static';
+  g1.image = topGroundPic;
 
   tileMap = new Tiles([
     '..........',
@@ -70,7 +70,7 @@ function setup() {
 }
 
 function draw() {
-  background(220);
+  background(135, 206, 235);
 }
 
 /*function keyPressed(){
