@@ -124,7 +124,7 @@ function setup() {
     '...........................aa.',
     '...aaaaa.aaa.aaa.aaa.aaaaa....',
     '.a..c.........................',
-    '..baaab.............aaaaa.....',
+    '..baaab.............aaaa......',
     '........aaa.aaaaaaa.......aaa.',
     '.........x....................',
     'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
