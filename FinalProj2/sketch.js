@@ -127,19 +127,19 @@ function setup() {
     player.y = 30;
   })
   tileMap = new Tiles([
-    '.aaaaaaa......................',
-    '.........aaaaaaaa.............',
+    '..c.aaaa......................',
+    '.aaa.....aaaaaaaa.............',
     '..................aaaaaaa.....',
     '...........................aa.',
     '...aaaaa.aaa.aaa.aaa.aaaaa....',
     '.a..x.........................',
     '..baaab.............aaaaa.....',
     '........aaa.aaaaaaa.......aaa.',
-    '.........c....................',
+    '..............................',
     'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
   ],
-    100,
-    100,
+    groundSize,
+    groundSize,
     groundSize-1,
     groundSize-1
 );
