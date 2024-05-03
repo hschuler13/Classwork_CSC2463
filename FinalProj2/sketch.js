@@ -99,8 +99,8 @@ function setup() {
   */
 
   enemy = new Group();
-  enemy.w = 80;
-  enemy.h = 80;
+  enemy.w = 40;
+  enemy.h = 40;
   enemy.scale = 0.5
   enemy.tile = 'x';
   enemy.rotationLock = true;
