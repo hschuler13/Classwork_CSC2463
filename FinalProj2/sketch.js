@@ -70,6 +70,15 @@ function setup() {
   g1.collider = 'static';
   g1.image = topGroundPic;
 
+  g2 = new walkable.Group();
+  g2.w = groundSize;
+  g2.h = groundSize;
+  g2.tile = 'b';
+  g2.collider = 'static';
+  g2.image = topGroundPic;
+
+
+
   //go to next stage tile
   /*
   g1 = new walkable.Group();
@@ -114,10 +123,10 @@ function setup() {
     '..............................',
     '..............................',
     '..............................',
-    '..............................',
-    '..............................',
-    '..............................',
-    '......c..x....................',
+    '....c.........................',
+    '..baaab.............aaaaa.....',
+    '........aaa.aaaaaaa.......aaa.',
+    '.........x....................',
     'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
   ],
     groundSize,
@@ -223,7 +232,7 @@ function levelTwo(){
 
 function enemyMovement(){
   for(e of enemy){
-    if(e.overlaps(f1) || e.overlaps(f3) || e.overlaps(carrot)){
+    if(e.overlaps(g2) || e.overlaps(carrot)){
       e.vel.x = -0.2;
     }
     if(e.vel.x < 0){
