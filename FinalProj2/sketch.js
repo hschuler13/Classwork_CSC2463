@@ -150,7 +150,7 @@ function draw() {
     world.step();
     text('carrots:' + score, 10, 25);
     background(135, 206, 235);
-    camera.x = player.x + 52;
+    camera.x = player.x;
     camera.y = player.y;
     player.visible = true;
     walkable.visible = true;
