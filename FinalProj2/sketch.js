@@ -8,8 +8,8 @@ let jump = 20;
 let score = 0;
 
 function preload(){
-  player = new Sprite(30,30,50,50);
-  playerPic = loadImage('assets/playerSpriteSheet.png');
+  player = new Sprite(30,30,80,80);
+  playerPic = loadImage('assets/playerSpritesheetFinal.png');
   player.spriteSheet = playerPic;
   player.rotationLock = true;
   player.friction = 0;
