@@ -2,7 +2,7 @@ let player, onGround, tileMap;
 let gameState = 0;
 let playerPic, bgPic, topGroundPic, bottomGroundPic, carrotPic, iceBulletPic, fireBulletPic, fireEnemyPic, iceEnemyPic, fireObstaclePic, iceObstaclePic;
 let groundSize = 34;
-let jump = 20;
+let jump = 40;
 //add bg music using tonejs
 //also use sound effects
 let score = 0;
@@ -123,7 +123,7 @@ function setup() {
     '..................aaaaaaaa....',
     '...........................aa.',
     '...aaaaa.aaa.aaa.aaa.aaaaa....',
-    'aa..c.........................',
+    '.a..c.........................',
     '..baaab.............aaaaa.....',
     '........aaa.aaaaaaa.......aaa.',
     '.........x....................',
@@ -243,6 +243,7 @@ function enemyMovement(){
     }
   }
 }
-/*function keyPressed(){
+
+function tileSet(x){
   
-}*/
+}
