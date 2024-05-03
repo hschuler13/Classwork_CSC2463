@@ -120,11 +120,11 @@ function setup() {
   tileMap = new Tiles([
     '.aaaaaaa......................',
     '.........aaaaaaaa.............',
-    '..................aaaaaaaa....',
+    '..................aaaaaaa.....',
     '...........................aa.',
     '...aaaaa.aaa.aaa.aaa.aaaaa....',
     '.a..c.........................',
-    '..baaab.............aaaa......',
+    '..baaab.............aaaaa.....',
     '........aaa.aaaaaaa.......aaa.',
     '.........x....................',
     'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
