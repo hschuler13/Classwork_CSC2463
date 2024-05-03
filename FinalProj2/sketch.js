@@ -7,6 +7,10 @@ let jump = 40;
 //also use sound effects
 let score = 0;
 
+let startSeq;
+let gameSeq;
+let gameOverSeq;
+
 function preload(){
   player = new Sprite(30,30,80,80);
   playerPic = loadImage('assets/PlayerSpritesheetFinal.png');
@@ -134,8 +138,8 @@ function setup() {
     '.........c....................',
     'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
   ],
-    groundSize,
-    groundSize,
+    100,
+    100,
     groundSize-1,
     groundSize-1
 );
@@ -252,3 +256,59 @@ function enemyMovement(){
 function tileSet(x){
   
 }
+
+/*
+tileMap1 = new Tiles([
+    '.aaaaaaa......................',
+    '.........aaaaaaaa.............',
+    '..................aaaaaaa.....',
+    '...........................aa.',
+    '...aaaaa.aaa.aaa.aaa.aaaaa....',
+    '.a..x.........................',
+    '..baaab.............aaaaa.....',
+    '........aaa.aaaaaaa.......aaa.',
+    '.........c....................',
+    'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
+  ],
+    groundSize,
+    groundSize,
+    groundSize-1,
+    groundSize-1
+);
+
+tileMap2 = new Tiles([
+    '.aaaaaaa......................',
+    '.........aaaaaaaa.............',
+    '..................aaaaaaa.....',
+    '...........................aa.',
+    '...aaaaa.aaa.aaa.aaa.aaaaa....',
+    '.a..x.........................',
+    '..baaab.............aaaaa.....',
+    '........aaa.aaaaaaa.......aaa.',
+    '.........c....................',
+    'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
+  ],
+    groundSize,
+    groundSize,
+    groundSize-1,
+    groundSize-1
+);
+
+tileMap = new Tiles([
+    '.aaaaaaa......................',
+    '.........aaaaaaaa.............',
+    '..................aaaaaaa.....',
+    '...........................aa.',
+    '...aaaaa.aaa.aaa.aaa.aaaaa....',
+    '.a..x.........................',
+    '..baaab.............aaaaa.....',
+    '........aaa.aaaaaaa.......aaa.',
+    '.........c....................',
+    'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
+  ],
+    groundSize,
+    groundSize,
+    groundSize-1,
+    groundSize-1
+);
+*/
