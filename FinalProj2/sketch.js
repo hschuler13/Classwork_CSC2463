@@ -25,9 +25,9 @@ function preload(){
   //bottomGroundPic = loadImage('assets/placeholder.png');
   carrotPic = loadImage('assets/carrot.png');
   /*iceBulletPic = loadImage('assets/placeholder.png');
-  fireBulletPic = loadImage('assets/placeholder.png');
-  fireEnemyPic = loadImage('assets/placeholder.png');*/
-  iceEnemyPic = loadImage('assets/sprite_sheet(2).png');
+  fireBulletPic = loadImage('assets/placeholder.png');*/
+  fireEnemyPic = loadImage('assets/FireEnemySpritesheetFinal.png');
+  iceEnemyPic = loadImage('assets/IceEnemySpritesheetFinal.png');
   //fireObstaclePic = loadImage('assets/placeholder.png');*/
   //iceObstaclePic = loadImage('assets/sprite_sheet(2).png');
 
@@ -47,8 +47,9 @@ function setup() {
   //player.scale = 0.5;
   player.debug = true;
   //adjust hitbox if neccessary
-  player.w = 30;
-  player.h = 30;
+  player.w = 40;
+  player.h = 40;
+  player.scale 
   player.overlaps(carrot,(p,c) =>{
     c.remove()
   });
@@ -84,8 +85,9 @@ function setup() {
   */
 
   enemy = new Group();
-  enemy.w = 51;
-  enemy.h = 50;
+  enemy.w = 90;
+  enemy.h = 90;
+  enemy.scale = 0.5
   enemy.tile = 'x';
   enemy.rotationLock = true;
   enemy.friction = 0;
