@@ -49,7 +49,7 @@ function setup() {
   //adjust hitbox if neccessary
   player.w = 40;
   player.h = 40;
-  player.scale 
+  player.scale = 0.5;
   player.overlaps(carrot,(p,c) =>{
     c.remove()
   });
