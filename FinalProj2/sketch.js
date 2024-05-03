@@ -9,7 +9,7 @@ let score = 0;
 
 function preload(){
   player = new Sprite(30,30,80,80);
-  playerPic = loadImage('assets/playerSpritesheetFinal.png');
+  playerPic = loadImage('assets/PlayerSpritesheetFinal.png');
   player.spriteSheet = playerPic;
   player.rotationLock = true;
   player.friction = 0;
