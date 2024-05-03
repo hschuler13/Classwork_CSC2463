@@ -29,7 +29,7 @@ function preload(){
   fireEnemyPic = loadImage('assets/FireEnemySpritesheetFinal.png');
   iceEnemyPic = loadImage('assets/IceEnemySpritesheetFinal.png');
   //fireObstaclePic = loadImage('assets/placeholder.png');*/
-  //iceObstaclePic = loadImage('assets/sprite_sheet(2).png');
+  iceObstaclePic = loadImage('assets/sprite_sheet(2).png');
 
   carrot = new Group();
   carrot.w = 30;
@@ -49,7 +49,7 @@ function setup() {
   //adjust hitbox if neccessary
   player.w = 40;
   player.h = 40;
-  player.scale = 0.5;
+  player.scale = 0.4;
   player.overlaps(carrot,(p,c) =>{
     c.remove()
   });
@@ -77,7 +77,12 @@ function setup() {
   g2.collider = 'static';
   g2.image = topGroundPic;
 
-
+  w = new walkable.Group();
+  w.w = groundSize;
+  w.h = groundSizel
+  w.tile = 'w';
+  w.collider = 'static';
+  w.image = iceObstaclePic;
 
   //go to next stage tile
   /*
