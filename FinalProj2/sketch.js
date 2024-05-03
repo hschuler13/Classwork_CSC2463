@@ -33,7 +33,7 @@ function preload(){
   fireEnemyPic = loadImage('assets/FireEnemySpritesheetFinal.png');
   iceEnemyPic = loadImage('assets/IceEnemySpritesheetFinal.png');
   //fireObstaclePic = loadImage('assets/placeholder.png');*/
-  iceObstaclePic = loadImage('assets/sprite_sheet(2).png');
+  //iceObstaclePic = loadImage('assets/sprite_sheet(2).png');
 
   carrot = new Group();
   carrot.w = 30;
@@ -81,12 +81,12 @@ function setup() {
   g2.collider = 'static';
   g2.image = topGroundPic;
 
-  w = new walkable.Group();
+  /*w = new walkable.Group();
   w.w = groundSize;
   w.h = groundSizel
   w.tile = 'w';
   w.collider = 'static';
-  w.image = iceObstaclePic;
+  w.image = iceObstaclePic;*/
 
   //go to next stage tile
   /*
