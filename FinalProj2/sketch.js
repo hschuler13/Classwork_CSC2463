@@ -1,6 +1,7 @@
 let player, onGround, tileMap;
+let fireEnemy, iceEnemy;
 let gameState = 0;
-let playerPic, bgPic, topGroundPic, bottomGroundPic, carrotPic, iceBulletPic, fireBulletPic, fireEnemyPic, iceEnemyPic, fireObstaclePic, iceObstaclePic;
+let playerPic, bgPic, topGroundPic, bottomGroundPic, carrotPic, iceBulletPic, fireBulletPic, fireEnemyPic, iceEnemyPic, fireObstaclePic, fireObstacleNullifiedPic, iceObstaclePic, iceObstacleNullifiedPic, iceTriggerPic, fireTriggerPic, activatedTriggerPic;
 let groundSize = 34;
 let jump = 40;
 //let tileRepresentationArray = ['a','b','c','d'];
@@ -55,11 +56,10 @@ function setup() {
   createCanvas(800, 500);
   world.autoStep = false;
   world.gravity.y = 12;
-  //player.scale = 0.5;
   player.debug = true;
   //adjust hitbox if neccessary
-  player.w = 40;
-  player.h = 40;
+  player.w = 90;
+  player.h = 90;
   player.scale = 0.2;
   /*player.overlaps(carrot,(p,c) =>{
     c.remove()
@@ -81,20 +81,15 @@ function setup() {
   tileSet(spike,'s',fireObstaclePic);
   tileSet(ash,'h',fireObstacleNullifiedPic);
 
-  
-  /*g1 = new walkable.Group();
-  g1.w = groundSize;
-  g1.h = groundSize;
-  g1.tile = 'a';
-  g1.collider = 'static';
-  g1.image = topGroundPic;*/
+  enemy(fireEnemy,'f',fireEnemyPic);
+  enemy(iceEnemy,'i',iceEnemyPic);
 
   player.overlaps(carrot, (p,c) => {
     levelTwo();
   });
 
 
-  enemy = new Group();
+  /*enemy = new Group();
   enemy.w = 40;
   enemy.h = 40;
   enemy.scale = 0.5
@@ -106,7 +101,7 @@ function setup() {
   enemy.spriteSheet = iceEnemyPic;
   enemy.addAnis({
     run:{row:0, frames: 7}
-  });
+  });*/
 
   onGround.overlaps(enemy,(s,e) =>{
     if(player.vel.y > 0){
@@ -243,6 +238,22 @@ function enemyMovement(){
       e.mirror.x = true;
     }
   }
+}
+
+function enemy(e,tileRepresentation,ePic){
+  e = new Group();
+  e.w = 40;
+  e.h = 40;
+  e.scale = 0.5
+  e.tile = tileRepresentation;
+  e.rotationLock = true;
+  e.friction = 0;
+  e.drag = 0;
+  e.vel.x = 0.2;
+  e.spriteSheet = ePic;
+  e.addAnis({
+    run:{row:0, frames: 7}
+  });
 }
 
 function tileSet(x,tileRepresentation,tilePic){
