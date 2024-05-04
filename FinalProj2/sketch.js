@@ -3,6 +3,7 @@ let gameState = 0;
 let playerPic, bgPic, topGroundPic, bottomGroundPic, carrotPic, iceBulletPic, fireBulletPic, fireEnemyPic, iceEnemyPic, fireObstaclePic, iceObstaclePic;
 let groundSize = 34;
 let jump = 40;
+//let tileRepresentationArray = ['a','b','c','d'];
 //add bg music using tonejs
 //also use sound effects
 let score = 0;
@@ -12,6 +13,7 @@ let gameSeq;
 let gameOverSeq;
 
 function preload(){
+  //set up sprite player controls through game
   player = new Sprite(30,30,80,80);
   playerPic = loadImage('assets/PlayerSpritesheetFinal.png');
   player.spriteSheet = playerPic;
@@ -22,18 +24,22 @@ function preload(){
     run:{row:0, frames:7}
   })
   player.ani = 'stand';
-  //load images here with loadImage();
-  /*
-  bgPic = loadImage('assets/placeholder.png');*/
+  
+  //load images
   topGroundPic = loadImage('assets/grassBlock.png');
-  //bottomGroundPic = loadImage('assets/placeholder.png');
+  bottomGroundPic = loadImage('assets/dirtBlock.png');
   carrotPic = loadImage('assets/carrot.png');
-  /*iceBulletPic = loadImage('assets/placeholder.png');
-  fireBulletPic = loadImage('assets/placeholder.png');*/
+  iceBulletPic = loadImage('assets/iceBullet.png');
+  fireBulletPic = loadImage('assets/fireBullet.png');
   fireEnemyPic = loadImage('assets/FireEnemySpritesheetFinal.png');
   iceEnemyPic = loadImage('assets/IceEnemySpritesheetFinal.png');
-  //fireObstaclePic = loadImage('assets/placeholder.png');*/
-  //iceObstaclePic = loadImage('assets/sprite_sheet(2).png');
+  fireObstaclePic = loadImage('assets/woodenSpikeBlock.png');
+  fireObstacleNullifiedPic = loadImage('assets/ashBlock.png');
+  iceObstaclePic = loadImage('assets/waterBlock.png');
+  iceObstacleNullifiedPic = loadImage('assets/iceBlock.png');
+  fireTriggerPic = loadImage('assets/fireTrigger.png');
+  iceTriggerPic = loadImage('assets/iceTrigger.png');
+  activatedTriggerPic = loadImage('assets/activatedTrigger.png');
 
   carrot = new Group();
   carrot.w = 30;
@@ -66,13 +72,14 @@ function setup() {
   walkable = new Group();
   walkable.layer = 1;
 
+  tileSet(g1,'a',topGroundPic);
   //copy and paste this for each group of tiles player walks on
-  g1 = new walkable.Group();
+  /*g1 = new walkable.Group();
   g1.w = groundSize;
   g1.h = groundSize;
   g1.tile = 'a';
   g1.collider = 'static';
-  g1.image = topGroundPic;
+  g1.image = topGroundPic;*/
 
   g2 = new walkable.Group();
   g2.w = groundSize;
@@ -253,8 +260,13 @@ function enemyMovement(){
   }
 }
 
-function tileSet(x){
-  
+function tileSet(x,tileRepresentation,tilePic){
+  x = new walkable.Group();
+  x.w = groundSize;
+  x.h = groundSize;
+  x.tile = tileRepresentation;
+  x.collider = 'static';
+  x.image = tilePic;
 }
 
 /*
