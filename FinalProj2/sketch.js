@@ -61,9 +61,9 @@ function setup() {
   player.w = 40;
   player.h = 40;
   player.scale = 0.2;
-  player.overlaps(carrot,(p,c) =>{
+  /*player.overlaps(carrot,(p,c) =>{
     c.remove()
-  });
+  });*/
   onGround = new Sprite(player.x, player.y + player.h/2, player.w/2, 1);
   onGround.visible = false;
   onGround.mass = 0.1;
