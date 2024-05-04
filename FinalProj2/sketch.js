@@ -42,13 +42,13 @@ function preload(){
   iceTriggerPic = loadImage('assets/iceTrigger.png');
   activatedTriggerPic = loadImage('assets/activatedTrigger.png');
 
-  /*carrot = new Group();
+  carrot = new Group();
   carrot.w = 30;
   carrot.h = 30;
   carrot.image = carrotPic;
   carrot.tile = 'c';
   carrot.collider = 'static';
-  carrot.rotationLock = true;*/
+  carrot.rotationLock = true;
 }
 
 function setup() {
@@ -75,7 +75,6 @@ function setup() {
 
   tileSet(ground1,'a',topGroundPic);
   tileSet(ground2,'b',topGroundPic);
-  tileSet(carrot,'c',carrotPic);
   tileSet(dirt,'d',bottomGroundPic);
   tileSet(water,'w',iceObstaclePic);
   tileSet(ice,'e',iceObstacleNullifiedPic);
