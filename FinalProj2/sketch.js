@@ -7,7 +7,7 @@ let jump = 40;
 //add bg music using tonejs
 //also use sound effects
 let score = 0;
-let ground1, ground2, dirt, water, ice, spike, ash;
+let ground1, ground2, carrot, dirt, water, ice, spike, ash;
 
 let startSeq;
 let gameSeq;
