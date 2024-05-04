@@ -7,7 +7,7 @@ let jump = 40;
 //add bg music using tonejs
 //also use sound effects
 let score = 0;
-let g1;
+let ground1, ground2, dirt, water, ice, spike, ash;
 
 let startSeq;
 let gameSeq;
@@ -42,13 +42,13 @@ function preload(){
   iceTriggerPic = loadImage('assets/iceTrigger.png');
   activatedTriggerPic = loadImage('assets/activatedTrigger.png');
 
-  carrot = new Group();
+  /*carrot = new Group();
   carrot.w = 30;
   carrot.h = 30;
   carrot.image = carrotPic;
   carrot.tile = 'c';
   carrot.collider = 'static';
-  carrot.rotationLock = true;
+  carrot.rotationLock = true;*/
 }
 
 function setup() {
@@ -73,8 +73,16 @@ function setup() {
   walkable = new Group();
   walkable.layer = 1;
 
-  tileSet(g1,'a',topGroundPic);
-  //copy and paste this for each group of tiles player walks on
+  tileSet(ground1,'a',topGroundPic);
+  tileSet(ground2,'b',topGroundPic);
+  tileSet(carrot,'c',carrotPic);
+  tileSet(dirt,'d',bottomGroundPic);
+  tileSet(water,'w',iceObstaclePic);
+  tileSet(ice,'e',iceObstacleNullifiedPic);
+  tileSet(spike,'s',fireObstaclePic);
+  tileSet(ash,'h',fireObstacleNullifiedPic);
+
+  
   /*g1 = new walkable.Group();
   g1.w = groundSize;
   g1.h = groundSize;
@@ -82,33 +90,10 @@ function setup() {
   g1.collider = 'static';
   g1.image = topGroundPic;*/
 
-  g2 = new walkable.Group();
-  g2.w = groundSize;
-  g2.h = groundSize;
-  g2.tile = 'b';
-  g2.collider = 'static';
-  g2.image = topGroundPic;
-
-  /*w = new walkable.Group();
-  w.w = groundSize;
-  w.h = groundSizel
-  w.tile = 'w';
-  w.collider = 'static';
-  w.image = iceObstaclePic;*/
-
-  //go to next stage tile
-  /*
-  g1 = new walkable.Group();
-  g1.w = groundSize;
-  g1.h = groundSize;
-  g1.tile = 'a';
-  g1.collider = 'static';
-  g1.image = topGroundPic;
-
-  player.overlaps(door, (p,d) => {
+  player.overlaps(carrot, (p,c) => {
     levelTwo();
   });
-  */
+
 
   enemy = new Group();
   enemy.w = 40;
@@ -249,7 +234,7 @@ function levelTwo(){
 
 function enemyMovement(){
   for(e of enemy){
-    if(e.overlaps(g2) || e.overlaps(carrot)){
+    if(e.overlaps(g2)){
       e.vel.x = -0.2;
     }
     if(e.vel.x < 0){
@@ -269,59 +254,3 @@ function tileSet(x,tileRepresentation,tilePic){
   x.collider = 'static';
   x.image = tilePic;
 }
-
-/*
-tileMap1 = new Tiles([
-    '.aaaaaaa......................',
-    '.........aaaaaaaa.............',
-    '..................aaaaaaa.....',
-    '...........................aa.',
-    '...aaaaa.aaa.aaa.aaa.aaaaa....',
-    '.a..x.........................',
-    '..baaab.............aaaaa.....',
-    '........aaa.aaaaaaa.......aaa.',
-    '.........c....................',
-    'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
-  ],
-    groundSize,
-    groundSize,
-    groundSize-1,
-    groundSize-1
-);
-
-tileMap2 = new Tiles([
-    '.aaaaaaa......................',
-    '.........aaaaaaaa.............',
-    '..................aaaaaaa.....',
-    '...........................aa.',
-    '...aaaaa.aaa.aaa.aaa.aaaaa....',
-    '.a..x.........................',
-    '..baaab.............aaaaa.....',
-    '........aaa.aaaaaaa.......aaa.',
-    '.........c....................',
-    'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
-  ],
-    groundSize,
-    groundSize,
-    groundSize-1,
-    groundSize-1
-);
-
-tileMap = new Tiles([
-    '.aaaaaaa......................',
-    '.........aaaaaaaa.............',
-    '..................aaaaaaa.....',
-    '...........................aa.',
-    '...aaaaa.aaa.aaa.aaa.aaaaa....',
-    '.a..x.........................',
-    '..baaab.............aaaaa.....',
-    '........aaa.aaaaaaa.......aaa.',
-    '.........c....................',
-    'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
-  ],
-    groundSize,
-    groundSize,
-    groundSize-1,
-    groundSize-1
-);
-*/
