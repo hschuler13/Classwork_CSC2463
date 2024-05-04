@@ -7,6 +7,7 @@ let jump = 40;
 //add bg music using tonejs
 //also use sound effects
 let score = 0;
+let g1;
 
 let startSeq;
 let gameSeq;
