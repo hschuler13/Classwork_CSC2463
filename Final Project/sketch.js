@@ -314,7 +314,7 @@ function draw() {
     if (values.length > 2) {
       joyX = values[0];
       sw = values[1];
-      temp = values[2]
+      temp = values[2];
       
       //temp = values[]
     }
