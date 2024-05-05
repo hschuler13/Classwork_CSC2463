@@ -205,6 +205,7 @@ function setup() {
   iceBullet.remove();*/
 
   //player collision setup
+  levelSelect();
   player.overlaps(carrot, (p,c) => {
     level++;
     levelSelect();
