@@ -216,7 +216,7 @@ function setup() {
   });
 
   //ground collision setup
-  onGround.overlaps(enemy,(s,e) =>{
+  onGround.overlaps(fireEnemy,(s,e) =>{
     if(player.vel.y > 0){
       e.remove();
     }
