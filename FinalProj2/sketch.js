@@ -139,61 +139,9 @@ function setup() {
       groundSize-1
     );
     
-    /*tileMap2 = new Tiles([
-    'aaa...............................................',
-    '...aaaaa..........................................',
-    '........aaaaa..f.f..................f.............',
-    '..............baaaaaaaaaaaaaaaaaaaaaab............',
-    '.............................................sssss',
-    '............i.....i.....i..............aaa..addddd',
-    '.........baaaaabaaaaabaaaaabaaaaaaaaaa.....a......',
-    '.........ddddddddddddddddddddddddddddd......a..i..',
-    '....aaa......................................baaab',
-    '..................................................',
-    '!........aaa......................................',
-    'sssss.aaa.........................................',
-    'ddddda.......ssssssssssssssssssssssssssss.........',
-    '......a......dddddddddddddddddddddddddddd.........',
-    '..f..a...................................ss.......',
-    'baaab....................................ddss.....',
-    '...........................................ddss...',
-    '..............f.................i............ddssc',
-    'aaaaaaaaaaaaabaaaaaaaaaabaaaabaaaaaaaaaaabaaadddda',
-    'dddddddddddddddddddddddddddddddddddddddddddddddddd'
-    ],
-      groundSize,
-      groundSize,
-      groundSize-1,
-      groundSize-1
-    );
+    /*tileMap2 = 
     
-    tileMap3 = new Tiles([
-    'aaa.............i.................................',
-    '.....aaaaaaaa..baaaaaaaaaaaaab....................',
-    'i......i........................aaa...............',
-    'bbwwwwwbb.........................................',
-    '...............................f................f.',
-    '........aa.aa.aa.aa.aa.aa.aa...bbsssssssssssssssbb',
-    'aaa..i........................f...................',
-    '.....bbwwwwwwwwwwwwwwwwwwwwwwwbb..................',
-    '.......................................i.........!',
-    '..aa.....aaaaaaaaa..................baaaaaaaaaaaba',
-    'f....aaa............aasaa...aasaa.................',
-    'aaaaa............................................?',
-    'ddddd.......................................baaaab',
-    'dddddd......aaa.a...a...a...a...a...a.aaa...dddddd',
-    'dddddd......ddd...a...a...a...a...a...ddd...dddddd',
-    'ddddddd.....dddsssssssssssssssssssssssddd...dddddd',
-    'ddddddd.....ddddddddddddddddddddddddddddd...dddddd',
-    'ddddddd........f...........f.....................c',
-    'dddddddaaaaabaaaaabaaaaabaaaaabaaaaaaaaaawwwwwwwww',
-    'dddddddddddddddddddddddddddddddddddddddddddddddddd'
-    ],
-      groundSize,
-      groundSize,
-      groundSize-1,
-      groundSize-1
-    );*/
+    */
 
   //bullet setup
   /*fireBullets = new Group();
@@ -303,6 +251,14 @@ function playerMove(){
   }
 }
 
+function levelTwo(){
+
+}
+
+function levelThree(){
+
+}
+
 function levelSelect(){
   switch(level){
     case 1:
@@ -310,14 +266,66 @@ function levelSelect(){
       break;
     case 2:
       tileMap.remove();
-      tileMap = tileMap2;
+      tileMap = new Tiles([
+        'aaa...............................................',
+        '...aaaaa..........................................',
+        '........aaaaa..f.f..................f.............',
+        '..............baaaaaaaaaaaaaaaaaaaaaab............',
+        '.............................................sssss',
+        '............i.....i.....i..............aaa..addddd',
+        '.........baaaaabaaaaabaaaaabaaaaaaaaaa.....a......',
+        '.........ddddddddddddddddddddddddddddd......a..i..',
+        '....aaa......................................baaab',
+        '..................................................',
+        '!........aaa......................................',
+        'sssss.aaa.........................................',
+        'ddddda.......ssssssssssssssssssssssssssss.........',
+        '......a......dddddddddddddddddddddddddddd.........',
+        '..f..a...................................ss.......',
+        'baaab....................................ddss.....',
+        '...........................................ddss...',
+        '..............f.................i............ddssc',
+        'aaaaaaaaaaaaabaaaaaaaaaabaaaabaaaaaaaaaaabaaadddda',
+        'dddddddddddddddddddddddddddddddddddddddddddddddddd'
+        ],
+          groundSize,
+          groundSize,
+          groundSize-1,
+          groundSize-1
+        );
       player.speed = 0;
       player.x = 2000;
       player.y = 50;
       break;
     case 3:
       tileMap.remove();
-      tileMap = tileMap3;
+      tileMap = new Tiles([
+        'aaa.............i.................................',
+        '.....aaaaaaaa..baaaaaaaaaaaaab....................',
+        'i......i........................aaa...............',
+        'bbwwwwwbb.........................................',
+        '...............................f................f.',
+        '........aa.aa.aa.aa.aa.aa.aa...bbsssssssssssssssbb',
+        'aaa..i........................f...................',
+        '.....bbwwwwwwwwwwwwwwwwwwwwwwwbb..................',
+        '.......................................i.........!',
+        '..aa.....aaaaaaaaa..................baaaaaaaaaaaba',
+        'f....aaa............aasaa...aasaa.................',
+        'aaaaa............................................?',
+        'ddddd.......................................baaaab',
+        'dddddd......aaa.a...a...a...a...a...a.aaa...dddddd',
+        'dddddd......ddd...a...a...a...a...a...ddd...dddddd',
+        'ddddddd.....dddsssssssssssssssssssssssddd...dddddd',
+        'ddddddd.....ddddddddddddddddddddddddddddd...dddddd',
+        'ddddddd........f...........f.....................c',
+        'dddddddaaaaabaaaaabaaaaabaaaaabaaaaaaaaaawwwwwwwww',
+        'dddddddddddddddddddddddddddddddddddddddddddddddddd'
+        ],
+          groundSize,
+          groundSize,
+          groundSize-1,
+          groundSize-1
+        );
       player.speed = 0;
       player.x = 40;
       player.y = 100;
