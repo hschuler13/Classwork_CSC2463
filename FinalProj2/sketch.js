@@ -288,8 +288,8 @@ function levelSelect(){
         'aaaaaaaaaaaaabaaaaaaaaaabaaaabaaaaaaaaaaabaaadddda',
         'dddddddddddddddddddddddddddddddddddddddddddddddddd'
         ],
-          groundSize,
-          groundSize,
+          2000,
+          50,
           groundSize-1,
           groundSize-1
         );
@@ -321,8 +321,8 @@ function levelSelect(){
         'dddddddaaaaabaaaaabaaaaabaaaaabaaaaaaaaaawwwwwwwww',
         'dddddddddddddddddddddddddddddddddddddddddddddddddd'
         ],
-          groundSize,
-          groundSize,
+          2000,
+          50,
           groundSize-1,
           groundSize-1
         );
