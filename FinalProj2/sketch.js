@@ -10,90 +10,9 @@ let iceBullets, iceBullet;
 let temp;
 let score = 0;
 let ground1, ground2, carrot, dirt, water, ice, spike, ash;
+let tileMap1, tileMap2, tileMap3;
 
-let tileMap1 = new Tiles([
-'aaa.........aaaaa.........f.......................',
-'....aaaaaaa.......aaaaaaabaaaaab..................',
-'.................................aaa........f.....',
-'..............................f........baaaaaaaaab',
-'.i................i..........baaaaaaab............',
-'baaab.........baaaaaaab...........................',
-'dddddaaaa.........................................',
-'ddddddddda.......................a.....a..........',
-'dddddddddda......................a.....a..........',
-'ddddddddddda.....................a.....a..........',
-'dddddddddddda................a.............a......',
-'ddddd.........................a...........a.......',
-'dddd....ddddddaaa..............aaaaaaaaaaa........',
-'ddd...........dda.................................',
-'dd....ddddddddddda................................',
-'ddd....dddddddddda..............aaa...............',
-'dddd.....dddddddda.............addda..............',
-'ddddd................i........addddda............c',
-'aaaaabaaaaaaaaaaaaaaaaaaaaaaabdddddddaaaaaaaaaaaaa',
-'dddddddddddddddddddddddddddddddddddddddddddddddddd'
-],
-  groundSize,
-  groundSize,
-  groundSize-1,
-  groundSize-1
-);
 
-let tileMap2 = new Tiles([
-'aaa...............................................',
-'...aaaaa..........................................',
-'........aaaaa..f.f..................f.............',
-'..............baaaaaaaaaaaaaaaaaaaaaab............',
-'.............................................sssss',
-'............i.....i.....i..............aaa..addddd',
-'.........baaaaabaaaaabaaaaabaaaaaaaaaa.....a......',
-'.........ddddddddddddddddddddddddddddd......a..i..',
-'....aaa......................................baaab',
-'..................................................',
-'!........aaa......................................',
-'sssss.aaa.........................................',
-'ddddda.......ssssssssssssssssssssssssssss.........',
-'......a......dddddddddddddddddddddddddddd.........',
-'..f..a...................................ss.......',
-'baaab....................................ddss.....',
-'...........................................ddss...',
-'..............f.................i............ddssc',
-'aaaaaaaaaaaaabaaaaaaaaaabaaaabaaaaaaaaaaabaaadddda',
-'dddddddddddddddddddddddddddddddddddddddddddddddddd'
-],
-  groundSize,
-  groundSize,
-  groundSize-1,
-  groundSize-1
-);
-
-let tileMap3 = new Tiles([
-'aaa.............i.................................',
-'.....aaaaaaaa..baaaaaaaaaaaaab....................',
-'i......i........................aaa...............',
-'bbwwwwwbb.........................................',
-'...............................f................f.',
-'........aa.aa.aa.aa.aa.aa.aa...bbsssssssssssssssbb',
-'aaa..i........................f...................',
-'.....bbwwwwwwwwwwwwwwwwwwwwwwwbb..................',
-'.......................................i.........!',
-'..aa.....aaaaaaaaa..................baaaaaaaaaaaba',
-'f....aaa............aasaa...aasaa.................',
-'aaaaa............................................?',
-'ddddd.......................................baaaab',
-'dddddd......aaa.a...a...a...a...a...a.aaa...dddddd',
-'dddddd......ddd...a...a...a...a...a...ddd...dddddd',
-'ddddddd.....dddsssssssssssssssssssssssddd...dddddd',
-'ddddddd.....ddddddddddddddddddddddddddddd...dddddd',
-'ddddddd........f...........f.....................c',
-'dddddddaaaaabaaaaabaaaaabaaaaabaaaaaaaaaawwwwwwwww',
-'dddddddddddddddddddddddddddddddddddddddddddddddddd'
-],
-  groundSize,
-  groundSize,
-  groundSize-1,
-  groundSize-1
-);
 
 //add bg music using tonejs
 //also use sound effects
@@ -121,6 +40,91 @@ function preload(){
 
 function setup() {
   createCanvas(800, 500);
+  //tiles
+  tileMap1 = new Tiles([
+    'aaa.........aaaaa.........f.......................',
+    '....aaaaaaa.......aaaaaaabaaaaab..................',
+    '.................................aaa........f.....',
+    '..............................f........baaaaaaaaab',
+    '.i................i..........baaaaaaab............',
+    'baaab.........baaaaaaab...........................',
+    'dddddaaaa.........................................',
+    'ddddddddda.......................a.....a..........',
+    'dddddddddda......................a.....a..........',
+    'ddddddddddda.....................a.....a..........',
+    'dddddddddddda................a.............a......',
+    'ddddd.........................a...........a.......',
+    'dddd....ddddddaaa..............aaaaaaaaaaa........',
+    'ddd...........dda.................................',
+    'dd....ddddddddddda................................',
+    'ddd....dddddddddda..............aaa...............',
+    'dddd.....dddddddda.............addda..............',
+    'ddddd................i........addddda............c',
+    'aaaaabaaaaaaaaaaaaaaaaaaaaaaabdddddddaaaaaaaaaaaaa',
+    'dddddddddddddddddddddddddddddddddddddddddddddddddd'
+    ],
+      groundSize,
+      groundSize,
+      groundSize-1,
+      groundSize-1
+    );
+    
+    tileMap2 = new Tiles([
+    'aaa...............................................',
+    '...aaaaa..........................................',
+    '........aaaaa..f.f..................f.............',
+    '..............baaaaaaaaaaaaaaaaaaaaaab............',
+    '.............................................sssss',
+    '............i.....i.....i..............aaa..addddd',
+    '.........baaaaabaaaaabaaaaabaaaaaaaaaa.....a......',
+    '.........ddddddddddddddddddddddddddddd......a..i..',
+    '....aaa......................................baaab',
+    '..................................................',
+    '!........aaa......................................',
+    'sssss.aaa.........................................',
+    'ddddda.......ssssssssssssssssssssssssssss.........',
+    '......a......dddddddddddddddddddddddddddd.........',
+    '..f..a...................................ss.......',
+    'baaab....................................ddss.....',
+    '...........................................ddss...',
+    '..............f.................i............ddssc',
+    'aaaaaaaaaaaaabaaaaaaaaaabaaaabaaaaaaaaaaabaaadddda',
+    'dddddddddddddddddddddddddddddddddddddddddddddddddd'
+    ],
+      groundSize,
+      groundSize,
+      groundSize-1,
+      groundSize-1
+    );
+    
+    tileMap3 = new Tiles([
+    'aaa.............i.................................',
+    '.....aaaaaaaa..baaaaaaaaaaaaab....................',
+    'i......i........................aaa...............',
+    'bbwwwwwbb.........................................',
+    '...............................f................f.',
+    '........aa.aa.aa.aa.aa.aa.aa...bbsssssssssssssssbb',
+    'aaa..i........................f...................',
+    '.....bbwwwwwwwwwwwwwwwwwwwwwwwbb..................',
+    '.......................................i.........!',
+    '..aa.....aaaaaaaaa..................baaaaaaaaaaaba',
+    'f....aaa............aasaa...aasaa.................',
+    'aaaaa............................................?',
+    'ddddd.......................................baaaab',
+    'dddddd......aaa.a...a...a...a...a...a.aaa...dddddd',
+    'dddddd......ddd...a...a...a...a...a...ddd...dddddd',
+    'ddddddd.....dddsssssssssssssssssssssssddd...dddddd',
+    'ddddddd.....ddddddddddddddddddddddddddddd...dddddd',
+    'ddddddd........f...........f.....................c',
+    'dddddddaaaaabaaaaabaaaaabaaaaabaaaaaaaaaawwwwwwwww',
+    'dddddddddddddddddddddddddddddddddddddddddddddddddd'
+    ],
+      groundSize,
+      groundSize,
+      groundSize-1,
+      groundSize-1
+    );
+    
   //player setup
   player = new Sprite(30,30,80,80);
   player.spriteSheet = playerPic;
@@ -186,8 +190,8 @@ function setup() {
   tileSet(ash,'h',fireObstacleNullifiedPic);
 
   //enemy setup
-  enemy(fireEnemy,'f',fireEnemyPic);
-  enemy(iceEnemy,'i',iceEnemyPic);
+  enemySetup(fireEnemy,'f',fireEnemyPic);
+  enemySetup(iceEnemy,'i',iceEnemyPic);
 
   //bullet setup
   fireBullets = new Group();
