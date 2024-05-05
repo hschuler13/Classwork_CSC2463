@@ -194,9 +194,14 @@ function setup() {
   fireBullet = createSprite(-1000,0);
   fireBullet.remove();
 
+  iceBullets = new Group();
+  iceBullet = createSprite(-1000,0);
+  iceBullet.remove();
+
   //player collision setup
   player.overlaps(carrot, (p,c) => {
-    levelTwo();
+    level++;
+    levelSelect();
   });
   player.overlaps(enemy,(p,e) =>{
     player.speed = 0;
@@ -256,6 +261,7 @@ function bulletRemove(){
 function bulletCollision(){
 
 }
+
 function playerMove(){
   if(kb.pressing('a')){
     player.vel.x = -2;
