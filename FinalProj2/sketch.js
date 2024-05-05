@@ -16,9 +16,9 @@ let tileMap1, tileMap2, tileMap3;
 
 //add bg music using tonejs
 //also use sound effects
-let startSeq = ["C2", "G2", "A2", "G2"];
-let gameSeq;
-let gameOverSeq;
+let startSeq = ["C4", "C4", "E4", "C4", "C4", "E4", "C4", "C4", "E4", "F4", "G4", "A4", "G4", "F4"];
+let gameSeq = ["C3", "D3", "E3", "G3", "C3", "D3", "E3", "A3", "C3", "D3", "E3", "B3", "A3", "G3", "D3", "C3"];
+let gameOverSeq = [["D#3", "D#4", "D#4"],["C3", "C4", "C4"],["F#3", "F#4", "F#4"]];
 
 function preload(){
   playerPic = loadImage('assets/PlayerSpritesheetFinal.png');
@@ -356,8 +356,8 @@ function enemyMovement(){
 
 function enemySetup(e,tileRepresentation,ePic){
   e = new Group();
-  e.w = 90;
-  e.h = 90;
+  e.w = 80;
+  e.h = 80;
   e.scale = 0.4;
   e.tile = tileRepresentation;
   e.rotationLock = true;
