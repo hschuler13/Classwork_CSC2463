@@ -203,7 +203,6 @@ function setup() {
   iceBullet.remove();*/
 
   //player collision setup
-  //levelSelect();
   player.overlaps(carrot, (p,c) => {
     level++;
     if(level == 2){
@@ -212,7 +211,6 @@ function setup() {
     else{
       levelThree();
     }
-    //levelSelect();
   });
   player.overlaps(fireEnemy,(p,e) =>{
     player.speed = 0;
