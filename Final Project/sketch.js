@@ -14,7 +14,7 @@ let tileMap1, tileMap2, tileMap3;
 let specialMoveReady = 1;
 let port, connectButton;
 let joyX = 0, sw = 0;
-let buttonVal = 0;
+let buttonVal = 0, buttonVal2 = 0;
 
 //add bg music using tonejs
 //also use sound effects
@@ -317,6 +317,7 @@ function draw() {
       sw = values[1];
       temp = values[2];
       buttonVal = values[3];
+      buttonVal2 = values[4];
       
       //temp = values[]
     }
@@ -347,7 +348,10 @@ function draw() {
     //player.y = 20;
     background(135, 206, 235);
     text(joyX, 100, 100);
-    text(sw,200, 200);
+    text(sw, 100, 125);
+    text(temp, 100, 150);
+    text(buttonVal, 100, 175);
+    text(buttonVal2, 100, 200);
     camera.x = player.x;
     camera.y = player.y;
     player.visible = true;
