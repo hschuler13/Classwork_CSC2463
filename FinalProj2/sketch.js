@@ -12,13 +12,36 @@ let score = 0;
 let ground1, ground2, carrot, dirt, water, ice, spike, ash;
 let tileMap1, tileMap2, tileMap3;
 
-
-
 //add bg music using tonejs
 //also use sound effects
-let startSeq = ["C4", "C4", "E4", "C4", "C4", "E4", "C4", "C4", "E4", "F4", "G4", "A4", "G4", "F4"];
-let gameSeq = ["C3", "D3", "E3", "G3", "C3", "D3", "E3", "A3", "C3", "D3", "E3", "B3", "A3", "G3", "D3", "C3"];
-let gameOverSeq = [["D#3", "D#4", "D#4"],["C3", "C4", "C4"],["F#3", "F#4", "F#4"]];
+//let sounds = new Tone.Players({
+  //'paintStroke': "assets/paintStroke.mp3",
+  //'paintSplash': "assets/paintSplash.mp3",
+  //'paperCrumple': "assets/paperCrumple.mp3",
+  //'cameraClick': "assets/cameraClick.mp3"
+//});
+
+let synth = new Tone.PolySynth(Tone.MonoSynth);
+
+let startSong = ["C4", "C4", "E4", "C4", "C4", "E4", "C4", "C4", "E4", "F4", "G4", "A4", "G4", "F4"];
+let gameSong = ["C3", "D3", "E3", "G3", "C3", "D3", "E3", "A3", "C3", "D3", "E3", "B3", "A3", "G3", "D3", "C3"];
+let gameOverSong = [["D#3", "D#4", "D#4"],["C3", "C4", "C4"],["F#3", "F#4", "F#4"]];
+
+const startSeq = new Tone.Sequence((time, note) => {
+	synth.triggerAttackRelease(note, 0.1, time);
+}, defaultSong);
+
+const gameSeq = new Tone.Sequence((time, note) => {
+  synth.triggerAttackRelease(note, 0.1, time);
+}, paintingSong);
+
+const gameOverSeq = new Tone.Sequence((time, note) => {
+  synth.triggerAttackRelease(note, 0.1, time);
+}, tenLineSong);
+
+//sounds.toDestination();
+synth.toDestination();
+Tone.Transport.start();
 
 function preload(){
   playerPic = loadImage('assets/PlayerSpritesheetFinal.png');
@@ -158,11 +181,11 @@ function setup() {
     level++;
     levelSelect();
   });
-  /*player.overlaps(fireEnemy,(p,e) =>{
+  player.overlaps(fireEnemy,(p,e) =>{
     player.speed = 0;
     player.x = 30;
     player.y = 30;
-  });*/
+  });
 
   //ground collision setup
   /*onGround.overlaps(fireEnemy,(s,e) =>{
@@ -179,8 +202,6 @@ function draw() {
     player.visible = false;
     walkable.visible = false;
     carrot.visible = false;
-    //fireEnemy.visible = false;
-    //iceEnemy.visible = false;
     if(kb.presses('space')){
       gameState = 1;
     }
@@ -194,13 +215,19 @@ function draw() {
     player.visible = true;
     walkable.visible = true;
     carrot.visible = true;
-    //fireEnemy.visible = true;
-    //iceEnemy.visible = true;
     playerMove();
   }
-  /*else {
-    
-  }*/
+  else {
+    background(220);
+    text("Game Over!", 400, 250);
+    text("Press space to restart", 400, 350);
+    player.visible = false;
+    walkable.visible = false;
+    carrot.visible = false;
+    if(kb.presses('space')){
+      gameState = 1;
+    }
+  }
   
 }
 
