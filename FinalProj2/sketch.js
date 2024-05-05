@@ -40,6 +40,76 @@ function preload(){
 
 function setup() {
   createCanvas(800, 500);
+  
+
+  //player setup
+  player = new Sprite(30,30,80,80);
+  player.spriteSheet = playerPic;
+  player.rotationLock = true;
+  player.friction = 0;
+  player.addAnis({
+    stand:{row:0, frames:1},
+    run:{row:0, frames:7}
+  })
+  player.ani = 'stand';
+  player.w = 90;
+  player.h = 90;
+  player.scale = 0.2;
+
+  player.debug = true;
+
+  //carrot setup (move to next level)
+  carrot = new Group();
+  carrot.w = 30;
+  carrot.h = 30;
+  carrot.image = carrotPic;
+  carrot.tile = 'c';
+  carrot.collider = 'static';
+  carrot.rotationLock = true;
+
+  fireTrigger = new Group();
+  fireTrigger.w = 30;
+  fireTrigger.h = 30;
+  fireTrigger.image = fireTriggerPic;
+  fireTrigger.tile = '!';
+  fireTrigger.collider = 'static';
+  fireTrigger.rotationLock = true;
+
+  iceTrigger = new Group();
+  iceTrigger.w = 30;
+  iceTrigger.h = 30;
+  iceTrigger.image = iceTriggerPic;
+  iceTrigger.tile = '?';
+  iceTrigger.collider = 'static';
+  iceTrigger.rotationLock = true;
+
+  //world setup
+  world.autoStep = false;
+  world.gravity.y = 12;
+
+  //ground collision setup
+  onGround = new Sprite(player.x, player.y + player.h/2, player.w/2, 1);
+  onGround.visible = false;
+  onGround.mass = 0.1;
+  let joint = new GlueJoint(player,onGround);
+  joint.visible = false;
+
+  //tile group setup
+  walkable = new Group();
+  walkable.layer = 1;
+
+  tileSet(ground1,'a',topGroundPic);
+  tileSet(ground2,'b',topGroundPic);
+  tileSet(dirt,'d',bottomGroundPic);
+  tileSet(water,'w',iceObstaclePic);
+  tileSet(ice,'e',iceObstacleNullifiedPic);
+  tileSet(spike,'s',fireObstaclePic);
+  tileSet(ash,'h',fireObstacleNullifiedPic);
+
+  //enemy setup
+  enemySetup(fireEnemy,'f',fireEnemyPic);
+  enemySetup(iceEnemy,'i',iceEnemyPic);
+
   //tiles
   tileMap1 = new Tiles([
     'aaa.........aaaaa.........f.......................',
@@ -124,74 +194,6 @@ function setup() {
       groundSize-1,
       groundSize-1
     );
-    
-  //player setup
-  player = new Sprite(30,30,80,80);
-  player.spriteSheet = playerPic;
-  player.rotationLock = true;
-  player.friction = 0;
-  player.addAnis({
-    stand:{row:0, frames:1},
-    run:{row:0, frames:7}
-  })
-  player.ani = 'stand';
-  player.w = 90;
-  player.h = 90;
-  player.scale = 0.2;
-
-  player.debug = true;
-
-  //carrot setup (move to next level)
-  carrot = new Group();
-  carrot.w = 30;
-  carrot.h = 30;
-  carrot.image = carrotPic;
-  carrot.tile = 'c';
-  carrot.collider = 'static';
-  carrot.rotationLock = true;
-
-  fireTrigger = new Group();
-  fireTrigger.w = 30;
-  fireTrigger.h = 30;
-  fireTrigger.image = fireTriggerPic;
-  fireTrigger.tile = '!';
-  fireTrigger.collider = 'static';
-  fireTrigger.rotationLock = true;
-
-  iceTrigger = new Group();
-  iceTrigger.w = 30;
-  iceTrigger.h = 30;
-  iceTrigger.image = iceTriggerPic;
-  iceTrigger.tile = '?';
-  iceTrigger.collider = 'static';
-  iceTrigger.rotationLock = true;
-
-  //world setup
-  world.autoStep = false;
-  world.gravity.y = 12;
-
-  //ground collision setup
-  onGround = new Sprite(player.x, player.y + player.h/2, player.w/2, 1);
-  onGround.visible = false;
-  onGround.mass = 0.1;
-  let joint = new GlueJoint(player,onGround);
-  joint.visible = false;
-
-  //tile group setup
-  walkable = new Group();
-  walkable.layer = 1;
-
-  tileSet(ground1,'a',topGroundPic);
-  tileSet(ground2,'b',topGroundPic);
-  tileSet(dirt,'d',bottomGroundPic);
-  tileSet(water,'w',iceObstaclePic);
-  tileSet(ice,'e',iceObstacleNullifiedPic);
-  tileSet(spike,'s',fireObstaclePic);
-  tileSet(ash,'h',fireObstacleNullifiedPic);
-
-  //enemy setup
-  enemySetup(fireEnemy,'f',fireEnemyPic);
-  enemySetup(iceEnemy,'i',iceEnemyPic);
 
   //bullet setup
   fireBullets = new Group();
