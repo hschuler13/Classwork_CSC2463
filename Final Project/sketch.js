@@ -14,6 +14,7 @@ let tileMap1, tileMap2, tileMap3;
 let specialMoveReady = 1;
 let port, connectButton;
 let joyX = 0, sw = 0;
+let buttonVal = 0;
 
 //add bg music using tonejs
 //also use sound effects
@@ -315,6 +316,7 @@ function draw() {
       joyX = values[0];
       sw = values[1];
       temp = values[2];
+      buttonVal = values[3];
       
       //temp = values[]
     }
@@ -333,7 +335,7 @@ function draw() {
       player.vel.x = 0;
     }
   
-    if (sw == 1 && (onGround.overlapping(walkable) ||onGround.overlapping(spike) ||onGround.overlapping(water))) {
+    if (buttonVal == 1 && (onGround.overlapping(walkable) ||onGround.overlapping(spike) ||onGround.overlapping(water))) {
       player.vel.y = jump;
     }
     startSeq.stop();
