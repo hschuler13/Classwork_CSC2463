@@ -289,11 +289,11 @@ function playerMove(){
   }
 
 
-if(onGround.overlapping(spike) || onGround.overlapping(water)){
+/*if(onGround.overlapping(spike) || onGround.overlapping(water)){
   player.speed = 0;
   player.x = 40;
   player.y = 100;
-  }
+  }*/
 
   if(player.y > 400){
     player.speed = 0;
