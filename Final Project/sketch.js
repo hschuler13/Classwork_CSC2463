@@ -64,6 +64,7 @@ function preload() {
   fireTriggerPic = loadImage('assets/fireTrigger.png');
   iceTriggerPic = loadImage('assets/iceTrigger.png');
   activatedTriggerPic = loadImage('assets/activatedTrigger.png');
+  gameFont = loadFOnt('assets/PixelifySans-Regular.ttf');
 }
 
 function setup() {
@@ -81,7 +82,7 @@ function setup() {
   frameRate(60);
 
   //game font
-  textFont(PixelifySans-Regular);
+  textFont(gameFont);
 
   //player setup
   player = new Sprite(30, 30, 80, 80);
