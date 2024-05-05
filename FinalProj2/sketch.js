@@ -29,15 +29,15 @@ let gameOverSong = [["D#3", "D#4", "D#4"],["C3", "C4", "C4"],["F#3", "F#4", "F#4
 
 const startSeq = new Tone.Sequence((time, note) => {
 	synth.triggerAttackRelease(note, 0.1, time);
-}, defaultSong);
+}, startSong);
 
 const gameSeq = new Tone.Sequence((time, note) => {
   synth.triggerAttackRelease(note, 0.1, time);
-}, paintingSong);
+}, gameSong);
 
 const gameOverSeq = new Tone.Sequence((time, note) => {
   synth.triggerAttackRelease(note, 0.1, time);
-}, tenLineSong);
+}, gameOverSong);
 
 //sounds.toDestination();
 synth.toDestination();
