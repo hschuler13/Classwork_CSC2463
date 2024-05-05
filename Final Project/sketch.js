@@ -80,6 +80,9 @@ function setup() {
   }
   frameRate(60);
 
+  //game font
+  textFont(PixelifySans-Regular);
+
   //player setup
   player = new Sprite(30, 30, 80, 80);
   player.spriteSheet = playerPic;
