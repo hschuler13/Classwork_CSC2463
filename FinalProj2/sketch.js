@@ -209,7 +209,7 @@ function setup() {
     level++;
     levelSelect();
   });
-  player.overlaps(enemy,(p,e) =>{
+  player.overlaps(fireEnemy,(p,e) =>{
     player.speed = 0;
     player.x = 30;
     player.y = 30;
