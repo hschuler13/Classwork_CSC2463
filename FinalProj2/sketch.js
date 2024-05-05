@@ -16,7 +16,7 @@ let tileMap1, tileMap2, tileMap3;
 
 //add bg music using tonejs
 //also use sound effects
-let startSeq;
+let startSeq = ["C2", "G2", "A2", "G2"];
 let gameSeq;
 let gameOverSeq;
 
@@ -196,31 +196,31 @@ function setup() {
     );
 
   //bullet setup
-  fireBullets = new Group();
+  /*fireBullets = new Group();
   fireBullet = createSprite(-1000,0);
   fireBullet.remove();
 
   iceBullets = new Group();
   iceBullet = createSprite(-1000,0);
-  iceBullet.remove();
+  iceBullet.remove();*/
 
   //player collision setup
   player.overlaps(carrot, (p,c) => {
     level++;
     levelSelect();
   });
-  player.overlaps(fireEnemy,(p,e) =>{
+  /*player.overlaps(fireEnemy,(p,e) =>{
     player.speed = 0;
     player.x = 30;
     player.y = 30;
-  });
+  });*/
 
   //ground collision setup
-  onGround.overlaps(fireEnemy,(s,e) =>{
+  /*onGround.overlaps(fireEnemy,(s,e) =>{
     if(player.vel.y > 0){
       e.remove();
     }
-  });
+  });*/
 }
 
 function draw() {
@@ -249,7 +249,7 @@ function draw() {
   
 }
 
-function keyReleased(){
+/*function keyReleased(){
   if(keyCode == 76){
     fireBullet = createSprite(player.x,player.y);
     fireBullet.addImage(fireBulletPic);
@@ -266,7 +266,7 @@ function bulletRemove(){
 
 function bulletCollision(){
 
-}
+}*/
 
 function playerMove(){
   if(kb.pressing('a')){
