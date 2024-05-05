@@ -133,8 +133,8 @@ function setup() {
     'aaaaabaaaaaaaaaaaaaaaaaaaaaaabdddddddaaaaaaaaaaaaa',
     'dddddddddddddddddddddddddddddddddddddddddddddddddd'
     ],
-      groundSize,
-      groundSize,
+      2000,
+      50,
       groundSize-1,
       groundSize-1
     );
@@ -296,10 +296,10 @@ function playerMove(){
   player.y = 100;
   }*/
 
-  if(player.y > 400){
+  if(player.y > 2100){
     player.speed = 0;
-    player.x = 40;
-    player.y = 100;
+    player.x = 2000;
+    player.y = 50;
   }
 }
 
@@ -312,8 +312,8 @@ function levelSelect(){
       tileMap.remove();
       tileMap = tileMap2;
       player.speed = 0;
-      player.x = 40;
-      player.y = 100;
+      player.x = 2000;
+      player.y = 50;
       break;
     case 3:
       tileMap.remove();
