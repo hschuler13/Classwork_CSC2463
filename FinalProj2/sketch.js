@@ -139,7 +139,7 @@ function setup() {
       groundSize-1
     );
     
-    tileMap2 = new Tiles([
+    /*tileMap2 = new Tiles([
     'aaa...............................................',
     '...aaaaa..........................................',
     '........aaaaa..f.f..................f.............',
@@ -193,7 +193,7 @@ function setup() {
       groundSize,
       groundSize-1,
       groundSize-1
-    );
+    );*/
 
   //bullet setup
   /*fireBullets = new Group();
