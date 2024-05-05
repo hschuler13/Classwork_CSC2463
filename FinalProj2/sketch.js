@@ -335,7 +335,7 @@ function enemyMovement(){
 }
 
 function levelTwo(){
-  tileMap.remove();
+  //tileMap.remove();
       tileMap = new Tiles([
         'aaa...............................................',
         '...aaaaa..........................................',
@@ -369,7 +369,7 @@ function levelTwo(){
 }
 
 function levelThree(){
-  tileMap.remove();
+  //tileMap.remove();
   tileMap = new Tiles([
     'aaa.............i.................................',
     '.....aaaaaaaa..baaaaaaaaaaaaab....................',
