@@ -250,7 +250,7 @@ function draw() {
 }
 
 function keyReleased(){
-  if(kb.pressing('l')){
+  if(keyCode == 76){
     fireBullet = createSprite(player.x,player.y);
     fireBullet.addImage(fireBulletPic);
     fireBullet.life = 30;
