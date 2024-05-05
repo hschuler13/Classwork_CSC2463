@@ -54,7 +54,7 @@ function setup() {
   player.ani = 'stand';
   player.w = 90;
   player.h = 90;
-  player.scale = 0.2;
+  player.scale = 0.4;
 
   player.debug = true;
 
@@ -173,7 +173,19 @@ function setup() {
 }
 
 function draw() {
-  if(gameState == 1){
+  if(gameState == 0){
+    background(220);
+    text("Press space to start", 400, 250);
+    player.visible = false;
+    walkable.visible = false;
+    carrot.visible = false;
+    fireEnemy.visible = false;
+    iceEnemy.visible = false;
+    if(kb.presses('space')){
+      gameState = 1;
+    }
+  }
+  else if(gameState == 1){
     world.step();
     text('carrots:' + score, 10, 25);
     background(135, 206, 235);
@@ -182,19 +194,13 @@ function draw() {
     player.visible = true;
     walkable.visible = true;
     carrot.visible = true;
+    fireEnemy.visible = true;
+    iceEnemy.visible = true;
     playerMove();
   }
-
-  else {
-    background(220);
-    text("Press space to start", 400, 250);
-    player.visible = false;
-    walkable.visible = false;
-    carrot.visible = false;
-    if(kb.presses('space')){
-      gameState = 1;
-    }
-  }
+  /*else {
+    
+  }*/
   
 }
 
@@ -247,7 +253,7 @@ function playerMove(){
   if(player.y > 2100){
     player.speed = 0;
     player.x = 2000;
-    player.y = 50;
+    player.y = 10;
   }
 }
 
@@ -350,9 +356,9 @@ function enemyMovement(){
 
 function enemySetup(e,tileRepresentation,ePic){
   e = new Group();
-  e.w = 40;
-  e.h = 40;
-  e.scale = 0.5
+  e.w = 90;
+  e.h = 90;
+  e.scale = 0.4;
   e.tile = tileRepresentation;
   e.rotationLock = true;
   e.friction = 0;
