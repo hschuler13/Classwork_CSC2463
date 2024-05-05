@@ -63,7 +63,6 @@ function preload(){
 
 function setup() {
   createCanvas(800, 500);
-  
 
   //player setup
   player = new Sprite(30,30,80,80);
@@ -130,8 +129,36 @@ function setup() {
   tileSet(ash,'h',fireObstacleNullifiedPic);
 
   //enemy setup
-  enemySetup(fireEnemy,'f',fireEnemyPic);
-  enemySetup(iceEnemy,'i',iceEnemyPic);
+  fireEnemy = new Group();
+  fireEnemy.w = 80;
+  fireEnemy.h = 80;
+  fireEnemy.scale = 0.4;
+  fireEnemy.tile = 'f';
+  fireEnemy.rotationLock = true;
+  fireEnemy.friction = 0;
+  fireEnemy.drag = 0;
+  fireEnemy.vel.x = 0.2;
+  fireEnemy.spriteSheet = fireEnemyPic;
+  fireEnemy.addAnis({
+    run:{row:0, frames: 7}
+  });
+
+  iceEnemy = new Group();
+  iceEnemy.w = 80;
+  iceEnemy.h = 80;
+  iceEnemy.scale = 0.4;
+  iceEnemy.tile = 'i';
+  iceEnemy.rotationLock = true;
+  iceEnemy.friction = 0;
+  iceEnemy.drag = 0;
+  iceEnemy.vel.x = 0.2;
+  iceEnemy.spriteSheet = iceEnemyPic;
+  iceEnemy.addAnis({
+    run:{row:0, frames: 7}
+  });
+
+  //enemySetup(fireEnemy,'f',fireEnemyPic);
+  //enemySetup(iceEnemy,'i',iceEnemyPic);
 
   //tiles
   tileMap1 = new Tiles([
@@ -188,6 +215,11 @@ function setup() {
     //levelSelect();
   });
   player.overlaps(fireEnemy,(p,e) =>{
+    player.speed = 0;
+    player.x = 30;
+    player.y = 30;
+  });
+  player.overlaps(iceEnemy,(p,e) =>{
     player.speed = 0;
     player.x = 30;
     player.y = 30;
