@@ -176,10 +176,16 @@ function setup() {
   iceBullet.remove();*/
 
   //player collision setup
-  levelSelect();
+  //levelSelect();
   player.overlaps(carrot, (p,c) => {
     level++;
-    levelSelect();
+    if(level == 2){
+      levelTwo();
+    }
+    else{
+      levelThree();
+    }
+    //levelSelect();
   });
   player.overlaps(fireEnemy,(p,e) =>{
     player.speed = 0;
@@ -284,21 +290,22 @@ function playerMove(){
   }
 }
 
+function enemyMovement(){
+  for(e of enemy){
+    if(e.overlaps(g2)){
+      e.vel.x = -0.2;
+    }
+    if(e.vel.x < 0){
+      e.mirror.x = false;
+    }
+    else{
+      e.mirror.x = true;
+    }
+  }
+}
+
 function levelTwo(){
-
-}
-
-function levelThree(){
-
-}
-
-function levelSelect(){
-  switch(level){
-    case 1:
-      tileMap = tileMap1;
-      break;
-    case 2:
-      tileMap.remove();
+  tileMap.remove();
       tileMap = new Tiles([
         'aaa...............................................',
         '...aaaaa..........................................',
@@ -329,56 +336,41 @@ function levelSelect(){
       player.speed = 0;
       player.x = 2000;
       player.y = 50;
-      break;
-    case 3:
-      tileMap.remove();
-      tileMap = new Tiles([
-        'aaa.............i.................................',
-        '.....aaaaaaaa..baaaaaaaaaaaaab....................',
-        'i......i........................aaa...............',
-        'bbwwwwwbb.........................................',
-        '...............................f................f.',
-        '........aa.aa.aa.aa.aa.aa.aa...bbsssssssssssssssbb',
-        'aaa..i........................f...................',
-        '.....bbwwwwwwwwwwwwwwwwwwwwwwwbb..................',
-        '.......................................i.........!',
-        '..aa.....aaaaaaaaa..................baaaaaaaaaaaba',
-        'f....aaa............aasaa...aasaa.................',
-        'aaaaa............................................?',
-        'ddddd.......................................baaaab',
-        'dddddd......aaa.a...a...a...a...a...a.aaa...dddddd',
-        'dddddd......ddd...a...a...a...a...a...ddd...dddddd',
-        'ddddddd.....dddsssssssssssssssssssssssddd...dddddd',
-        'ddddddd.....ddddddddddddddddddddddddddddd...dddddd',
-        'ddddddd........f...........f.....................c',
-        'dddddddaaaaabaaaaabaaaaabaaaaabaaaaaaaaaawwwwwwwww',
-        'dddddddddddddddddddddddddddddddddddddddddddddddddd'
-        ],
-          2000,
-          50,
-          groundSize-1,
-          groundSize-1
-        );
-      player.speed = 0;
-      player.x = 40;
-      player.y = 100;
-      tileMap.remove();
-      break;
-  }
 }
 
-function enemyMovement(){
-  for(e of enemy){
-    if(e.overlaps(g2)){
-      e.vel.x = -0.2;
-    }
-    if(e.vel.x < 0){
-      e.mirror.x = false;
-    }
-    else{
-      e.mirror.x = true;
-    }
-  }
+function levelThree(){
+  tileMap.remove();
+  tileMap = new Tiles([
+    'aaa.............i.................................',
+    '.....aaaaaaaa..baaaaaaaaaaaaab....................',
+    'i......i........................aaa...............',
+    'bbwwwwwbb.........................................',
+    '...............................f................f.',
+    '........aa.aa.aa.aa.aa.aa.aa...bbsssssssssssssssbb',
+    'aaa..i........................f...................',
+    '.....bbwwwwwwwwwwwwwwwwwwwwwwwbb..................',
+    '.......................................i.........!',
+    '..aa.....aaaaaaaaa..................baaaaaaaaaaaba',
+    'f....aaa............aasaa...aasaa.................',
+    'aaaaa............................................?',
+    'ddddd.......................................baaaab',
+    'dddddd......aaa.a...a...a...a...a...a.aaa...dddddd',
+    'dddddd......ddd...a...a...a...a...a...ddd...dddddd',
+    'ddddddd.....dddsssssssssssssssssssssssddd...dddddd',
+    'ddddddd.....ddddddddddddddddddddddddddddd...dddddd',
+    'ddddddd........f...........f.....................c',
+    'dddddddaaaaabaaaaabaaaaabaaaaabaaaaaaaaaawwwwwwwww',
+    'dddddddddddddddddddddddddddddddddddddddddddddddddd'
+    ],
+      2000,
+      50,
+      groundSize-1,
+      groundSize-1
+    );
+  player.speed = 0;
+  player.x = 40;
+  player.y = 100;
+  tileMap.remove();
 }
 
 function enemySetup(e,tileRepresentation,ePic){
