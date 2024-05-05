@@ -179,8 +179,8 @@ function draw() {
     player.visible = false;
     walkable.visible = false;
     carrot.visible = false;
-    fireEnemy.visible = false;
-    iceEnemy.visible = false;
+    //fireEnemy.visible = false;
+    //iceEnemy.visible = false;
     if(kb.presses('space')){
       gameState = 1;
     }
@@ -194,8 +194,8 @@ function draw() {
     player.visible = true;
     walkable.visible = true;
     carrot.visible = true;
-    fireEnemy.visible = true;
-    iceEnemy.visible = true;
+    //fireEnemy.visible = true;
+    //iceEnemy.visible = true;
     playerMove();
   }
   /*else {
