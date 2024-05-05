@@ -4,30 +4,105 @@ let gameState = 0;
 let playerPic, bgPic, topGroundPic, bottomGroundPic, carrotPic, iceBulletPic, fireBulletPic, fireEnemyPic, iceEnemyPic, fireObstaclePic, fireObstacleNullifiedPic, iceObstaclePic, iceObstacleNullifiedPic, iceTriggerPic, fireTriggerPic, activatedTriggerPic;
 let groundSize = 34;
 let jump = 40;
-//let tileRepresentationArray = ['a','b','c','d'];
-//add bg music using tonejs
-//also use sound effects
+let level = 1;
+let fireBullets, fireBullet;
+let iceBullets, iceBullet;
+let temp;
 let score = 0;
 let ground1, ground2, carrot, dirt, water, ice, spike, ash;
 
+let tileMap1 = new Tiles([
+'aaa.........aaaaa.........f.......................',
+'....aaaaaaa.......aaaaaaabaaaaab..................',
+'.................................aaa........f.....',
+'..............................f........baaaaaaaaab',
+'.i................i..........baaaaaaab............',
+'baaab.........baaaaaaab...........................',
+'dddddaaaa.........................................',
+'ddddddddda.......................a.....a..........',
+'dddddddddda......................a.....a..........',
+'ddddddddddda.....................a.....a..........',
+'dddddddddddda................a.............a......',
+'ddddd.........................a...........a.......',
+'dddd....ddddddaaa..............aaaaaaaaaaa........',
+'ddd...........dda.................................',
+'dd....ddddddddddda................................',
+'ddd....dddddddddda..............aaa...............',
+'dddd.....dddddddda.............addda..............',
+'ddddd................i........addddda............c',
+'aaaaabaaaaaaaaaaaaaaaaaaaaaaabdddddddaaaaaaaaaaaaa',
+'dddddddddddddddddddddddddddddddddddddddddddddddddd'
+],
+  groundSize,
+  groundSize,
+  groundSize-1,
+  groundSize-1
+);
+
+let tileMap2 = new Tiles([
+'aaa...............................................',
+'...aaaaa..........................................',
+'........aaaaa..f.f..................f.............',
+'..............baaaaaaaaaaaaaaaaaaaaaab............',
+'.............................................sssss',
+'............i.....i.....i..............aaa..addddd',
+'.........baaaaabaaaaabaaaaabaaaaaaaaaa.....a......',
+'.........ddddddddddddddddddddddddddddd......a..i..',
+'....aaa......................................baaab',
+'..................................................',
+'!........aaa......................................',
+'sssss.aaa.........................................',
+'ddddda.......ssssssssssssssssssssssssssss.........',
+'......a......dddddddddddddddddddddddddddd.........',
+'..f..a...................................ss.......',
+'baaab....................................ddss.....',
+'...........................................ddss...',
+'..............f.................i............ddssc',
+'aaaaaaaaaaaaabaaaaaaaaaabaaaabaaaaaaaaaaabaaadddda',
+'dddddddddddddddddddddddddddddddddddddddddddddddddd'
+],
+  groundSize,
+  groundSize,
+  groundSize-1,
+  groundSize-1
+);
+
+let tileMap3 = new Tiles([
+'aaa.............i.................................',
+'.....aaaaaaaa..baaaaaaaaaaaaab....................',
+'i......i........................aaa...............',
+'bbwwwwwbb.........................................',
+'...............................f................f.',
+'........aa.aa.aa.aa.aa.aa.aa...bbsssssssssssssssbb',
+'aaa..i........................f...................',
+'.....bbwwwwwwwwwwwwwwwwwwwwwwwbb..................',
+'.......................................i.........!',
+'..aa.....aaaaaaaaa..................baaaaaaaaaaaba',
+'f....aaa............aasaa...aasaa.................',
+'aaaaa............................................?',
+'ddddd.......................................baaaab',
+'dddddd......aaa.a...a...a...a...a...a.aaa...dddddd',
+'dddddd......ddd...a...a...a...a...a...ddd...dddddd',
+'ddddddd.....dddsssssssssssssssssssssssddd...dddddd',
+'ddddddd.....ddddddddddddddddddddddddddddd...dddddd',
+'ddddddd........f...........f.....................c',
+'dddddddaaaaabaaaaabaaaaabaaaaabaaaaaaaaaawwwwwwwww',
+'dddddddddddddddddddddddddddddddddddddddddddddddddd'
+],
+  groundSize,
+  groundSize,
+  groundSize-1,
+  groundSize-1
+);
+
+//add bg music using tonejs
+//also use sound effects
 let startSeq;
 let gameSeq;
 let gameOverSeq;
 
 function preload(){
-  //set up sprite player controls through game
-  player = new Sprite(30,30,80,80);
   playerPic = loadImage('assets/PlayerSpritesheetFinal.png');
-  player.spriteSheet = playerPic;
-  player.rotationLock = true;
-  player.friction = 0;
-  player.addAnis({
-    stand:{row:0, frames:1},
-    run:{row:0, frames:7}
-  })
-  player.ani = 'stand';
-  
-  //load images
   topGroundPic = loadImage('assets/grassBlock.png');
   bottomGroundPic = loadImage('assets/dirtBlock.png');
   carrotPic = loadImage('assets/carrot.png');
@@ -42,7 +117,27 @@ function preload(){
   fireTriggerPic = loadImage('assets/fireTrigger.png');
   iceTriggerPic = loadImage('assets/iceTrigger.png');
   activatedTriggerPic = loadImage('assets/activatedTrigger.png');
+}
 
+function setup() {
+  createCanvas(800, 500);
+  //player setup
+  player = new Sprite(30,30,80,80);
+  player.spriteSheet = playerPic;
+  player.rotationLock = true;
+  player.friction = 0;
+  player.addAnis({
+    stand:{row:0, frames:1},
+    run:{row:0, frames:7}
+  })
+  player.ani = 'stand';
+  player.w = 90;
+  player.h = 90;
+  player.scale = 0.2;
+
+  player.debug = true;
+
+  //carrot setup (move to next level)
   carrot = new Group();
   carrot.w = 30;
   carrot.h = 30;
@@ -50,26 +145,35 @@ function preload(){
   carrot.tile = 'c';
   carrot.collider = 'static';
   carrot.rotationLock = true;
-}
 
-function setup() {
-  createCanvas(800, 500);
+  fireTrigger = new Group();
+  fireTrigger.w = 30;
+  fireTrigger.h = 30;
+  fireTrigger.image = fireTriggerPic;
+  fireTrigger.tile = '!';
+  fireTrigger.collider = 'static';
+  fireTrigger.rotationLock = true;
+
+  iceTrigger = new Group();
+  iceTrigger.w = 30;
+  iceTrigger.h = 30;
+  iceTrigger.image = iceTriggerPic;
+  iceTrigger.tile = '?';
+  iceTrigger.collider = 'static';
+  iceTrigger.rotationLock = true;
+
+  //world setup
   world.autoStep = false;
   world.gravity.y = 12;
-  player.debug = true;
-  //adjust hitbox if neccessary
-  player.w = 90;
-  player.h = 90;
-  player.scale = 0.2;
-  /*player.overlaps(carrot,(p,c) =>{
-    c.remove()
-  });*/
+
+  //ground collision setup
   onGround = new Sprite(player.x, player.y + player.h/2, player.w/2, 1);
   onGround.visible = false;
   onGround.mass = 0.1;
   let joint = new GlueJoint(player,onGround);
   joint.visible = false;
 
+  //tile group setup
   walkable = new Group();
   walkable.layer = 1;
 
@@ -81,55 +185,31 @@ function setup() {
   tileSet(spike,'s',fireObstaclePic);
   tileSet(ash,'h',fireObstacleNullifiedPic);
 
+  //enemy setup
   enemy(fireEnemy,'f',fireEnemyPic);
   enemy(iceEnemy,'i',iceEnemyPic);
 
+  //bullet setup
+  fireBullets = new Group();
+  fireBullet = createSprite(-1000,0);
+  fireBullet.remove();
+
+  //player collision setup
   player.overlaps(carrot, (p,c) => {
     levelTwo();
-  });
-
-
-  /*enemy = new Group();
-  enemy.w = 40;
-  enemy.h = 40;
-  enemy.scale = 0.5
-  enemy.tile = 'x';
-  enemy.rotationLock = true;
-  enemy.friction = 0;
-  enemy.drag = 0;
-  enemy.vel.x = 0.2;
-  enemy.spriteSheet = iceEnemyPic;
-  enemy.addAnis({
-    run:{row:0, frames: 7}
-  });*/
-
-  onGround.overlaps(enemy,(s,e) =>{
-    if(player.vel.y > 0){
-      e.remove();
-    }
   });
   player.overlaps(enemy,(p,e) =>{
     player.speed = 0;
     player.x = 30;
     player.y = 30;
-  })
-  tileMap = new Tiles([
-    '..c.aaaa......................',
-    '.aaa.....aaaaaaaa.............',
-    '..................aaaaaaa.....',
-    '...........................aa.',
-    '...aaaaa.aaa.aaa.aaa.aaaaa....',
-    '.a..x.........................',
-    '..baaab.............aaaaa.....',
-    '........aaa.aaaaaaa.......aaa.',
-    '..............................',
-    'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
-  ],
-    groundSize,
-    groundSize,
-    groundSize-1,
-    groundSize-1
-);
+  });
+
+  //ground collision setup
+  onGround.overlaps(enemy,(s,e) =>{
+    if(player.vel.y > 0){
+      e.remove();
+    }
+  });
 }
 
 function draw() {
@@ -144,9 +224,7 @@ function draw() {
     carrot.visible = true;
     playerMove();
   }
-  /*else if(gameState == 2){
 
-  }*/
   else {
     background(220);
     text("Press space to start", 400, 250);
@@ -160,6 +238,24 @@ function draw() {
   
 }
 
+function keyReleased(){
+  if(kb.pressing('l')){
+    fireBullet = createSprite(player.x,player.y);
+    fireBullet.addImage(fireBulletPic);
+    fireBullet.life = 30;
+    fireBullet.rotation = player.rotation;
+    fireBullet.setSpeed(5,player.rotation);
+    fireBullets.add(fireBullet);
+  }
+}
+
+function bulletRemove(){
+  fireBullet.remove();
+}
+
+function bulletCollision(){
+
+}
 function playerMove(){
   if(kb.pressing('a')){
     player.vel.x = -2;
@@ -180,19 +276,12 @@ function playerMove(){
     player.vel.y = jump;
   }
 
-  //adjust for your specific tiles
-  /*if(onGround.overlapping(grass) || onGround.overlapping(water)){
-    player.drag = 20;
-    player.friction = 10;
-    jump = 15;
-    player.h = 8;
-  }*/
-  /*else{
-    player.drag = 0;
-    player.friction = 0;
-    jump = 20;
-    //player.h = 
-  }*/
+
+if(onGround.overlapping(spike) || onGround.overlapping(water)){
+  player.speed = 0;
+  player.x = 40;
+  player.y = 100;
+  }
 
   if(player.y > 400){
     player.speed = 0;
@@ -201,29 +290,27 @@ function playerMove(){
   }
 }
 
-function levelTwo(){
-  player.speed = 0;
-    player.x = 40;
-    player.y = 100;
-  tileMap.remove();
-  tileMap = new Tiles([
-    '..............................',
-    '..............................',
-    '..............................',
-    '..............................',
-    '..............................',
-    '..............................',
-    '..............................',
-    '..............................',
-    '..............................',
-    'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
-  ],
-    groundSize,
-    groundSize,
-    groundSize-1,
-    groundSize-1
-);
-
+function levelSelect(){
+  switch(level){
+    case 1:
+      tileMap = tileMap1;
+      break;
+    case 2:
+      tileMap.remove();
+      tileMap = tileMap2;
+      player.speed = 0;
+      player.x = 40;
+      player.y = 100;
+      break;
+    case 3:
+      tileMap.remove();
+      tileMap = tileMap3;
+      player.speed = 0;
+      player.x = 40;
+      player.y = 100;
+      tileMap.remove();
+      break;
+  }
 }
 
 function enemyMovement(){
@@ -240,7 +327,7 @@ function enemyMovement(){
   }
 }
 
-function enemy(e,tileRepresentation,ePic){
+function enemySetup(e,tileRepresentation,ePic){
   e = new Group();
   e.w = 40;
   e.h = 40;
