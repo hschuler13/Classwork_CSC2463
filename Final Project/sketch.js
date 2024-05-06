@@ -343,7 +343,7 @@ function draw() {
     gameOverSeq.stop();
     gameSeq.start();
     world.step();
-    timer += (ceil(deltaTime/1000))/60;
+    timer += ceil((ceil(deltaTime/1000))/60);
     //player.x = 2000;
     //player.y = 20;
     background(135, 206, 235);
@@ -481,13 +481,13 @@ function bulletCollision(){
 
 
 function playerMovement() {
-  if (kb.pressing('a')) {
+  if (joyX > 5) {
     //sounds.player('walk').start();
     player.vel.x = -2;
     player.ani = 'run';
     player.mirror.x = true;
   }
-  else if (kb.pressing('d')) {
+  else if (joyX < -5) {
     //sounds.player('walk').start();
     player.vel.x = 2;
     player.ani = 'run';
@@ -498,7 +498,7 @@ function playerMovement() {
     player.vel.x = 0;
   }
 
-  if (kb.presses('space') && (onGround.overlapping(walkable) ||onGround.overlapping(spike) ||onGround.overlapping(water))) {
+  if (sw == 1 && (onGround.overlapping(walkable) ||onGround.overlapping(spike) ||onGround.overlapping(water))) {
     //sounds.player('jump').start();
     player.vel.y = jump;
   }
@@ -548,6 +548,7 @@ function connectBtnClick() {
 
 function levelTwo() {
   tileMap1.remove();
+  gameState = 1;
   spike.image = fireObstaclePic;
   tileMap2 = new Tiles([
     'aaa...............................................',
@@ -583,6 +584,7 @@ function levelTwo() {
 
 function levelThree() {
   tileMap2.remove();
+  gameState = 1;
   spike.image = fireObstaclePic;
   water.image = iceObstaclePic;
   fireTrigger.image = fireTriggerPic;
