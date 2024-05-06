@@ -280,7 +280,7 @@ function draw() {
 
     background(220);
     text("Cold as fire", width/2, height/2);
-    text("Press space to start", width/2, 250);
+    text("Press space to start", width/2, 200);
     player.visible = false;
     walkable.visible = false;
     carrot.visible = false;
@@ -298,7 +298,7 @@ function draw() {
     //player.y = 20;
     background(135, 206, 235);
     text('score: ' + score, 10, 25);
-    text('timer: ' + deltaTime/1000, 10, 50);
+    text('timer: ' + ceil(deltaTime/1000), 10, 50);
     camera.x = player.x;
     camera.y = player.y;
     player.visible = true;
