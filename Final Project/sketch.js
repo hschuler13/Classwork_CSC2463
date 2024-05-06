@@ -279,24 +279,6 @@ function draw() {
     buttonVal = values[3];
     buttonVal2 = values[4];
     
-    if (joyX < 0) {
-      player.vel.x = -2;
-      player.ani = 'run';
-      player.mirror.x = true;
-    }
-    else if (joyX > 0) {
-      player.vel.x = 2;
-      player.ani = 'run';
-      player.mirror.x = false;
-    }
-    else {
-      player.ani = 'stand';
-      player.vel.x = 0;
-    }
-  
-    if (buttonVal == 1 && (onGround.overlapping(walkable) ||onGround.overlapping(spike) ||onGround.overlapping(water))) {
-      player.vel.y = jump;
-    }
     //temp = values[]
   }
 
@@ -333,8 +315,6 @@ function draw() {
     }
   }
   else if (gameState == 1) {
-    
-    
     startSeq.stop();
     gameOverSeq.stop();
     gameSeq.start();
@@ -446,6 +426,24 @@ function bulletCollision(){
 }
 
 function playerMovement() {
+  if (kb.pressing('a')) {
+    player.vel.x = -2;
+    player.ani = 'run';
+    player.mirror.x = true;
+  }
+  else if (kb.pressing('d')) {
+    player.vel.x = 2;
+    player.ani = 'run';
+    player.mirror.x = false;
+  }
+  else {
+    player.ani = 'stand';
+    player.vel.x = 0;
+  }
+
+  if (kb.pressing('space') && (onGround.overlapping(walkable) ||onGround.overlapping(spike) ||onGround.overlapping(water))) {
+    player.vel.y = jump;
+  }
   if (player.y > 2100) {
     player.speed = 0;
     player.x = 2000;
