@@ -232,6 +232,13 @@ function setup() {
   iceBullet = createSprite(-1000, 0);
   iceBullet.remove();
 
+  
+  
+}
+
+
+function draw() {
+  //gameOverSeq.loop = false;
   //player collision setup
   player.overlaps(carrot, (p, c) => {
     level++;
@@ -268,12 +275,6 @@ function setup() {
       gameState = 2;
     }
   });
-  
-}
-
-
-function draw() {
-  //gameOverSeq.loop = false;
   startSeq.start();
   onGround.overlaps(spike, (s, e) => {
     if(spike.image == fireObstaclePic){
