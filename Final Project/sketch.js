@@ -351,11 +351,30 @@ function draw() {
     text('score: ' + score, 20, 25);
     text('timer: ' + timer, 20, 50);
     text('level: ' + level, 20, 75); 
-    text(joyX, 20, 100);
+    /*text(joyX, 20, 100);
     text(sw, 20, 125);
     text(temp, 20, 150);
     text(buttonVal, 20, 175);
-    text(buttonVal2, 20, 200);
+    text(buttonVal2, 20, 200);*/
+    if (buttonVal == 1) {
+      fireBullet = createSprite(player.x, player.y);
+      fireBullet.life = 50;
+      fireBullet.scale = 0.3;
+      if(temp > 80){
+        fireBullet.addImage(fireBulletPic);
+      }
+      else{
+        fireBullet.addImage(iceBulletPic);
+      }
+      if (player.mirror.x == true) {
+        fireBullet.mirror.x = true;
+      }
+      else {
+        fireBullet.mirror.x = false;
+      }
+      fireBullets.add(fireBullet);
+      //sounds.player('shoot').start();
+    }
     camera.x = player.x;
     camera.y = player.y;
     player.visible = true;
@@ -415,29 +434,6 @@ function draw() {
     text("you win!", width/2, height/2);
   }
 
-}
-
-function keyReleased() {
-  
-  if (buttonVal == 1) {
-    fireBullet = createSprite(player.x, player.y);
-    fireBullet.life = 50;
-    fireBullet.scale = 0.3;
-    if(temp > 80){
-      fireBullet.addImage(fireBulletPic);
-    }
-    else{
-      fireBullet.addImage(iceBulletPic);
-    }
-    if (player.mirror.x == true) {
-      fireBullet.mirror.x = true;
-    }
-    else {
-      fireBullet.mirror.x = false;
-    }
-    fireBullets.add(fireBullet);
-    sounds.player('shoot').start();
-  }
 }
 
 function bulletRemove() {
