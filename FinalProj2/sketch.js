@@ -9,6 +9,7 @@ let fireBullets, fireBullet;
 let iceBullets, iceBullet;
 let temp;
 let score = 0;
+let fireTrigger, iceTrigger;
 let ground1, ground2, carrot, dirt, water, ice, spike, ash;
 let tileMap1, tileMap2, tileMap3;
 let timer = 0;
