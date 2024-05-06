@@ -32,7 +32,7 @@ function setup() {
 
 function draw() {
   // this makes received text scroll up
-  copy(0, 0, width, height, 0, -1, width, height);
+  //copy(0, 0, width, height, 0, -1, width, height);
 
   // reads in complete lines and prints them at the
   // bottom of the canvas
