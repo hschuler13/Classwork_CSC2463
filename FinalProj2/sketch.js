@@ -346,9 +346,8 @@ function keyReleased() {
       temp = 30;
     }
   }
-  if (kb.presses('l')) {
+  if (keyCode == 76) {
     fireBullet = createSprite(player.x, player.y);
-    
     fireBullet.life = 50;
     fireBullet.scale = 0.3;
     if(temp > 80){
