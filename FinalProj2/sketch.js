@@ -232,7 +232,7 @@ function setup() {
       //synth.triggerAttackRelease("C3", "8n", now);
       levelTwo();
     }
-    else if(level == 2){
+    else if(level == 3){
       //synth.triggerAttackRelease("C3", "8n", now);
       levelThree();
     }
@@ -371,6 +371,16 @@ function draw() {
     }
   }
   else{
+    player.visible = false;
+    walkable.visible = false;
+    carrot.visible = false;
+    iceEnemy.visible = false;
+    fireEnemy.visible = false;
+    ground2.visible = false;
+    spike.visible = false;
+    water.visible = false; 
+    fireTrigger.visible = false;
+    iceTrigger.visible = false; 
     textSize(100);
     background(60,179,113);
     text("you win!", width/2, height/2);
@@ -536,6 +546,7 @@ function levelThree() {
   tileMap2.remove();
   spike.image = fireObstaclePic;
   water.image = iceObstaclePic;
+  fireTrigger.image == fireTriggerPic;
   tileMap3 = new Tiles([
     'aaa...............i..............................',
     '.....aaaaaaaa..baaaaabaaaaaaaa....................',
