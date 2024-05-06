@@ -15,6 +15,7 @@ let specialMoveReady = 1;
 let port, connectButton;
 let joyX = 0, sw = 0;
 let buttonVal = 0, buttonVal2 = 0;
+let gameFont;
 
 //add bg music using tonejs
 //also use sound effects
@@ -163,10 +164,6 @@ function setup() {
 
   tileSet(ground1, 'a', topGroundPic);
   tileSet(dirt, 'd', bottomGroundPic);
-  //tileSet(water,'w',iceObstaclePic);
-  //tileSet(ice,'e',iceObstacleNullifiedPic);
-  //tileSet(spike,'s',fireObstaclePic);
-  //tileSet(ash,'h',fireObstacleNullifiedPic);
 
   //enemy setup
   fireEnemy = new Group();
@@ -567,4 +564,8 @@ function connect() {
   } else {
     port.close();
   }
+}
+
+class Player{
+
 }
