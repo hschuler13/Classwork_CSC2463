@@ -383,7 +383,10 @@ function draw() {
     background(0,0,200);
     text("you win :))", 400, 250);
   }
-
+  if (port.opened()) {
+    let message = specialMoveReady;
+    port.write(message);
+  }
 }
 
 function keyReleased() {
@@ -439,10 +442,7 @@ function bulletCollision(){
       }
     });
   }
-  if (port.opened()) {
-    let message = specialMoveReady;
-    port.write(message);
-  }
+  
 }
 
 function playerMovement() {
