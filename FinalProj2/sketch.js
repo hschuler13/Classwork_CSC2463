@@ -15,19 +15,18 @@ let timer = 0;
 
 //add bg music using tonejs
 //also use sound effects
-//let sounds = new Tone.Players({
-//'paintStroke': "assets/paintStroke.mp3",
-//'paintSplash': "assets/paintSplash.mp3",
-//'paperCrumple': "assets/paperCrumple.mp3",
-//'cameraClick': "assets/cameraClick.mp3"
-//});
+let sounds = new Tone.Players({
+'walk': "assets/walk.mp3",
+'shoot': "assets/shoot.mp3",
+'jump': "assets/jump.mp3",
+'poof': "assets/poof.mp3"
+});
 
 let synth = new Tone.PolySynth(Tone.MonoSynth);
 
 let startSong = ["C4", "C4", "E4", "C4", "C4", "E4", "C4", "C4", "E4", "F4", "G4", "A4", "G4", "F4"];
 let gameSong = ["C3", "D3", "E3", "G3", "C3", "D3", "E3", "A3", "C3", "D3", "E3", "B3", "A3", "G3", "D3", "C3"];
 let gameOverSong = [["D#3", "D#4", "D#4"], ["C3", "C4", "C4"], ["F#3", "F#4", "F#4"]];
-let gameOverDuration = [0.25, 0.25, 0.5];
 
 const startSeq = new Tone.Sequence((time, note) => {
   synth.triggerAttackRelease(note, 0.1, time);
@@ -201,10 +200,10 @@ function setup() {
     'dddddddddddda................a.............a......',
     'ddddd.........................a...........a.......',
     'dddd....ddddddaaa..............aaaaaaaaaaa........',
-    'ddd...........dda.................................',
+    'ddd...........ddd.................................',
     'dd....ddddddddddda................................',
-    'ddd....dddddddddda..............aaa...............',
-    'dddd.....dddddddda.............addda..............',
+    'ddd....ddddddddddd..............aaa...............',
+    'dddd.....ddddddddd.............addda..............',
     'ddddd.....................i...addddda............c',
     'aaaaaaaaaaaaaaaaaaaaaaabaaaaabdddddddaaaaaaaaaaaaa',
     'dddddddddddddddddddddddddddddddddddddddddddddddddd'
@@ -230,8 +229,11 @@ function setup() {
     if (level == 2) {
       levelTwo();
     }
-    else {
+    else if(level == 2){
       levelThree();
+    }
+    else{
+      gameState = 3;
     }
   });
   player.overlaps(fireEnemy, (p, e) => {
@@ -279,8 +281,8 @@ function draw() {
   if (gameState == 0) {
 
     background(220);
-    text("Cold as fire", width/2, height/2);
-    text("Press space to start", width/2, 200);
+    text("Cold as fire", width/2, 200);
+    text("Press space to start", width/2, height/2);
     player.visible = false;
     walkable.visible = false;
     carrot.visible = false;
@@ -314,6 +316,7 @@ function draw() {
     background(135, 206, 235);
     text('score: ' + score, 20, 25);
     text('timer: ' + timer, 20, 50);
+    text('level: ' + level, 20, 75); 
     camera.x = player.x;
     camera.y = player.y;
     player.visible = true;
@@ -339,6 +342,7 @@ function draw() {
 
     text("Game Over!", 400, 250);
     text("Press space to restart", 400, 350);
+    
     player.visible = false;
     walkable.visible = false;
     carrot.visible = false;
@@ -381,6 +385,7 @@ function keyReleased() {
       fireBullet.mirror.x = false;
     }
     fireBullets.add(fireBullet);
+    sounds.player('shoot').start();
   }
 }
 
@@ -391,6 +396,7 @@ function bulletRemove() {
 function bulletCollision(){
   if(fireBullet.image == fireBulletPic){
     fireBullet.overlaps(iceEnemy, (s, e) => {
+      sounds.player('poof').start();
       e.remove();
       fireBullet.remove();
     });
@@ -405,6 +411,7 @@ function bulletCollision(){
   }
   else{
     fireBullet.overlaps(fireEnemy, (s, e) => {
+      sounds.player('poof').start();
       e.remove();
       fireBullet.remove();
     });
@@ -422,11 +429,13 @@ function bulletCollision(){
 
 function playerMovement() {
   if (kb.pressing('a')) {
+    sounds.player('walk').start();
     player.vel.x = -2;
     player.ani = 'run';
     player.mirror.x = true;
   }
   else if (kb.pressing('d')) {
+    sounds.player('walk').start();
     player.vel.x = 2;
     player.ani = 'run';
     player.mirror.x = false;
@@ -437,6 +446,7 @@ function playerMovement() {
   }
 
   if (kb.presses('space') && (onGround.overlapping(walkable) ||onGround.overlapping(spike) ||onGround.overlapping(water))) {
+    sounds.player('jump').start();
     player.vel.y = jump;
   }
 
@@ -493,10 +503,10 @@ function levelTwo() {
     'sssss.aaa.........................................',
     'ddddda.......ssssssssssssssssssssssssssss.........',
     '......a......dddddddddddddddddddddddddddd.........',
-    '.....a...................................ss.......',
-    'aaaaa....................................ddss.....',
-    '...........................................ddss...',
-    '................f...............i............ddssc',
+    '.....a..................................dss.......',
+    'aaaaa...................................dddss.....',
+    '..........................................dddss...',
+    '................f...............i...........dddssc',
     'aaaaaaaaaaaaabaaaaabaaaaaaaaabaaaaabaaaaaaaaadddda',
     'dddddddddddddddddddddddddddddddddddddddddddddddddd'
   ],
