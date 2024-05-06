@@ -87,7 +87,13 @@ function setup() {
   //player.debug = true;
 
   //carrot setup (move to next level)
-  carrot = new Group();
+  groupSet(carrot, 30, 30, carrotPic, 'c');
+  groupSet(fireTrigger, 30, 30, fireTriggerPic, '!');
+  groupSet(iceTrigger, 30, 30, iceTriggerPic, '?');
+  groupSet(spike, groundSize, groundSize, fireObstaclePic, 's');
+  groupSet(water, groundSize, groundSize, iceObstaclePic, 'w');
+  groupSet(ground2, groundSize, groundSize, topGroundPic, 'b');
+  /*carrot = new Group();
   carrot.w = 30;
   carrot.h = 30;
   carrot.image = carrotPic;
@@ -123,7 +129,7 @@ function setup() {
   water.h = groundSize;
   water.tile = 'w';
   water.collider = 'static';
-  water.image = iceObstaclePic;
+  water.image = iceObstaclePic;*/
 
   //world setup
   world.autoStep = false;
@@ -136,12 +142,12 @@ function setup() {
   let joint = new GlueJoint(player, onGround);
   joint.visible = false;
 
-  ground2 = new Group();
+  /*ground2 = new Group();
   ground2.w = groundSize;
   ground2.h = groundSize;
   ground2.tile = 'b';
   ground2.collider = 'static';
-  ground2.image = topGroundPic;
+  ground2.image = topGroundPic;*/
 
   //tile group setup
   walkable = new Group();
@@ -182,8 +188,8 @@ function setup() {
   iceEnemy.addAnis({
     run: { row: 0, frames: 7 }
   });
-  iceEnemy.debug = true;
-  fireEnemy.debug = true;
+  //iceEnemy.debug = true;
+  //fireEnemy.debug = true;
   //enemySetup(fireEnemy,'f',fireEnemyPic);
   //enemySetup(iceEnemy,'i',iceEnemyPic);
 
@@ -569,8 +575,14 @@ function levelThree() {
   player.y = 20;
 }
 
-function groupSet(){
-
+function groupSet(x, wVal, hVal, picType, tileRepresentation){
+  x = new Group();
+  x.w = wVal;
+  x.h = hVal;
+  x.image = picType;
+  x.tile = tileRepresentation;
+  x.collider = 'static';
+  x.rotationLock = true;
 }
 
 function tileSet(x, tileRepresentation, tilePic) {
