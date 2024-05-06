@@ -7,11 +7,15 @@ let jump = 40;
 let level = 1;
 let fireBullets, fireBullet;
 let iceBullets, iceBullet;
-let temp;
+let temp = 0;
 let score = 0;
 let ground1, ground2, carrot, dirt, water, ice, spike, ash;
 let tileMap1, tileMap2, tileMap3;
 let timer = 0;
+
+let port;
+let connectBtn;
+let joyX = 0, sw = 0, buttonVal = 0, buttonVal2 = 0;
 
 //add bg music using tonejs
 //also use sound effects
@@ -261,7 +265,17 @@ function setup() {
       gameState = 2;
     }
   });
-  
+
+  port = createSerial();
+
+  let usedPorts = usedSerialPorts();
+  if (usedPorts.length > 0) {
+    port.open(usedPorts[0], 57600);
+  }
+
+  connectBtn = createButton('Connect to Arduino');
+  connectBtn.position(80, 200);
+  connectBtn.mousePressed(connectBtnClick);
 }
 
 
@@ -278,6 +292,17 @@ function draw() {
     gameState = 2;
     }
   });
+
+  let latest = port.readUntil("\n");
+  let values = latest.split(",");
+  if (values.length > 2) {
+    joyX = values[0];
+    sw = Number(values[1]);
+    temp = values[2];
+    buttonVal = values[3];
+    buttonVal2 = values[4];
+
+  }
 
   if (fireBullet.mirror.x == true) {
     fireBullet.x -= 5;
@@ -327,6 +352,11 @@ function draw() {
     text('score: ' + score, 20, 25);
     text('timer: ' + timer, 20, 50);
     text('level: ' + level, 20, 75); 
+    text(joyX, 20, 100);
+    text(sw, 20, 125);
+    text(temp, 20, 150);
+    text(buttonVal, 20, 175);
+    text(buttonVal2, 20, 200);
     camera.x = player.x;
     camera.y = player.y;
     player.visible = true;
@@ -419,6 +449,7 @@ function bulletCollision(){
   if(fireBullet.image == fireBulletPic){
     fireBullet.overlaps(iceEnemy, (s, e) => {
       //sounds.player('poof').start();
+      score += 100;
       e.remove();
       fireBullet.remove();
     });
@@ -434,6 +465,7 @@ function bulletCollision(){
   else{
     fireBullet.overlaps(fireEnemy, (s, e) => {
       //sounds.player('poof').start();
+      score += 100;
       e.remove();
       fireBullet.remove();
     });
@@ -504,6 +536,14 @@ function fireEnemyMovement() {
     else {
       e.mirror.x = false;
     }
+  }
+}
+
+function connectBtnClick() {
+  if (!port.opened()) {
+    port.open('Arduino', 57600);
+  } else {
+    port.close();
   }
 }
 
