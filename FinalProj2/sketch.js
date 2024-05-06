@@ -15,12 +15,12 @@ let timer = 0;
 
 //add bg music using tonejs
 //also use sound effects
-let sounds = new Tone.Players({
+/*let sounds = new Tone.Players({
 'walk': "assets/walk.mp3",
 'shoot': "assets/shoot.mp3",
 'jump': "assets/jump.mp3",
 'poof': "assets/poof.mp3"
-});
+});*/
 
 let synth = new Tone.PolySynth(Tone.MonoSynth);
 
@@ -68,6 +68,8 @@ function setup() {
 
   textFont(gameFont);
   textAlign(CENTER);
+  fill(255);
+  stroke(0);
   //player setup
   player = new Sprite(30, 30, 80, 80);
   player.spriteSheet = playerPic;
@@ -227,16 +229,16 @@ function setup() {
   player.overlaps(carrot, (p, c) => {
     level++;
     if (level == 2) {
-      synth.triggerAttackRelease("C3", "8n", now);
+      //synth.triggerAttackRelease("C3", "8n", now);
       levelTwo();
     }
     else if(level == 2){
-      synth.triggerAttackRelease("C3", "8n", now);
+      //synth.triggerAttackRelease("C3", "8n", now);
       levelThree();
     }
     else{
       for(let i = 0; i < 3; i++){
-        synth.triggerAttackRelease("C3", "16n", now);
+        //synth.triggerAttackRelease("C3", "16n", now);
       }
       gameState = 3;
     }
@@ -285,9 +287,11 @@ function draw() {
   }
   if (gameState == 0) {
 
-    background(220);
+    background(186,85,211);
+    textSize(100);
     text("Cold as fire", width/2, 200);
-    text("Press space to start", width/2, height/2);
+    textSize(25);
+    text("Press space to start", width/2, 100);
     player.visible = false;
     walkable.visible = false;
     carrot.visible = false;
@@ -315,10 +319,11 @@ function draw() {
     gameOverSeq.stop();
     gameSeq.start();
     world.step();
-    timer += ceil(deltaTime/1000);
+    timer += (ceil(deltaTime/1000))/60;
     //player.x = 2000;
     //player.y = 20;
     background(135, 206, 235);
+    textSize(10);
     text('score: ' + score, 20, 25);
     text('timer: ' + timer, 20, 50);
     text('level: ' + level, 20, 75); 
@@ -340,11 +345,12 @@ function draw() {
     bulletCollision();
   }
   else if (gameState == 2) {
-    background(220);
+    background(220,20,60);
     gameSeq.stop();
     startSeq.stop();
     gameOverSeq.start();
 
+    textSize();
     text("Game Over!", 400, 250);
     text("Press space to restart", 400, 350);
     
@@ -365,8 +371,9 @@ function draw() {
     }
   }
   else{
-    background(255);
-    text("you win :))", 400, 250);
+    textSize(100);
+    background(60,179,113);
+    text("you win!", width/2, height/2);
   }
 
 }
@@ -401,7 +408,7 @@ function bulletRemove() {
 function bulletCollision(){
   if(fireBullet.image == fireBulletPic){
     fireBullet.overlaps(iceEnemy, (s, e) => {
-      sounds.player('poof').start();
+      //sounds.player('poof').start();
       e.remove();
       fireBullet.remove();
     });
@@ -416,7 +423,7 @@ function bulletCollision(){
   }
   else{
     fireBullet.overlaps(fireEnemy, (s, e) => {
-      sounds.player('poof').start();
+      //sounds.player('poof').start();
       e.remove();
       fireBullet.remove();
     });
@@ -434,13 +441,13 @@ function bulletCollision(){
 
 function playerMovement() {
   if (kb.pressing('a')) {
-    sounds.player('walk').start();
+    //sounds.player('walk').start();
     player.vel.x = -2;
     player.ani = 'run';
     player.mirror.x = true;
   }
   else if (kb.pressing('d')) {
-    sounds.player('walk').start();
+    //sounds.player('walk').start();
     player.vel.x = 2;
     player.ani = 'run';
     player.mirror.x = false;
@@ -451,7 +458,7 @@ function playerMovement() {
   }
 
   if (kb.presses('space') && (onGround.overlapping(walkable) ||onGround.overlapping(spike) ||onGround.overlapping(water))) {
-    sounds.player('jump').start();
+    //sounds.player('jump').start();
     player.vel.y = jump;
   }
 
