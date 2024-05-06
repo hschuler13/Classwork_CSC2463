@@ -11,7 +11,7 @@ let temp;
 let score = 0;
 let ground1, ground2, carrot, dirt, water, ice, spike, ash;
 let tileMap1, tileMap2, tileMap3;
-let timerLength = 0;
+let timer = 0;
 
 //add bg music using tonejs
 //also use sound effects
@@ -289,16 +289,24 @@ function draw() {
     }
   }
   else if (gameState == 1) {
+    if(kb.presses('k')){
+      if (temp == 30){
+        temp = 90;
+      }
+      else{
+        temp = 30;
+      }
+    }
     startSeq.stop();
     gameOverSeq.stop();
     gameSeq.start();
     world.step();
-    
+    timer += ceil(deltaTime/1000);
     //player.x = 2000;
     //player.y = 20;
     background(135, 206, 235);
-    text('score: ' + score, 10, 25);
-    text('timer: ' + ceil(deltaTime/1000), 10, 50);
+    text('score: ' + score, 20, 25);
+    text('timer: ' + timer, 20, 50);
     camera.x = player.x;
     camera.y = player.y;
     player.visible = true;
@@ -338,14 +346,7 @@ function draw() {
 }
 
 function keyReleased() {
-  if(kb.presses('k')){
-    if (temp == 30){
-      temp = 90;
-    }
-    else{
-      temp = 30;
-    }
-  }
+  
   if (keyCode == 76) {
     fireBullet = createSprite(player.x, player.y);
     fireBullet.life = 50;
@@ -400,13 +401,7 @@ function bulletCollision(){
   }
 }
 
-function timer() {
-  timer += deltaTime / 1000;
-  text("Timer: " + ceil(timerLength), 300, 20);
-  if (timerLength < 0) {
-    //screen = 2;
-  }
-}
+
 
 function playerMovement() {
   if (kb.pressing('a')) {
