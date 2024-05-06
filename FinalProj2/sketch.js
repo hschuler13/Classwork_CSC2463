@@ -419,6 +419,7 @@ function bulletCollision(){
   if(fireBullet.image == fireBulletPic){
     fireBullet.overlaps(iceEnemy, (s, e) => {
       //sounds.player('poof').start();
+      score += 100;
       e.remove();
       fireBullet.remove();
     });
@@ -434,6 +435,7 @@ function bulletCollision(){
   else{
     fireBullet.overlaps(fireEnemy, (s, e) => {
       //sounds.player('poof').start();
+      score += 100;
       e.remove();
       fireBullet.remove();
     });

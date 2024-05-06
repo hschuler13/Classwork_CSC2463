@@ -301,7 +301,6 @@ function draw() {
     temp = values[2];
     buttonVal = values[3];
     buttonVal2 = values[4];
-
   }
 
   if (fireBullet.mirror.x == true) {
