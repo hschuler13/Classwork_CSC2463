@@ -351,11 +351,11 @@ function draw() {
     text('score: ' + score, 20, 25);
     text('timer: ' + timer, 20, 50);
     text('level: ' + level, 20, 75); 
-    /*text(joyX, 20, 100);
+    text(joyX, 20, 100);
     text(sw, 20, 125);
     text(temp, 20, 150);
     text(buttonVal, 20, 175);
-    text(buttonVal2, 20, 200);*/
+    text(buttonVal2, 20, 200);
     if (buttonVal == 1) {
       fireBullet = createSprite(player.x, player.y);
       fireBullet.life = 50;
@@ -477,13 +477,13 @@ function bulletCollision(){
 
 
 function playerMovement() {
-  if (joyX > 5) {
+  if (joyX > 10) {
     //sounds.player('walk').start();
     player.vel.x = -2;
     player.ani = 'run';
     player.mirror.x = true;
   }
-  else if (joyX < -5) {
+  else if (joyX < -10) {
     //sounds.player('walk').start();
     player.vel.x = 2;
     player.ani = 'run';
