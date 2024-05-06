@@ -281,7 +281,7 @@ function setup() {
 
 function draw() {
   //gameOverSeq.loop = false;
-  
+  Tone.start();
   onGround.overlaps(spike, (s, e) => {
     if(spike.image == fireObstaclePic){
     gameState = 2;
@@ -331,14 +331,6 @@ function draw() {
     }
   }
   else if (gameState == 1) {
-    if(kb.presses('k')){
-      if (temp == 30){
-        temp = 90;
-      }
-      else{
-        temp = 30;
-      }
-    }
     startSeq.stop();
     gameOverSeq.stop();
     gameSeq.start();
