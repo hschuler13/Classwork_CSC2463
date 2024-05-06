@@ -292,16 +292,7 @@ function draw() {
     text("Cold as fire", width/2, 200);
     textSize(25);
     text("Press space to start", width/2, 100);
-    player.visible = false;
-    walkable.visible = false;
-    carrot.visible = false;
-    iceEnemy.visible = false;
-    fireEnemy.visible = false;
-    ground2.visible = false;
-    spike.visible = false;
-    water.visible = false; 
-    fireTrigger.visible = false;
-    iceTrigger.visible = false; 
+    setVisible(false); 
     if (kb.presses('space')) {
       gameState = 1;
     }
@@ -329,19 +320,10 @@ function draw() {
     text('level: ' + level, 20, 75); 
     camera.x = player.x;
     camera.y = player.y;
-    player.visible = true;
-    walkable.visible = true;
-    carrot.visible = true;
-    iceEnemy.visible = true;
-    fireEnemy.visible = true;
-    ground2.visible = true;
-    spike.visible = true;
-    water.visible = true; 
-    fireTrigger.visible = true;
-    iceTrigger.visible = true; 
+    setVisible(true);
     playerMovement();
-    iceEnemyMovement();
-    fireEnemyMovement();
+    enemyMovement(iceEnemy);
+    enemyMovement(fireEnemy);
     bulletCollision();
   }
   else if (gameState == 2) {
@@ -354,16 +336,7 @@ function draw() {
     text("Game Over!", 400, 250);
     text("Press space to restart", 400, 350);
     
-    player.visible = false;
-    walkable.visible = false;
-    carrot.visible = false;
-    iceEnemy.visible = false;
-    fireEnemy.visible = false;
-    ground2.visible = false;
-    spike.visible = false;
-    water.visible = false; 
-    fireTrigger.visible = false;
-    iceTrigger.visible = false; 
+    setVisible(false);
     if (kb.presses('space')) {
       gameState = 1;
       player.x = 2000;
@@ -371,16 +344,7 @@ function draw() {
     }
   }
   else{
-    player.visible = false;
-    walkable.visible = false;
-    carrot.visible = false;
-    iceEnemy.visible = false;
-    fireEnemy.visible = false;
-    ground2.visible = false;
-    spike.visible = false;
-    water.visible = false; 
-    fireTrigger.visible = false;
-    iceTrigger.visible = false; 
+    setVisible(false);
     textSize(100);
     background(60,179,113);
     text("you win!", width/2, height/2);
@@ -389,7 +353,6 @@ function draw() {
 }
 
 function keyReleased() {
-  
   if (keyCode == 76) {
     fireBullet = createSprite(player.x, player.y);
     fireBullet.life = 50;
@@ -411,9 +374,9 @@ function keyReleased() {
   }
 }
 
-function bulletRemove() {
+/*function bulletRemove() {
   fireBullet.remove();
-}
+}*/
 
 function bulletCollision(){
   if(fireBullet.image == fireBulletPic){
@@ -449,8 +412,6 @@ function bulletCollision(){
   }
 }
 
-
-
 function playerMovement() {
   if (kb.pressing('a')) {
     //sounds.player('walk').start();
@@ -481,7 +442,34 @@ function playerMovement() {
   }
 }
 
-function iceEnemyMovement(){
+function enemyMovement(enemyName){
+  for(e of enemyName){
+    if (e.overlaps(ground2)) {
+      e.vel.x *= -1;
+    }
+    if (e.vel.x < 0) {
+      e.mirror.x = true;
+    }
+    else {
+      e.mirror.x = false;
+    }
+  }
+}
+
+function setVisible(booleanV){
+  player.visible = booleanV;
+    walkable.visible = booleanV;
+    carrot.visible = booleanV;
+    iceEnemy.visible = booleanV;
+    fireEnemy.visible = booleanV;
+    ground2.visible = booleanV;
+    spike.visible = booleanV;
+    water.visible = booleanV; 
+    fireTrigger.visible = booleanV;
+    iceTrigger.visible = booleanV; 
+}
+
+/*function iceEnemyMovement(){
   for (e of iceEnemy) {
     if (e.overlaps(ground2)) {
       e.vel.x *= -1;
@@ -507,7 +495,7 @@ function fireEnemyMovement() {
       e.mirror.x = false;
     }
   }
-}
+}*/
 
 function levelTwo() {
   tileMap1.remove();
@@ -581,6 +569,10 @@ function levelThree() {
   player.y = 20;
 }
 
+function groupSet(){
+
+}
+
 function tileSet(x, tileRepresentation, tilePic) {
   x = new walkable.Group();
   x.w = groundSize;
@@ -589,3 +581,4 @@ function tileSet(x, tileRepresentation, tilePic) {
   x.collider = 'static';
   x.image = tilePic;
 }
+
