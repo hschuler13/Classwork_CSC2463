@@ -326,7 +326,7 @@ function draw() {
     water.visible = false; 
     fireTrigger.visible = false;
     iceTrigger.visible = false; 
-    if (kb.presses('space')) {
+    if (sw == 1) {
       gameState = 1;
     }
   }
@@ -393,7 +393,7 @@ function draw() {
     water.visible = false; 
     fireTrigger.visible = false;
     iceTrigger.visible = false; 
-    if (kb.presses('space')) {
+    if (sw == 1) {
       gameState = 1;
       player.x = 2000;
       player.y = 20;
@@ -419,7 +419,7 @@ function draw() {
 
 function keyReleased() {
   
-  if (keyCode == 76) {
+  if (buttonVal == 1) {
     fireBullet = createSprite(player.x, player.y);
     fireBullet.life = 50;
     fireBullet.scale = 0.3;
