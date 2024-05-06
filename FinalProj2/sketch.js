@@ -546,7 +546,7 @@ function levelThree() {
   tileMap2.remove();
   spike.image = fireObstaclePic;
   water.image = iceObstaclePic;
-  fireTrigger.image == fireTriggerPic;
+  fireTrigger.image = fireTriggerPic;
   tileMap3 = new Tiles([
     'aaa...............i..............................',
     '.....aaaaaaaa..baaaaabaaaaaaaa....................',
