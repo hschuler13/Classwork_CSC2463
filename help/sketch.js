@@ -3,6 +3,7 @@ let joyX = 0, temp = 0, sw = 0, buttonVal = 0, buttonVal2 = 0;
 let connectButton;
 let circleX, circleY;
 let speed = 3;
+let specialMoveReady = 1;
 
 function setup() {
   port = createSerial();
@@ -46,6 +47,8 @@ function draw() {
   text(temp, 100, 150);
   text(buttonVal, 100, 175);
   text(buttonVal2, 100, 200);
+
+  port.write(specialMoveReady);
 
   /*if (port.opened() && frameCount % 3 == 0) {
     let pixel = get(circleX, circleY);
