@@ -5,7 +5,7 @@ let playerPic, bgPic, topGroundPic, bottomGroundPic, carrotPic, iceBulletPic, fi
 let groundSize = 34;
 let jump = 40;
 let level = 1;
-let fireBullets, fireBullet;
+let bullets, bullet;
 let iceBullets, iceBullet;
 let temp;
 let score = 0;
@@ -64,7 +64,7 @@ function preload() {
   fireTriggerPic = loadImage('assets/fireTrigger.png');
   iceTriggerPic = loadImage('assets/iceTrigger.png');
   activatedTriggerPic = loadImage('assets/activatedTrigger.png');
-  gameFont = loadFOnt('assets/PixelifySans-Regular.ttf');
+  gameFont = loadFont('assets/PixelifySans-Regular.ttf');
 }
 
 function setup() {
@@ -231,9 +231,9 @@ function setup() {
   );
 
   //bullet setup
-  fireBullets = new Group();
-  fireBullet = createSprite(-1000, 0);
-  fireBullet.remove();
+  bullets = new Group();
+  bullet = createSprite(-1000, 0);
+  bullet.remove();
 
   iceBullets = new Group();
   iceBullet = createSprite(-1000, 0);
@@ -275,10 +275,6 @@ function draw() {
   //gameOverSeq.loop = false;
   let latest = port.readUntil("\n");
   let values = latest.split(",");
-  
-  
-
-  
 
   if (port.opened()) {
     let message = `specialMoveReady\n`;
@@ -297,11 +293,11 @@ function draw() {
     }
   });
 
-  if (fireBullet.mirror.x == true) {
-    fireBullet.x -= 5;
+  if (bullet.mirror.x == true) {
+    bullet.x -= 5;
   }
   else {
-    fireBullet.x += 5;
+    bullet.x += 5;
   }
   if (gameState == 0) {
 
@@ -396,49 +392,54 @@ function draw() {
 
 function keyReleased() {
   if (keyCode == 76) {
-    fireBullet = createSprite(player.x, player.y);
-    fireBullet.addImage(fireBulletPic);
-    fireBullet.life = 50;
-    fireBullet.scale = 0.3;
+    bullet = createSprite(player.x, player.y);
+    if(temp > 80){
+      bullet.addImage(fireBulletPic);
+    }
+    else{
+      bullet.addImage(iceBulletPic);
+    }
+    bullet.life = 50;
+    bullet.scale = 0.3;
     if (player.mirror.x == true) {
-      fireBullet.mirror.x = true;
+      bullet.mirror.x = true;
     }
     else {
-      fireBullet.mirror.x = false;
+      bullet.mirror.x = false;
     }
-    fireBullets.add(fireBullet);
+    bullets.add(bullet);
   }
 }
 
 function bulletRemove() {
-  fireBullet.remove();
+  bullet.remove();
 }
 
 function bulletCollision(){
-  if(fireBullet.image == fireBulletPic){
-    fireBullet.overlaps(iceEnemy, (s, e) => {
+  if(bullet.image == fireBulletPic){
+    bullet.overlaps(iceEnemy, (s, e) => {
       e.remove();
-      fireBullet.remove();
+      bullet.remove();
     });
-    fireBullet.overlaps(fireTrigger, (s, e) => {
+    bullet.overlaps(fireTrigger, (s, e) => {
       if(fireTrigger.image == fireTriggerPic){
         spike.image = fireObstacleNullifiedPic;
       fireTrigger.image = activatedTriggerPic;
-      fireBullet.remove();
+      bullet.remove();
       }
     });
     
   }
   else{
-    fireBullet.overlaps(fireEnemy, (s, e) => {
+    bullet.overlaps(fireEnemy, (s, e) => {
       e.remove();
-      fireBullet.remove();
+      bullet.remove();
     });
-    fireBullet.overlaps(iceTrigger, (s, e) => {
+    bullet.overlaps(iceTrigger, (s, e) => {
       if(iceTrigger.image == iceTriggerPic){
         water.image = iceObstacleNullifiedPic;
       iceTrigger.image = activatedTriggerPic;
-      fireBullet.remove();
+      bullet.remove();
       }
     });
   }
