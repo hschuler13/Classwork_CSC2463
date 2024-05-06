@@ -274,7 +274,7 @@ function setup() {
   }
 
   connectBtn = createButton('Connect to Arduino');
-  connectBtn.position(80, 200);
+  connectBtn.position(0, 2100);
   connectBtn.mousePressed(connectBtnClick);
 }
 
