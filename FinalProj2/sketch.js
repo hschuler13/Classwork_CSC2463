@@ -11,6 +11,7 @@ let temp;
 let score = 0;
 let ground1, ground2, carrot, dirt, water, ice, spike, ash;
 let tileMap1, tileMap2, tileMap3;
+let timerLength = 0;
 
 //add bg music using tonejs
 //also use sound effects
@@ -60,11 +61,14 @@ function preload() {
   fireTriggerPic = loadImage('assets/fireTrigger.png');
   iceTriggerPic = loadImage('assets/iceTrigger.png');
   activatedTriggerPic = loadImage('assets/activatedTrigger.png');
+  gameFont = loadFont('assets/PixelifySans-Regular.ttf');
 }
 
 function setup() {
   createCanvas(800, 500);
 
+  textFont(gameFont);
+  textAlign(CENTER);
   //player setup
   player = new Sprite(30, 30, 80, 80);
   player.spriteSheet = playerPic;
@@ -79,7 +83,7 @@ function setup() {
   player.h = 70;
   player.scale = 0.3;
 
-  player.debug = true;
+  //player.debug = true;
 
   //carrot setup (move to next level)
   carrot = new Group();
@@ -275,7 +279,8 @@ function draw() {
   if (gameState == 0) {
 
     background(220);
-    text("Press space to start", 400, 250);
+    text("Cold as fire", width/2, height/2);
+    text("Press space to start", width/2, 250);
     player.visible = false;
     walkable.visible = false;
     carrot.visible = false;
@@ -288,10 +293,12 @@ function draw() {
     gameOverSeq.stop();
     gameSeq.start();
     world.step();
-    text('carrots:' + score, 10, 25);
+    
     //player.x = 2000;
     //player.y = 20;
     background(135, 206, 235);
+    text('score: ' + score, 10, 25);
+    text('timer: ' + deltaTime/1000, 10, 50);
     camera.x = player.x;
     camera.y = player.y;
     player.visible = true;
@@ -331,11 +338,25 @@ function draw() {
 }
 
 function keyReleased() {
-  if (keyCode == 76) {
+  if(kb.presses('k')){
+    if (temp == 30){
+      temp = 90;
+    }
+    else{
+      temp = 30;
+    }
+  }
+  if (kb.presses('l')) {
     fireBullet = createSprite(player.x, player.y);
-    fireBullet.addImage(fireBulletPic);
+    
     fireBullet.life = 50;
     fireBullet.scale = 0.3;
+    if(temp > 80){
+      fireBullet.addImage(fireBulletPic);
+    }
+    else{
+      fireBullet.addImage(iceBulletPic);
+    }
     if (player.mirror.x == true) {
       fireBullet.mirror.x = true;
     }
@@ -377,6 +398,14 @@ function bulletCollision(){
       fireBullet.remove();
       }
     });
+  }
+}
+
+function timer() {
+  timer += deltaTime / 1000;
+  text("Timer: " + ceil(timerLength), 300, 20);
+  if (timerLength < 0) {
+    //screen = 2;
   }
 }
 

@@ -83,6 +83,7 @@ function setup() {
   frameRate(60);
 
   //game font
+  textAlign(CENTER);
   textFont(gameFont);
 
   //player setup
@@ -99,7 +100,7 @@ function setup() {
   player.h = 70;
   player.scale = 0.3;
 
-  player.debug = true;
+  //player.debug = true;
 
   //carrot setup (move to next level)
   carrot = new Group();
@@ -242,8 +243,11 @@ function setup() {
     if (level == 2) {
       levelTwo();
     }
-    else {
+    else if(level == 3){
       levelThree();
+    }
+    else{
+      gameState = 3;
     }
   });
   player.overlaps(fireEnemy, (p, e) => {
@@ -282,8 +286,6 @@ function draw() {
     //temp = values[]
   }
 
-  
-
   startSeq.start();
   onGround.overlaps(spike, (s, e) => {
     if(spike.image == fireObstaclePic){
@@ -305,8 +307,8 @@ function draw() {
   if (gameState == 0) {
 
     background(0, 200, 0);
-    
-    text("Press space to start", 400, 250);
+    text("Cold as Fire", width/2, )
+    text("Press space to start", width, 250);
     player.visible = false;
     walkable.visible = false;
     carrot.visible = false;
@@ -370,6 +372,9 @@ function draw() {
 }
 
 function keyReleased() {
+  if (kb.pressing('space') && (onGround.overlapping(walkable) ||onGround.overlapping(spike) ||onGround.overlapping(water))) {
+    player.vel.y = jump;
+  }
   if (keyCode == 76) {
     bullet = createSprite(player.x, player.y);
     if(temp > 80){
@@ -395,6 +400,7 @@ function bulletRemove() {
 }
 
 function bulletCollision(){
+  
   if(bullet.image == fireBulletPic){
     bullet.overlaps(iceEnemy, (s, e) => {
       e.remove();
@@ -441,9 +447,8 @@ function playerMovement() {
     player.vel.x = 0;
   }
 
-  if (kb.pressing('space') && (onGround.overlapping(walkable) ||onGround.overlapping(spike) ||onGround.overlapping(water))) {
-    player.vel.y = jump;
-  }
+  
+
   if (player.y > 2100) {
     player.speed = 0;
     player.x = 2000;
@@ -567,6 +572,6 @@ function connect() {
   }
 }
 
-/*class Player{
+class Player{
 
-}*/
+}
