@@ -315,7 +315,7 @@ function draw() {
     textSize(100);
     text("Cold as fire", width/2, 200);
     textSize(25);
-    text("Press space to start", width/2, 100);
+    text("Press SWITCH to start", width/2, 100);
     player.visible = false;
     walkable.visible = false;
     carrot.visible = false;
@@ -400,7 +400,7 @@ function draw() {
 
     textSize();
     text("Game Over!", 400, 250);
-    text("Press space to restart", 400, 350);
+    text("Press SWITCH to restart", 400, 350);
     
     player.visible = false;
     walkable.visible = false;
