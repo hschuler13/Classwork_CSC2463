@@ -227,12 +227,17 @@ function setup() {
   player.overlaps(carrot, (p, c) => {
     level++;
     if (level == 2) {
+      synth.triggerAttackRelease("C3", "8n", now);
       levelTwo();
     }
     else if(level == 2){
+      synth.triggerAttackRelease("C3", "8n", now);
       levelThree();
     }
     else{
+      for(let i = 0; i < 3; i++){
+        synth.triggerAttackRelease("C3", "16n", now);
+      }
       gameState = 3;
     }
   });
