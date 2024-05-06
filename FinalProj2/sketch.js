@@ -284,6 +284,13 @@ function draw() {
     player.visible = false;
     walkable.visible = false;
     carrot.visible = false;
+    iceEnemy.visible = false;
+    fireEnemy.visible = false;
+    ground2.visible = false;
+    spike.visible = false;
+    water.visible = false; 
+    fireTrigger.visible = false;
+    iceTrigger.visible = false; 
     if (kb.presses('space')) {
       gameState = 1;
     }
@@ -314,6 +321,11 @@ function draw() {
     carrot.visible = true;
     iceEnemy.visible = true;
     fireEnemy.visible = true;
+    ground2.visible = true;
+    spike.visible = true;
+    water.visible = true; 
+    fireTrigger.visible = true;
+    iceTrigger.visible = true; 
     playerMovement();
     iceEnemyMovement();
     fireEnemyMovement();
@@ -332,6 +344,11 @@ function draw() {
     carrot.visible = false;
     iceEnemy.visible = false;
     fireEnemy.visible = false;
+    ground2.visible = false;
+    spike.visible = false;
+    water.visible = false; 
+    fireTrigger.visible = false;
+    iceTrigger.visible = false; 
     if (kb.presses('space')) {
       gameState = 1;
       player.x = 2000;
