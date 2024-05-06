@@ -70,6 +70,8 @@ function preload() {
 function setup() {
   createCanvas(800, 500);
 
+  Tone.start();
+  
   textFont(gameFont);
   textAlign(CENTER);
   fill(255);
@@ -281,7 +283,7 @@ function setup() {
 
 function draw() {
   //gameOverSeq.loop = false;
-  Tone.start();
+  
   onGround.overlaps(spike, (s, e) => {
     if(spike.image == fireObstaclePic){
     gameState = 2;
