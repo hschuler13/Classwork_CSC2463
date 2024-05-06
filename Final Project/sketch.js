@@ -298,7 +298,7 @@ function draw() {
   }
   if (gameState == 0) {
 
-    background(220);
+    background(0, 200, 0);
     
     text("Press space to start", 400, 250);
     player.visible = false;
@@ -316,26 +316,27 @@ function draw() {
       buttonVal = values[3];
       buttonVal2 = values[4];
       
+      if (joyX < 0) {
+        player.vel.x = -2;
+        player.ani = 'run';
+        player.mirror.x = true;
+      }
+      else if (joyX > 0) {
+        player.vel.x = 2;
+        player.ani = 'run';
+        player.mirror.x = false;
+      }
+      else {
+        player.ani = 'stand';
+        player.vel.x = 0;
+      }
+    
+      if (buttonVal == 1 && (onGround.overlapping(walkable) ||onGround.overlapping(spike) ||onGround.overlapping(water))) {
+        player.vel.y = jump;
+      }
       //temp = values[]
     }
-    if (joyX < 0) {
-      player.vel.x = -2;
-      player.ani = 'run';
-      player.mirror.x = true;
-    }
-    else if (joyX > 0) {
-      player.vel.x = 2;
-      player.ani = 'run';
-      player.mirror.x = false;
-    }
-    else {
-      player.ani = 'stand';
-      player.vel.x = 0;
-    }
-  
-    if (buttonVal == 1 && (onGround.overlapping(walkable) ||onGround.overlapping(spike) ||onGround.overlapping(water))) {
-      player.vel.y = jump;
-    }
+    
     startSeq.stop();
     gameOverSeq.stop();
     gameSeq.start();
@@ -362,7 +363,7 @@ function draw() {
     bulletCollision();
   }
   else if (gameState == 2) {
-    background(220);
+    background(200,0,0);
     gameSeq.stop();
     startSeq.stop();
     gameOverSeq.start();
@@ -381,7 +382,7 @@ function draw() {
     }
   }
   else{
-    background(255);
+    background(0,0,200);
     text("you win :))", 400, 250);
   }
 
