@@ -281,7 +281,7 @@ function setup() {
 
 function draw() {
   //gameOverSeq.loop = false;
-  startSeq.start();
+  
   onGround.overlaps(spike, (s, e) => {
     if(spike.image == fireObstaclePic){
     gameState = 2;
@@ -310,7 +310,7 @@ function draw() {
     fireBullet.x += 5;
   }
   if (gameState == 0) {
-
+    startSeq.start();
     background(186,85,211);
     textSize(100);
     text("Cold as fire", width/2, 200);
