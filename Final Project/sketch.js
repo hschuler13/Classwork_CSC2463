@@ -272,11 +272,35 @@ function draw() {
   //gameOverSeq.loop = false;
   let latest = port.readUntil("\n");
   let values = latest.split(",");
-
-  if (port.opened()) {
-    let message = `specialMoveReady\n`;
-    port.write(message);
+  if (values.length > 2) {
+    joyX = values[0];
+    sw = values[1];
+    temp = values[2];
+    buttonVal = values[3];
+    buttonVal2 = values[4];
+    
+    if (joyX < 0) {
+      player.vel.x = -2;
+      player.ani = 'run';
+      player.mirror.x = true;
+    }
+    else if (joyX > 0) {
+      player.vel.x = 2;
+      player.ani = 'run';
+      player.mirror.x = false;
+    }
+    else {
+      player.ani = 'stand';
+      player.vel.x = 0;
+    }
+  
+    if (buttonVal == 1 && (onGround.overlapping(walkable) ||onGround.overlapping(spike) ||onGround.overlapping(water))) {
+      player.vel.y = jump;
+    }
+    //temp = values[]
   }
+
+  
 
   startSeq.start();
   onGround.overlaps(spike, (s, e) => {
@@ -309,33 +333,7 @@ function draw() {
     }
   }
   else if (gameState == 1) {
-    if (values.length > 2) {
-      joyX = values[0];
-      sw = values[1];
-      temp = values[2];
-      buttonVal = values[3];
-      buttonVal2 = values[4];
-      
-      if (joyX < 0) {
-        player.vel.x = -2;
-        player.ani = 'run';
-        player.mirror.x = true;
-      }
-      else if (joyX > 0) {
-        player.vel.x = 2;
-        player.ani = 'run';
-        player.mirror.x = false;
-      }
-      else {
-        player.ani = 'stand';
-        player.vel.x = 0;
-      }
     
-      if (buttonVal == 1 && (onGround.overlapping(walkable) ||onGround.overlapping(spike) ||onGround.overlapping(water))) {
-        player.vel.y = jump;
-      }
-      //temp = values[]
-    }
     
     startSeq.stop();
     gameOverSeq.stop();
@@ -440,6 +438,10 @@ function bulletCollision(){
       bullet.remove();
       }
     });
+  }
+  if (port.opened()) {
+    let message = specialMoveReady;
+    port.write(message);
   }
 }
 
@@ -567,6 +569,6 @@ function connect() {
   }
 }
 
-class Player{
+/*class Player{
 
-}
+}*/
