@@ -23,11 +23,7 @@ function setup() {
     buttonVal = Number(values[3]);
     buttonVal2 = Number(values[4]);
   }
-  text(joyX, 100, 100);
-  text(sw, 100, 125);
-  text(temp, 100, 150);
-  text(buttonVal, 100, 175);
-  text(buttonVal2, 100, 200);
+  
 
   // any other ports can be opened via a dialog after
   // user interaction (see connectBtnClick below)
@@ -36,14 +32,14 @@ function setup() {
   connectBtn.position(80, 200);
   connectBtn.mousePressed(connectBtnClick);
 
-  let sendBtn = createButton('Send hello');
+  /*let sendBtn = createButton('Send hello');
   sendBtn.position(220, 200);
-  sendBtn.mousePressed(sendBtnClick);
+  sendBtn.mousePressed(sendBtnClick);*/
 }
 
 function draw() {
   // this makes received text scroll up
-  copy(0, 0, width, height, 0, -1, width, height);
+  //copy(0, 0, width, height, 0, -1, width, height);
 
   // reads in complete lines and prints them at the
   // bottom of the canvas
@@ -58,6 +54,12 @@ function draw() {
   } else {
     connectBtn.html('Disconnect');
   }
+
+  text(joyX, 100, 100);
+  text(sw, 100, 125);
+  text(temp, 100, 150);
+  text(buttonVal, 100, 175);
+  text(buttonVal2, 100, 200);
 }
 
 function connectBtnClick() {
@@ -68,9 +70,9 @@ function connectBtnClick() {
   }
 }
 
-function sendBtnClick() {
+/*function sendBtnClick() {
   port.write("Hello from p5.js\n");
-}
+}*/
 
 /*
 let port;
