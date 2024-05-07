@@ -354,6 +354,8 @@ function draw() {
     text('score: ' + score, 20, 25);
     text('timer: ' + timer, 20, 50);
     text('level: ' + level, 20, 75);
+    text('special move: ' + specialValString, 20, 100);
+
 
     //press button, shoot bullet
     if (buttonVal == 1) {
@@ -378,6 +380,7 @@ function draw() {
 
       if(buttonVal2 == 1){
         spike.image = fireObstacleNullifiedPic;
+        specialValString = "USED";
       }
     }
 
