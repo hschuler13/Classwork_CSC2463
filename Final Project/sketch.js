@@ -294,9 +294,6 @@ function draw() {
   //start sound elements of project
   Tone.start();
 
-
-  
-
   //read arduino serial monitor
   let latest = port.readUntil("\n");
   let values = latest.split(",");
@@ -341,8 +338,6 @@ function draw() {
     gameSeq.start();
     world.step();
     timer += ceil((ceil(deltaTime/1000))/60);
-    //player.x = 2000;
-    //player.y = 20;
     background(135, 206, 235);
     textSize(10);
     text('score: ' + score, 20, 25);
@@ -433,20 +428,22 @@ function draw() {
 
 }
 
-function bulletRemove() {
+/*function bulletRemove() {
   fireBullet.remove();
-}
+}*/
 
+//bullet collisions with obstacle triggers and enemies
 function bulletCollision(){
   if(fireBullet.image == fireBulletPic){
     fireBullet.overlaps(iceEnemy, (s, e) => {
-      //sounds.player('poof').start();
+      sounds.player('poof').start();
       score += 100;
       e.remove();
       fireBullet.remove();
     });
     fireBullet.overlaps(fireTrigger, (s, e) => {
       if(fireTrigger.image == fireTriggerPic){
+        synth.triggerAttackRelease("C2", "8n");
         spike.image = fireObstacleNullifiedPic;
       fireTrigger.image = activatedTriggerPic;
       fireBullet.remove();
@@ -456,13 +453,14 @@ function bulletCollision(){
   }
   else{
     fireBullet.overlaps(fireEnemy, (s, e) => {
-      //sounds.player('poof').start();
+      sounds.player('poof').start();
       score += 100;
       e.remove();
       fireBullet.remove();
     });
     fireBullet.overlaps(iceTrigger, (s, e) => {
       if(iceTrigger.image == iceTriggerPic){
+        synth.triggerAttackRelease("C2", "8n");
         water.image = iceObstacleNullifiedPic;
       iceTrigger.image = activatedTriggerPic;
       fireBullet.remove();
@@ -472,16 +470,16 @@ function bulletCollision(){
 }
 
 
-
+//movement of player
 function playerMovement() {
   if (joyX > 10) {
-    //sounds.player('walk').start();
+    sounds.player('walk').start();
     player.vel.x = -2;
     player.ani = 'run';
     player.mirror.x = true;
   }
   else if (joyX < -10) {
-    //sounds.player('walk').start();
+    sounds.player('walk').start();
     player.vel.x = 2;
     player.ani = 'run';
     player.mirror.x = false;
@@ -492,7 +490,7 @@ function playerMovement() {
   }
 
   if (sw == 1 && (onGround.overlapping(walkable) ||onGround.overlapping(spike) ||onGround.overlapping(water))) {
-    //sounds.player('jump').start();
+    sounds.player('jump').start();
     player.vel.y = jump;
   }
 
@@ -503,6 +501,7 @@ function playerMovement() {
   }
 }
 
+//movement of ice enemies
 function iceEnemyMovement(){
   for (e of iceEnemy) {
     if (e.overlaps(ground2)) {
@@ -517,6 +516,7 @@ function iceEnemyMovement(){
   }
 }
 
+//movement of fire enemies
 function fireEnemyMovement() {
   for (e of fireEnemy) {
     if (e.overlaps(ground2)) {
@@ -531,6 +531,7 @@ function fireEnemyMovement() {
   }
 }
 
+//connect to arduino via button
 function connectBtnClick() {
   if (!port.opened()) {
     port.open('Arduino', 57600);
@@ -539,6 +540,7 @@ function connectBtnClick() {
   }
 }
 
+//setup level 2
 function levelTwo() {
   tileMap1.remove();
   gameState = 1;
@@ -575,6 +577,7 @@ function levelTwo() {
   player.y = 20;
 }
 
+//setup level 3
 function levelThree() {
   tileMap2.remove();
   gameState = 1;
@@ -613,6 +616,7 @@ function levelThree() {
   player.y = 20;
 }
 
+//function to setup tile player walks on
 function tileSet(x, tileRepresentation, tilePic) {
   x = new walkable.Group();
   x.w = groundSize;
