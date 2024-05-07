@@ -386,7 +386,6 @@ function draw() {
         fireBullet.x += 5;
       }
       fireBullets.add(fireBullet);
-      sounds.player('shoot').start();
     }
 
     //camera follows player
