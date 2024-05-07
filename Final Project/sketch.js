@@ -186,8 +186,6 @@ function setup() {
   iceEnemy.addAnis({
     run: { row: 0, frames: 7 }
   });
-  iceEnemy.debug = true;
-  fireEnemy.debug = true;
 
   //tiles for level 1
   tileMap1 = new Tiles([
@@ -301,18 +299,10 @@ function draw() {
     buttonVal2 = values[4];
   }
 
-  
+  //send information to arduino
   if (port.opened() && frameCount % 3 == 0) {
     port.write(special);
   }
-
-  //bullet mirroring to match player's direction
-  /*if (fireBullet.mirror.x == true) {
-    
-  }
-  else {
-    
-  }*/
 
   //starting screen
   if (gameState == 0) {
