@@ -17,20 +17,20 @@ let port;
 let connectBtn;
 let joyX = 0, sw = 0, buttonVal = 0, buttonVal2 = 0;
 
-//add bg music using tonejs
-//also use sound effects
-/*let sounds = new Tone.Players({
+//setup of sound portion of project
+let sounds = new Tone.Players({
 'walk': "assets/walk.mp3",
 'shoot': "assets/shoot.mp3",
 'jump': "assets/jump.mp3",
 'poof': "assets/poof.mp3"
-});*/
+});
 
 let synth = new Tone.PolySynth(Tone.MonoSynth);
 
 let startSong = ["C4", "C4", "E4", "C4", "C4", "E4", "C4", "C4", "E4", "F4", "G4", "A4", "G4", "F4"];
 let gameSong = ["C3", "D3", "E3", "G3", "C3", "D3", "E3", "A3", "C3", "D3", "E3", "B3", "A3", "G3", "D3", "C3"];
 let gameOverSong = [["D#3", "D#4", "D#4"], ["C3", "C4", "C4"], ["F#3", "F#4", "F#4"]];
+let victorySong = ["A3", "B3", "C3", "B3", "A3", "F4", "E4"]
 
 const startSeq = new Tone.Sequence((time, note) => {
   synth.triggerAttackRelease(note, 0.1, time);
@@ -44,11 +44,16 @@ const gameOverSeq = new Tone.Sequence((time, note) => {
   synth.triggerAttackRelease(note, 0.1, time);
 }, gameOverSong);
 
-//sounds.toDestination();
+const victorySeq = new Tone.Sequence((time, note) => {
+  synth.triggerAttackRelease(note, 0.1, time);
+}, victorySong);
+
+sounds.toDestination();
 synth.toDestination();
 Tone.Transport.start();
 
 function preload() {
+  //load all images used (all are drawn by me)
   playerPic = loadImage('assets/PlayerSpritesheetFinal.png');
   topGroundPic = loadImage('assets/grassBlock.png');
   bottomGroundPic = loadImage('assets/dirtBlock.png');
@@ -70,12 +75,12 @@ function preload() {
 function setup() {
   createCanvas(800, 500);
 
-  Tone.start();
-  
+  //text formatting
   textFont(gameFont);
   textAlign(CENTER);
   fill(255);
   stroke(0);
+
   //player setup
   player = new Sprite(30, 30, 80, 80);
   player.spriteSheet = playerPic;
@@ -90,8 +95,6 @@ function setup() {
   player.h = 70;
   player.scale = 0.3;
 
-  //player.debug = true;
-
   //carrot setup (move to next level)
   carrot = new Group();
   carrot.w = 30;
@@ -101,6 +104,7 @@ function setup() {
   carrot.collider = 'static';
   carrot.rotationLock = true;
 
+  //trigger setup (to make obstacles safe to traverse)
   fireTrigger = new Group();
   fireTrigger.w = 30;
   fireTrigger.h = 30;
@@ -117,6 +121,7 @@ function setup() {
   iceTrigger.collider = 'static';
   iceTrigger.rotationLock = true;
 
+  //setup of the obstacles in question
   spike = new Group();
   spike.w = groundSize;
   spike.h = groundSize;
@@ -142,6 +147,7 @@ function setup() {
   let joint = new GlueJoint(player, onGround);
   joint.visible = false;
 
+  //setup of tiles used to indicate to enemies when they turn and walk the other direction
   ground2 = new Group();
   ground2.w = groundSize;
   ground2.h = groundSize;
@@ -155,11 +161,7 @@ function setup() {
 
   tileSet(ground1, 'a', topGroundPic);
   tileSet(dirt, 'd', bottomGroundPic);
-  //tileSet(water,'w',iceObstaclePic);
-  //tileSet(ice,'e',iceObstacleNullifiedPic);
-  //tileSet(spike,'s',fireObstaclePic);
-  //tileSet(ash,'h',fireObstacleNullifiedPic);
-
+  
   //enemy setup
   fireEnemy = new Group();
   fireEnemy.w = 80;
@@ -190,10 +192,8 @@ function setup() {
   });
   iceEnemy.debug = true;
   fireEnemy.debug = true;
-  //enemySetup(fireEnemy,'f',fireEnemyPic);
-  //enemySetup(iceEnemy,'i',iceEnemyPic);
 
-  //tiles
+  //tiles for level 1
   tileMap1 = new Tiles([
     'aaa.........aaaaa.........f.......................',
     '....aaaaaaa.......aaaaaaabaaaaab..................',
@@ -213,7 +213,7 @@ function setup() {
     'ddd....ddddddddddd..............aaa...............',
     'dddd.....ddddddddd.............addda..............',
     'ddddd.....................i...addddda............c',
-    'aaaaaaaaaaaaaaaaaaaaaaabaaaaabdddddddaaaaaaaaaaaaa',
+    'dddddaaaaaaaaaaaaaaaaaabaaaaabdddddddaaaaaaaaaaaaa',
     'dddddddddddddddddddddddddddddddddddddddddddddddddd'
   ],
     2000,
@@ -235,17 +235,15 @@ function setup() {
   player.overlaps(carrot, (p, c) => {
     level++;
     if (level == 2) {
-      //synth.triggerAttackRelease("C3", "8n", now);
+      synth.triggerAttackRelease("C3", "8n");
       levelTwo();
     }
     else if(level == 3){
-      //synth.triggerAttackRelease("C3", "8n", now);
+      synth.triggerAttackRelease("C3", "8n");
       levelThree();
     }
     else{
-      for(let i = 0; i < 3; i++){
-        //synth.triggerAttackRelease("C3", "16n", now);
-      }
+      victorySeq.start();
       gameState = 3;
     }
   });
@@ -267,7 +265,18 @@ function setup() {
       gameState = 2;
     }
   });
+  onGround.overlaps(spike, (s, e) => {
+    if(spike.image == fireObstaclePic){
+    gameState = 2;
+    }
+  });
+  onGround.overlaps(water, (s, e) => {
+    if(water.image == iceObstaclePic){
+    gameState = 2;
+    }
+  });
 
+  //communication with arduino setup
   port = createSerial();
 
   let usedPorts = usedSerialPorts();
@@ -282,19 +291,13 @@ function setup() {
 
 
 function draw() {
-  //gameOverSeq.loop = false;
-  
-  onGround.overlaps(spike, (s, e) => {
-    if(spike.image == fireObstaclePic){
-    gameState = 2;
-    }
-  });
-  onGround.overlaps(water, (s, e) => {
-    if(water.image == iceObstaclePic){
-    gameState = 2;
-    }
-  });
+  //start sound elements of project
+  Tone.start();
 
+
+  
+
+  //read arduino serial monitor
   let latest = port.readUntil("\n");
   let values = latest.split(",");
   if (values.length > 2) {
