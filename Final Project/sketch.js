@@ -305,19 +305,27 @@ function draw() {
     buttonVal2 = values[4];
   }
 
-  if (fireBullet.mirror.x == true) {
-    fireBullet.x -= 5;
+  //bullet mirroring to match player's direction
+  /*if (fireBullet.mirror.x == true) {
+    
   }
   else {
-    fireBullet.x += 5;
-  }
+    
+  }*/
+
+  //starting screen
   if (gameState == 0) {
+    //song of the starting screen
     startSeq.start();
+
+    //setup color and text of the starting screen
     background(186,85,211);
     textSize(100);
     text("Cold as fire", width/2, 200);
     textSize(25);
     text("Press SWITCH to start", width/2, 100);
+
+    //no assets appear on the screen unwanted
     player.visible = false;
     walkable.visible = false;
     carrot.visible = false;
@@ -328,26 +336,35 @@ function draw() {
     water.visible = false; 
     fireTrigger.visible = false;
     iceTrigger.visible = false; 
+
+    //press joystick switch
     if (sw == 1) {
+      //move to playing screen
       gameState = 1;
     }
   }
+
+  //playing screen
   else if (gameState == 1) {
+    //stop other songs, 
     startSeq.stop();
     gameOverSeq.stop();
     gameSeq.start();
+
+    //start world
     world.step();
+
+    //timer variable, counts up and measures how long player has been playing
     timer += ceil((ceil(deltaTime/1000))/60);
+
+    //stats displayed
     background(135, 206, 235);
     textSize(10);
     text('score: ' + score, 20, 25);
     text('timer: ' + timer, 20, 50);
     text('level: ' + level, 20, 75); 
-    text(joyX, 20, 100);
-    text(sw, 20, 125);
-    text(temp, 20, 150);
-    text(buttonVal, 20, 175);
-    text(buttonVal2, 20, 200);
+
+    //press button, shoot bullet
     if (buttonVal == 1) {
       fireBullet = createSprite(player.x, player.y);
       fireBullet.life = 50;
@@ -360,15 +377,21 @@ function draw() {
       }
       if (player.mirror.x == true) {
         fireBullet.mirror.x = true;
+        fireBullet.x -= 5;
       }
       else {
         fireBullet.mirror.x = false;
+        fireBullet.x += 5;
       }
       fireBullets.add(fireBullet);
-      //sounds.player('shoot').start();
+      sounds.player('shoot').start();
     }
+
+    //camera follows player
     camera.x = player.x;
     camera.y = player.y;
+
+    //now assets can be visible
     player.visible = true;
     walkable.visible = true;
     carrot.visible = true;
@@ -379,21 +402,30 @@ function draw() {
     water.visible = true; 
     fireTrigger.visible = true;
     iceTrigger.visible = true; 
+
+    //make player and enemies move, as well as enable bullet collisions
     playerMovement();
     iceEnemyMovement();
     fireEnemyMovement();
     bulletCollision();
   }
+
+  //game over screen
   else if (gameState == 2) {
-    background(220,20,60);
+    
+    //stop all other songs and play game song
     gameSeq.stop();
     startSeq.stop();
     gameOverSeq.start();
 
-    textSize();
+    //setup background 
+    background(220,20,60);
+    textSize(100);
     text("Game Over!", 400, 250);
+    textSize(25);
     text("Press SWITCH to restart", 400, 350);
     
+    //assets dissapear
     player.visible = false;
     walkable.visible = false;
     carrot.visible = false;
@@ -404,13 +436,23 @@ function draw() {
     water.visible = false; 
     fireTrigger.visible = false;
     iceTrigger.visible = false; 
+
+    //press switch, restart current level
     if (sw == 1) {
       gameState = 1;
       player.x = 2000;
       player.y = 20;
     }
   }
+
+  //victory screen
   else{
+    //stop all other songs, play the victory song
+    gameSeq.stop();
+    startSeq.stop();
+    victorySeq.start();
+
+    //assets dissapear
     player.visible = false;
     walkable.visible = false;
     carrot.visible = false;
@@ -421,6 +463,8 @@ function draw() {
     water.visible = false; 
     fireTrigger.visible = false;
     iceTrigger.visible = false; 
+
+    //setup background color and text
     textSize(100);
     background(60,179,113);
     text("you win!", width/2, height/2);
@@ -428,15 +472,11 @@ function draw() {
 
 }
 
-/*function bulletRemove() {
-  fireBullet.remove();
-}*/
-
 //bullet collisions with obstacle triggers and enemies
 function bulletCollision(){
   if(fireBullet.image == fireBulletPic){
     fireBullet.overlaps(iceEnemy, (s, e) => {
-      sounds.player('poof').start();
+      synth.triggerAttackRelease("C4", "8n");
       score += 100;
       e.remove();
       fireBullet.remove();
@@ -453,7 +493,7 @@ function bulletCollision(){
   }
   else{
     fireBullet.overlaps(fireEnemy, (s, e) => {
-      sounds.player('poof').start();
+      synth.triggerAttackRelease("C4", "8n");
       score += 100;
       e.remove();
       fireBullet.remove();
@@ -469,17 +509,14 @@ function bulletCollision(){
   }
 }
 
-
 //movement of player
 function playerMovement() {
   if (joyX > 10) {
-    sounds.player('walk').start();
     player.vel.x = -2;
     player.ani = 'run';
     player.mirror.x = true;
   }
   else if (joyX < -10) {
-    sounds.player('walk').start();
     player.vel.x = 2;
     player.ani = 'run';
     player.mirror.x = false;
@@ -490,7 +527,6 @@ function playerMovement() {
   }
 
   if (sw == 1 && (onGround.overlapping(walkable) ||onGround.overlapping(spike) ||onGround.overlapping(water))) {
-    sounds.player('jump').start();
     player.vel.y = jump;
   }
 
