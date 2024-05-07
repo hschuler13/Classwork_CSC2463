@@ -19,10 +19,10 @@ let joyX = 0, sw = 0, buttonVal = 0, buttonVal2 = 0;
 
 //setup of sound portion of project
 let sounds = new Tone.Players({
-'walk': "assets/walk.mp3",
-'shoot': "assets/shoot.mp3",
-'jump': "assets/jump.mp3",
-'poof': "assets/poof.mp3"
+  'walk': "assets/walk.mp3",
+  'shoot': "assets/shoot.mp3",
+  'jump': "assets/jump.mp3",
+  'poof': "assets/poof.mp3"
 });
 
 let synth = new Tone.PolySynth(Tone.MonoSynth);
@@ -161,7 +161,7 @@ function setup() {
 
   tileSet(ground1, 'a', topGroundPic);
   tileSet(dirt, 'd', bottomGroundPic);
-  
+
   //enemy setup
   fireEnemy = new Group();
   fireEnemy.w = 80;
@@ -238,11 +238,11 @@ function setup() {
       synth.triggerAttackRelease("C3", "8n");
       levelTwo();
     }
-    else if(level == 3){
+    else if (level == 3) {
       synth.triggerAttackRelease("C3", "8n");
       levelThree();
     }
-    else{
+    else {
       victorySeq.start();
       gameState = 3;
     }
@@ -266,13 +266,13 @@ function setup() {
     }
   });
   onGround.overlaps(spike, (s, e) => {
-    if(spike.image == fireObstaclePic){
-    gameState = 2;
+    if (spike.image == fireObstaclePic) {
+      gameState = 2;
     }
   });
   onGround.overlaps(water, (s, e) => {
-    if(water.image == iceObstaclePic){
-    gameState = 2;
+    if (water.image == iceObstaclePic) {
+      gameState = 2;
     }
   });
 
@@ -319,11 +319,11 @@ function draw() {
     startSeq.start();
 
     //setup color and text of the starting screen
-    background(186,85,211);
+    background(186, 85, 211);
     textSize(100);
-    text("Cold as fire", width/2, 200);
+    text("Cold as fire", width / 2, 200);
     textSize(25);
-    text("Press SWITCH to start", width/2, 100);
+    text("Press SWITCH to start", width / 2, 100);
 
     //no assets appear on the screen unwanted
     player.visible = false;
@@ -333,9 +333,9 @@ function draw() {
     fireEnemy.visible = false;
     ground2.visible = false;
     spike.visible = false;
-    water.visible = false; 
+    water.visible = false;
     fireTrigger.visible = false;
-    iceTrigger.visible = false; 
+    iceTrigger.visible = false;
 
     //press joystick switch
     if (sw == 1) {
@@ -355,24 +355,24 @@ function draw() {
     world.step();
 
     //timer variable, counts up and measures how long player has been playing
-    timer += ceil((ceil(deltaTime/1000))/60);
+    timer += ceil((ceil(deltaTime / 1000)) / 60);
 
     //stats displayed
     background(135, 206, 235);
     textSize(10);
     text('score: ' + score, 20, 25);
     text('timer: ' + timer, 20, 50);
-    text('level: ' + level, 20, 75); 
+    text('level: ' + level, 20, 75);
 
     //press button, shoot bullet
     if (buttonVal == 1) {
       fireBullet = createSprite(player.x, player.y);
       fireBullet.life = 50;
       fireBullet.scale = 0.3;
-      if(temp > 80){
+      if (temp > 80) {
         fireBullet.addImage(fireBulletPic);
       }
-      else{
+      else {
         fireBullet.addImage(iceBulletPic);
       }
       if (player.mirror.x == true) {
@@ -399,9 +399,9 @@ function draw() {
     fireEnemy.visible = true;
     ground2.visible = true;
     spike.visible = true;
-    water.visible = true; 
+    water.visible = true;
     fireTrigger.visible = true;
-    iceTrigger.visible = true; 
+    iceTrigger.visible = true;
 
     //make player and enemies move, as well as enable bullet collisions
     playerMovement();
@@ -412,19 +412,19 @@ function draw() {
 
   //game over screen
   else if (gameState == 2) {
-    
+
     //stop all other songs and play game song
     gameSeq.stop();
     startSeq.stop();
     gameOverSeq.start();
 
     //setup background 
-    background(220,20,60);
+    background(220, 20, 60);
     textSize(100);
     text("Game Over!", 400, 250);
     textSize(25);
     text("Press SWITCH to restart", 400, 350);
-    
+
     //assets dissapear
     player.visible = false;
     walkable.visible = false;
@@ -433,9 +433,9 @@ function draw() {
     fireEnemy.visible = false;
     ground2.visible = false;
     spike.visible = false;
-    water.visible = false; 
+    water.visible = false;
     fireTrigger.visible = false;
-    iceTrigger.visible = false; 
+    iceTrigger.visible = false;
 
     //press switch, restart current level
     if (sw == 1) {
@@ -446,7 +446,7 @@ function draw() {
   }
 
   //victory screen
-  else{
+  else {
     //stop all other songs, play the victory song
     gameSeq.stop();
     startSeq.stop();
@@ -460,21 +460,21 @@ function draw() {
     fireEnemy.visible = false;
     ground2.visible = false;
     spike.visible = false;
-    water.visible = false; 
+    water.visible = false;
     fireTrigger.visible = false;
-    iceTrigger.visible = false; 
+    iceTrigger.visible = false;
 
     //setup background color and text
     textSize(100);
-    background(60,179,113);
-    text("you win!", width/2, height/2);
+    background(60, 179, 113);
+    text("you win!", width / 2, height / 2);
   }
 
 }
 
 //bullet collisions with obstacle triggers and enemies
-function bulletCollision(){
-  if(fireBullet.image == fireBulletPic){
+function bulletCollision() {
+  if (fireBullet.image == fireBulletPic) {
     fireBullet.overlaps(iceEnemy, (s, e) => {
       synth.triggerAttackRelease("C4", "8n");
       score += 100;
@@ -482,16 +482,16 @@ function bulletCollision(){
       fireBullet.remove();
     });
     fireBullet.overlaps(fireTrigger, (s, e) => {
-      if(fireTrigger.image == fireTriggerPic){
+      if (fireTrigger.image == fireTriggerPic) {
         synth.triggerAttackRelease("C2", "8n");
         spike.image = fireObstacleNullifiedPic;
-      fireTrigger.image = activatedTriggerPic;
-      fireBullet.remove();
+        fireTrigger.image = activatedTriggerPic;
+        fireBullet.remove();
       }
     });
-    
+
   }
-  else{
+  else {
     fireBullet.overlaps(fireEnemy, (s, e) => {
       synth.triggerAttackRelease("C4", "8n");
       score += 100;
@@ -499,11 +499,11 @@ function bulletCollision(){
       fireBullet.remove();
     });
     fireBullet.overlaps(iceTrigger, (s, e) => {
-      if(iceTrigger.image == iceTriggerPic){
+      if (iceTrigger.image == iceTriggerPic) {
         synth.triggerAttackRelease("C2", "8n");
         water.image = iceObstacleNullifiedPic;
-      iceTrigger.image = activatedTriggerPic;
-      fireBullet.remove();
+        iceTrigger.image = activatedTriggerPic;
+        fireBullet.remove();
       }
     });
   }
@@ -526,7 +526,7 @@ function playerMovement() {
     player.vel.x = 0;
   }
 
-  if (sw == 1 && (onGround.overlapping(walkable) ||onGround.overlapping(spike) ||onGround.overlapping(water))) {
+  if (sw == 1 && (onGround.overlapping(walkable) || onGround.overlapping(spike) || onGround.overlapping(water))) {
     player.vel.y = jump;
   }
 
@@ -538,7 +538,7 @@ function playerMovement() {
 }
 
 //movement of ice enemies
-function iceEnemyMovement(){
+function iceEnemyMovement() {
   for (e of iceEnemy) {
     if (e.overlaps(ground2)) {
       e.vel.x *= -1;
