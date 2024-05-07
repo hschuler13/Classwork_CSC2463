@@ -357,7 +357,7 @@ function draw() {
     world.step();
 
     //timer variable, counts up and measures how long player has been playing
-    timer += ceil((ceil(deltaTime / 1000)) / 60);
+    timer = floor(millis()/1000);
 
     //stats displayed
     background(135, 206, 235);
