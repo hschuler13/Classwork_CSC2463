@@ -12,18 +12,15 @@ let score = 0;
 let ground1, ground2, carrot, dirt, water, ice, spike, ash;
 let tileMap1, tileMap2, tileMap3;
 let timer = 0;
+let specialVal = 1;
+let specialValString = "READY";
 
+//arduino variables
 let port;
 let connectBtn;
 let joyX = 0, sw = 0, buttonVal = 0, buttonVal2 = 0;
 
 //setup of sound portion of project
-let sounds = new Tone.Players({
-  'walk': "assets/walk.mp3",
-  'shoot': "assets/shoot.mp3",
-  'jump': "assets/jump.mp3",
-  'poof': "assets/poof.mp3"
-});
 
 let synth = new Tone.PolySynth(Tone.MonoSynth);
 
@@ -48,7 +45,6 @@ const victorySeq = new Tone.Sequence((time, note) => {
   synth.triggerAttackRelease(note, 0.1, time);
 }, victorySong);
 
-sounds.toDestination();
 synth.toDestination();
 Tone.Transport.start();
 
@@ -304,6 +300,12 @@ function draw() {
     buttonVal = values[3];
     buttonVal2 = values[4];
   }
+
+  /*
+  if (port.opened() && frameCount % 3 == 0) {
+    port.write(message);
+  }
+  */
 
   //bullet mirroring to match player's direction
   /*if (fireBullet.mirror.x == true) {
