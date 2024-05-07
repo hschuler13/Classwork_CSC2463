@@ -301,11 +301,10 @@ function draw() {
     buttonVal2 = values[4];
   }
 
-  /*
+  
   if (port.opened() && frameCount % 3 == 0) {
-    port.write(message);
+    port.write(special);
   }
-  */
 
   //bullet mirroring to match player's direction
   /*if (fireBullet.mirror.x == true) {
@@ -386,6 +385,10 @@ function draw() {
         fireBullet.x += 5;
       }
       fireBullets.add(fireBullet);
+
+      if(buttonVal2 == 1){
+        spike.image = fireObstacleNullifiedPic;
+      }
     }
 
     //camera follows player
