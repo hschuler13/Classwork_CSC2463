@@ -300,9 +300,9 @@ function draw() {
   }
 
   //send information to arduino
-  if (port.opened() && frameCount % 3 == 0) {
+  /*if (port.opened() && frameCount % 3 == 0) {
     port.write(specialVal);
-  }
+  }*/
 
   //starting screen
   if (gameState == 0) {
