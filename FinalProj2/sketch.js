@@ -7,27 +7,27 @@ let jump = 40;
 let level = 1;
 let fireBullets, fireBullet;
 let iceBullets, iceBullet;
-let temp;
+let temp = 0;
 let score = 0;
-let fireTrigger, iceTrigger;
 let ground1, ground2, carrot, dirt, water, ice, spike, ash;
 let tileMap1, tileMap2, tileMap3;
 let timer = 0;
+let specialVal = 1;
+let specialValString = "READY";
 
-//add bg music using tonejs
-//also use sound effects
-/*let sounds = new Tone.Players({
-'walk': "assets/walk.mp3",
-'shoot': "assets/shoot.mp3",
-'jump': "assets/jump.mp3",
-'poof': "assets/poof.mp3"
-});*/
+//arduino variables
+let port;
+let connectBtn;
+let joyX = 0, sw = 0, buttonVal = 0, buttonVal2 = 0;
+
+//setup of sound portion of project
 
 let synth = new Tone.PolySynth(Tone.MonoSynth);
 
 let startSong = ["C4", "C4", "E4", "C4", "C4", "E4", "C4", "C4", "E4", "F4", "G4", "A4", "G4", "F4"];
 let gameSong = ["C3", "D3", "E3", "G3", "C3", "D3", "E3", "A3", "C3", "D3", "E3", "B3", "A3", "G3", "D3", "C3"];
 let gameOverSong = [["D#3", "D#4", "D#4"], ["C3", "C4", "C4"], ["F#3", "F#4", "F#4"]];
+let victorySong = ["A3", "B3", "C3", "B3", "A3", "F4", "E4"];
 
 const startSeq = new Tone.Sequence((time, note) => {
   synth.triggerAttackRelease(note, 0.1, time);
@@ -41,11 +41,15 @@ const gameOverSeq = new Tone.Sequence((time, note) => {
   synth.triggerAttackRelease(note, 0.1, time);
 }, gameOverSong);
 
-//sounds.toDestination();
+const victorySeq = new Tone.Sequence((time, note) => {
+  synth.triggerAttackRelease(note, 0.1, time);
+}, victorySong);
+
 synth.toDestination();
 Tone.Transport.start();
 
 function preload() {
+  //load all images used (all are drawn by me)
   playerPic = loadImage('assets/PlayerSpritesheetFinal.png');
   topGroundPic = loadImage('assets/grassBlock.png');
   bottomGroundPic = loadImage('assets/dirtBlock.png');
@@ -67,10 +71,12 @@ function preload() {
 function setup() {
   createCanvas(800, 500);
 
+  //text formatting
   textFont(gameFont);
   textAlign(CENTER);
   fill(255);
   stroke(0);
+
   //player setup
   player = new Sprite(30, 30, 80, 80);
   player.spriteSheet = playerPic;
@@ -85,16 +91,8 @@ function setup() {
   player.h = 70;
   player.scale = 0.3;
 
-  //player.debug = true;
-
   //carrot setup (move to next level)
-  groupSet(carrot, 30, 30, carrotPic, 'c');
-  groupSet(fireTrigger, 30, 30, fireTriggerPic, '!');
-  groupSet(iceTrigger, 30, 30, iceTriggerPic, '?');
-  groupSet(spike, groundSize, groundSize, fireObstaclePic, 's');
-  groupSet(water, groundSize, groundSize, iceObstaclePic, 'w');
-  groupSet(ground2, groundSize, groundSize, topGroundPic, 'b');
-  /*carrot = new Group();
+  carrot = new Group();
   carrot.w = 30;
   carrot.h = 30;
   carrot.image = carrotPic;
@@ -102,6 +100,7 @@ function setup() {
   carrot.collider = 'static';
   carrot.rotationLock = true;
 
+  //trigger setup (to make obstacles safe to traverse)
   fireTrigger = new Group();
   fireTrigger.w = 30;
   fireTrigger.h = 30;
@@ -118,6 +117,7 @@ function setup() {
   iceTrigger.collider = 'static';
   iceTrigger.rotationLock = true;
 
+  //setup of the obstacles in question
   spike = new Group();
   spike.w = groundSize;
   spike.h = groundSize;
@@ -130,7 +130,7 @@ function setup() {
   water.h = groundSize;
   water.tile = 'w';
   water.collider = 'static';
-  water.image = iceObstaclePic;*/
+  water.image = iceObstaclePic;
 
   //world setup
   world.autoStep = false;
@@ -143,12 +143,13 @@ function setup() {
   let joint = new GlueJoint(player, onGround);
   joint.visible = false;
 
-  /*ground2 = new Group();
+  //setup of tiles used to indicate to enemies when they turn and walk the other direction
+  ground2 = new Group();
   ground2.w = groundSize;
   ground2.h = groundSize;
   ground2.tile = 'b';
   ground2.collider = 'static';
-  ground2.image = topGroundPic;*/
+  ground2.image = topGroundPic;
 
   //tile group setup
   walkable = new Group();
@@ -156,10 +157,6 @@ function setup() {
 
   tileSet(ground1, 'a', topGroundPic);
   tileSet(dirt, 'd', bottomGroundPic);
-  //tileSet(water,'w',iceObstaclePic);
-  //tileSet(ice,'e',iceObstacleNullifiedPic);
-  //tileSet(spike,'s',fireObstaclePic);
-  //tileSet(ash,'h',fireObstacleNullifiedPic);
 
   //enemy setup
   fireEnemy = new Group();
@@ -189,12 +186,8 @@ function setup() {
   iceEnemy.addAnis({
     run: { row: 0, frames: 7 }
   });
-  //iceEnemy.debug = true;
-  //fireEnemy.debug = true;
-  //enemySetup(fireEnemy,'f',fireEnemyPic);
-  //enemySetup(iceEnemy,'i',iceEnemyPic);
 
-  //tiles
+  //tiles for level 1
   tileMap1 = new Tiles([
     'aaa.........aaaaa.........f.......................',
     '....aaaaaaa.......aaaaaaabaaaaab..................',
@@ -214,7 +207,7 @@ function setup() {
     'ddd....ddddddddddd..............aaa...............',
     'dddd.....ddddddddd.............addda..............',
     'ddddd.....................i...addddda............c',
-    'aaaaaaaaaaaaaaaaaaaaaaabaaaaabdddddddaaaaaaaaaaaaa',
+    'dddddaaaaaaaaaaaaaaaaaabaaaaabdddddddaaaaaaaaaaaaa',
     'dddddddddddddddddddddddddddddddddddddddddddddddddd'
   ],
     2000,
@@ -232,28 +225,19 @@ function setup() {
   iceBullet = createSprite(-1000, 0);
   iceBullet.remove();
 
-  
-  
-}
-
-
-function draw() {
-  //gameOverSeq.loop = false;
   //player collision setup
   player.overlaps(carrot, (p, c) => {
     level++;
     if (level == 2) {
-      //synth.triggerAttackRelease("C3", "8n", now);
+      synth.triggerAttackRelease("C3", "8n");
       levelTwo();
     }
-    else if(level == 3){
-      //synth.triggerAttackRelease("C3", "8n", now);
+    else if (level == 3) {
+      synth.triggerAttackRelease("C3", "8n");
       levelThree();
     }
-    else{
-      for(let i = 0; i < 3; i++){
-        //synth.triggerAttackRelease("C3", "16n", now);
-      }
+    else {
+      victorySeq.start();
       gameState = 3;
     }
   });
@@ -275,160 +259,240 @@ function draw() {
       gameState = 2;
     }
   });
-  startSeq.start();
   onGround.overlaps(spike, (s, e) => {
-    if(spike.image == fireObstaclePic){
-    gameState = 2;
+    if (spike.image == fireObstaclePic) {
+      gameState = 2;
     }
   });
   onGround.overlaps(water, (s, e) => {
-    if(water.image == iceObstaclePic){
-    gameState = 2;
+    if (water.image == iceObstaclePic) {
+      gameState = 2;
     }
   });
+}
 
-  if (fireBullet.mirror.x == true) {
-    fireBullet.x -= 5;
-  }
-  else {
-    fireBullet.x += 5;
-  }
+
+function draw() {
+  //start sound elements of project
+  Tone.start();
+
+  //starting screen
   if (gameState == 0) {
+    //song of the starting screen
+    startSeq.start();
 
-    background(186,85,211);
+    //setup color and text of the starting screen
+    background(186, 85, 211);
     textSize(100);
-    text("Cold as fire", width/2, 200);
+    text("Cold as fire", width / 2, 200);
     textSize(25);
-    text("Press space to start", width/2, 100);
-    setVisible(false); 
-    if (kb.presses('space')) {
+    text("Press SPACE to start", width / 2, 100);
+
+    //no assets appear on the screen unwanted
+    player.visible = false;
+    walkable.visible = false;
+    carrot.visible = false;
+    iceEnemy.visible = false;
+    fireEnemy.visible = false;
+    ground2.visible = false;
+    spike.visible = false;
+    water.visible = false;
+    fireTrigger.visible = false;
+    iceTrigger.visible = false;
+
+    //press joystick switch
+    if (kb.pressing('space')) {
+      //move to playing screen
       gameState = 1;
     }
   }
+
+  //playing screen
   else if (gameState == 1) {
-    if(kb.presses('k')){
-      if (temp == 30){
-        temp = 90;
+    //stop other songs, 
+    startSeq.stop();
+    gameOverSeq.stop();
+    gameSeq.start();
+
+    //start world
+    world.step();
+
+    //timer variable, counts up and measures how long player has been playing
+    timer = floor(millis()/1000);
+
+    //stats displayed
+    background(135, 206, 235);
+    textSize(10);
+    text('score: ' + score, 20, 25);
+    text('timer: ' + timer, 20, 50);
+    text('level: ' + level, 20, 75);
+    text('special move: ' + specialValString, 20, 100);
+
+    //press button, change temperature
+    if(kb.pressing('k')){
+      if(temp < 80){
+        temp = 85;
       }
       else{
         temp = 30;
       }
     }
-    startSeq.stop();
-    gameOverSeq.stop();
-    gameSeq.start();
-    world.step();
-    timer += (ceil(deltaTime/1000))/60;
-    //player.x = 2000;
-    //player.y = 20;
-    background(135, 206, 235);
-    textSize(10);
-    text('score: ' + score, 20, 25);
-    text('timer: ' + timer, 20, 50);
-    text('level: ' + level, 20, 75); 
+
+    //press button, shoot bullet
+    if (kb.pressing('l')) {
+      fireBullet = createSprite(player.x, player.y);
+      fireBullet.life = 50;
+      fireBullet.scale = 0.3;
+      if (temp > 80) {
+        fireBullet.addImage(fireBulletPic);
+      }
+      else {
+        fireBullet.addImage(iceBulletPic);
+      }
+      if (player.mirror.x == true) {
+        fireBullet.mirror.x = true;
+        fireBullet.x -= 5;
+      }
+      else {
+        fireBullet.mirror.x = false;
+        fireBullet.x += 5;
+      }
+      fireBullets.add(fireBullet);
+
+      if(kb.pressing('j')){
+        spike.image = fireObstacleNullifiedPic;
+        specialValString = "USED";
+      }
+    }
+
+    //camera follows player
     camera.x = player.x;
     camera.y = player.y;
-    setVisible(true);
+
+    //now assets can be visible
+    player.visible = true;
+    walkable.visible = true;
+    carrot.visible = true;
+    iceEnemy.visible = true;
+    fireEnemy.visible = true;
+    ground2.visible = true;
+    spike.visible = true;
+    water.visible = true;
+    fireTrigger.visible = true;
+    iceTrigger.visible = true;
+
+    //make player and enemies move, as well as enable bullet collisions
     playerMovement();
-    enemyMovement(iceEnemy);
-    enemyMovement(fireEnemy);
+    iceEnemyMovement();
+    fireEnemyMovement();
     bulletCollision();
   }
+
+  //game over screen
   else if (gameState == 2) {
-    background(220,20,60);
+
+    //stop all other songs and play game song
     gameSeq.stop();
     startSeq.stop();
     gameOverSeq.start();
 
-    textSize();
+    //setup background 
+    background(220, 20, 60);
+    textSize(100);
     text("Game Over!", 400, 250);
-    text("Press space to restart", 400, 350);
-    
-    setVisible(false);
-    if (kb.presses('space')) {
+    textSize(25);
+    text("Press SWITCH to restart", 400, 350);
+
+    //assets dissapear
+    player.visible = false;
+    walkable.visible = false;
+    carrot.visible = false;
+    iceEnemy.visible = false;
+    fireEnemy.visible = false;
+    ground2.visible = false;
+    spike.visible = false;
+    water.visible = false;
+    fireTrigger.visible = false;
+    iceTrigger.visible = false;
+
+    //press switch, restart current level
+    if (kb.pressing('space')) {
       gameState = 1;
       player.x = 2000;
       player.y = 20;
     }
   }
-  else{
-    setVisible(false);
+  //victory screen
+  else {
+    //stop all other songs, play the victory song
+    gameSeq.stop();
+    startSeq.stop();
+    victorySeq.start();
+
+    //assets dissapear
+    player.visible = false;
+    walkable.visible = false;
+    carrot.visible = false;
+    iceEnemy.visible = false;
+    fireEnemy.visible = false;
+    ground2.visible = false;
+    spike.visible = false;
+    water.visible = false;
+    fireTrigger.visible = false;
+    iceTrigger.visible = false;
+
+    //setup background color and text
     textSize(100);
-    background(60,179,113);
-    text("you win!", width/2, height/2);
-  }
-
-}
-
-function keyReleased() {
-  if (keyCode == 76) {
-    fireBullet = createSprite(player.x, player.y);
-    fireBullet.life = 50;
-    fireBullet.scale = 0.3;
-    if(temp > 80){
-      fireBullet.addImage(fireBulletPic);
-    }
-    else{
-      fireBullet.addImage(iceBulletPic);
-    }
-    if (player.mirror.x == true) {
-      fireBullet.mirror.x = true;
-    }
-    else {
-      fireBullet.mirror.x = false;
-    }
-    fireBullets.add(fireBullet);
-    sounds.player('shoot').start();
+    background(60, 179, 113);
+    text("you win!", width / 2, height / 2);
   }
 }
 
-/*function bulletRemove() {
-  fireBullet.remove();
-}*/
-
-function bulletCollision(){
-  if(fireBullet.image == fireBulletPic){
+//bullet collisions with obstacle triggers and enemies
+function bulletCollision() {
+  if (fireBullet.image == fireBulletPic) {
     fireBullet.overlaps(iceEnemy, (s, e) => {
-      //sounds.player('poof').start();
+      synth.triggerAttackRelease("C4", "8n");
       score += 100;
       e.remove();
       fireBullet.remove();
     });
     fireBullet.overlaps(fireTrigger, (s, e) => {
-      if(fireTrigger.image == fireTriggerPic){
+      if (fireTrigger.image == fireTriggerPic) {
+        synth.triggerAttackRelease("C2", "8n");
         spike.image = fireObstacleNullifiedPic;
-      fireTrigger.image = activatedTriggerPic;
-      fireBullet.remove();
+        fireTrigger.image = activatedTriggerPic;
+        fireBullet.remove();
       }
     });
-    
+
   }
-  else{
+  else {
     fireBullet.overlaps(fireEnemy, (s, e) => {
-      //sounds.player('poof').start();
+      synth.triggerAttackRelease("C4", "8n");
       score += 100;
       e.remove();
       fireBullet.remove();
     });
     fireBullet.overlaps(iceTrigger, (s, e) => {
-      if(iceTrigger.image == iceTriggerPic){
+      if (iceTrigger.image == iceTriggerPic) {
+        synth.triggerAttackRelease("C2", "8n");
         water.image = iceObstacleNullifiedPic;
-      iceTrigger.image = activatedTriggerPic;
-      fireBullet.remove();
+        iceTrigger.image = activatedTriggerPic;
+        fireBullet.remove();
       }
     });
   }
 }
 
+//movement of player
 function playerMovement() {
   if (kb.pressing('a')) {
-    //sounds.player('walk').start();
     player.vel.x = -2;
     player.ani = 'run';
     player.mirror.x = true;
   }
   else if (kb.pressing('d')) {
-    //sounds.player('walk').start();
     player.vel.x = 2;
     player.ani = 'run';
     player.mirror.x = false;
@@ -438,8 +502,7 @@ function playerMovement() {
     player.vel.x = 0;
   }
 
-  if (kb.presses('space') && (onGround.overlapping(walkable) ||onGround.overlapping(spike) ||onGround.overlapping(water))) {
-    //sounds.player('jump').start();
+  if (kb.pressing('space') && (onGround.overlapping(walkable) || onGround.overlapping(spike) || onGround.overlapping(water))) {
     player.vel.y = jump;
   }
 
@@ -450,34 +513,8 @@ function playerMovement() {
   }
 }
 
-function enemyMovement(enemyName){
-  for(e of enemyName){
-    if (e.overlaps(ground2)) {
-      e.vel.x *= -1;
-    }
-    if (e.vel.x < 0) {
-      e.mirror.x = true;
-    }
-    else {
-      e.mirror.x = false;
-    }
-  }
-}
-
-function setVisible(booleanV){
-  player.visible = booleanV;
-    walkable.visible = booleanV;
-    carrot.visible = booleanV;
-    iceEnemy.visible = booleanV;
-    fireEnemy.visible = booleanV;
-    ground2.visible = booleanV;
-    spike.visible = booleanV;
-    water.visible = booleanV; 
-    fireTrigger.visible = booleanV;
-    iceTrigger.visible = booleanV; 
-}
-
-/*function iceEnemyMovement(){
+//movement of ice enemies
+function iceEnemyMovement() {
   for (e of iceEnemy) {
     if (e.overlaps(ground2)) {
       e.vel.x *= -1;
@@ -491,6 +528,7 @@ function setVisible(booleanV){
   }
 }
 
+//movement of fire enemies
 function fireEnemyMovement() {
   for (e of fireEnemy) {
     if (e.overlaps(ground2)) {
@@ -503,10 +541,12 @@ function fireEnemyMovement() {
       e.mirror.x = false;
     }
   }
-}*/
+}
 
+//setup level 2
 function levelTwo() {
   tileMap1.remove();
+  gameState = 1;
   spike.image = fireObstaclePic;
   tileMap2 = new Tiles([
     'aaa...............................................',
@@ -540,8 +580,10 @@ function levelTwo() {
   player.y = 20;
 }
 
+//setup level 3
 function levelThree() {
   tileMap2.remove();
+  gameState = 1;
   spike.image = fireObstaclePic;
   water.image = iceObstaclePic;
   fireTrigger.image = fireTriggerPic;
@@ -577,16 +619,7 @@ function levelThree() {
   player.y = 20;
 }
 
-function groupSet(x, wVal, hVal, picType, tileRepresentation){
-  x = new Group();
-  x.w = wVal;
-  x.h = hVal;
-  x.image = picType;
-  x.tile = tileRepresentation;
-  x.collider = 'static';
-  x.rotationLock = true;
-}
-
+//function to setup tile player walks on
 function tileSet(x, tileRepresentation, tilePic) {
   x = new walkable.Group();
   x.w = groundSize;
