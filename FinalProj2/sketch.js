@@ -338,6 +338,11 @@ function draw() {
       }
     }
 
+    if(kb.pressing('j')){
+      spike.image = fireObstacleNullifiedPic;
+      specialValString = "USED";
+    }
+
     //press button, shoot bullet
     if (kb.pressing('l')) {
       fireBullet = createSprite(player.x, player.y);
@@ -357,12 +362,7 @@ function draw() {
         fireBullet.mirror.x = false;
         fireBullet.x += 5;
       }
-      fireBullets.add(fireBullet);
-
-      if(kb.pressing('j')){
-        spike.image = fireObstacleNullifiedPic;
-        specialValString = "USED";
-      }
+      fireBullets.add(fireBullet); 
     }
 
     //camera follows player
